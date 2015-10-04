@@ -47,7 +47,12 @@ def consumes():
 
 
 def produces():
-    pass
+    produces = []
+    if app.config.get('XML', True):
+        produces.append('application/xml')
+    if app.config.get('JSON', True):
+        produces.append('application/json')
+    return produces if produces else None
 
 
 def paths():
