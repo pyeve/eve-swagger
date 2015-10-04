@@ -22,6 +22,16 @@ Usage
     app = Eve()
     app.register_blueprint(swagger)
 
+    # You might want to simply update the eve settings module instead.
+    SWAGGER = {
+        'info': {
+            'title': 'My Supercool API',
+            'version': '1.0',
+            'description': 'an API description',
+            'termsOfService': 'my terms of service',
+        }
+    }
+    app.config['SWAGGER'] = SWAGGER
 
     if __name__ == '__main__':
         app.run()

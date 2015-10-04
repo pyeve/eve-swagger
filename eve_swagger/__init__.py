@@ -1,17 +1,14 @@
-from flask import Blueprint, jsonify, current_app as app
+# -*- coding: utf-8 -*-
+"""
+    eve-swagger
+    ~~~~~~~~~~~
+    swagger.io extension for Eve-powered REST APIs.
 
+    :copyright: (c) 2015 by Nicola Iarocci.
+    :license: BSD, see LICENSE for more details.
+"""
+from swagger import swagger  # noqa
 
-swagger = Blueprint('eve_swagger', __name__)
+SWAGGER = 'SWAGGER'
 
-
-@swagger.route('/api-docs')
-def index():
-    return jsonify(
-        {
-            'info': {
-                'title': 'API title',
-                'description': 'API description',
-                'version': '1.0.0'
-            }
-        }
-    )
+__version__ = '0.0.1'
