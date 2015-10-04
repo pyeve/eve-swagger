@@ -19,10 +19,12 @@ def info():
     cfg = swagger_cfg()['info']
 
     info = {}
-    node(info, 'title', cfg)
-    node(info, 'version', cfg)
-    node(info, 'description', cfg)
-    node(info, 'termsOfService', cfg)
+    node(info, cfg, 'title')
+    node(info, cfg, 'description')
+    node(info, cfg, 'termsOfService')
+    node(info, cfg, 'contact')
+    node(info, cfg, 'license')
+    node(info, cfg, 'version')
 
     return info
 
@@ -83,7 +85,7 @@ def swagger_cfg():
     return app.config[eve_swagger.SWAGGER]
 
 
-def node(parent, key, cfg):
+def node(parent, cfg, key):
     value = cfg.get(key)
     if value:
         parent[key] = cfg[key]
