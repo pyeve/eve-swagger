@@ -1,7 +1,7 @@
 Eve-Swagger
 ===========
 
-Swagger extension for Eve, by `popular request`_.
+Swagger_ extension for Eve, by `popular request`_.
 
 TODO
 ----
@@ -40,4 +40,5 @@ When API is up and running, visit the ``/api-docs`` endpoint. Please note,
 right now we are serving static, incomplete, content.
 
 
+.. _Swagger: http://swagger.io/
 .. _`popular request`: https://github.com/nicolaiarocci/eve/issues/574
