@@ -43,7 +43,7 @@ def schemes():
 
 
 def consumes():
-    pass
+    return ['application/json']
 
 
 def produces():
