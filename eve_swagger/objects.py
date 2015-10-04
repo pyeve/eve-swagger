@@ -7,7 +7,7 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from flask import current_app as app
+from flask import request, current_app as app
 
 import eve_swagger
 from validation import validate_info
@@ -31,7 +31,9 @@ def info():
 
 
 def host():
-    pass
+    # TODO should probably return None if 'host' has not been set as the host
+    # is optional in swagger.
+    return  swagger_cfg().get('host') or request.host
 
 
 def base_path():
