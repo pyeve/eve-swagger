@@ -11,6 +11,7 @@ from flask import current_app as app
 
 import eve_swagger
 from validation import validate_info
+from eve.utils import api_prefix
 
 
 def info():
@@ -34,7 +35,7 @@ def host():
 
 
 def base_path():
-    pass
+    return api_prefix()
 
 
 def schemes():
