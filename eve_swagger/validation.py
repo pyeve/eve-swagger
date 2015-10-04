@@ -9,7 +9,6 @@
 """
 from eve.exceptions import ConfigException
 from flask import current_app as app
-import urllib
 
 import eve_swagger
 
@@ -86,11 +85,7 @@ def _validate_url(value, key):
     # opening/parsing or regex match) take a big performance hit
     if value is None:
         pass
-    try:
-        urllib.urlopen(value)
-    except IOError:
-        raise ConfigException('%s does not seem to be a valid (or reachable) '
-                              'url' % value)
+    pass
 
 
 def _validate_email(value, key):
