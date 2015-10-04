@@ -41,7 +41,9 @@ def base_path():
 
 
 def schemes():
-    pass
+    scheme = request.url.split(':')[0]
+    return [scheme] if scheme in ['http', 'https', 'ws', 'wss'] else None
+
 
 
 def consumes():
