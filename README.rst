@@ -36,8 +36,7 @@ Usage
     if __name__ == '__main__':
         app.run()
 
-When API is up and running, visit the ``/api-docs`` endpoint. Please note,
-right now we are serving static, incomplete, content.
+When API is up and running, visit the ``/api-docs`` endpoint. 
 
 
 .. _Swagger: http://swagger.io/
