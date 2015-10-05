@@ -7,11 +7,13 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+from collections import OrderedDict
 from flask import Blueprint, jsonify
 
 from objects import info, host, base_path, schemes, consumes, produces, \
-    paths, definitions, parameters, responses, security_definitions, \
-    security, tags, external_docs
+    definitions, parameters, responses, security_definitions, security, \
+    tags, external_docs
+from paths import paths
 
 
 swagger = Blueprint('eve_swagger', __name__)
@@ -19,9 +21,8 @@ swagger = Blueprint('eve_swagger', __name__)
 
 @swagger.route('/api-docs')
 def index():
-    root = {
-        'swagger': '2.0',
-    }
+    root = OrderedDict()
+    root['swagger'] = '2.0'
     node(root, 'info', info())
     node(root, 'host', host())
     node(root, 'basePath', base_path())

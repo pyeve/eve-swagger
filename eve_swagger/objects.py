@@ -7,11 +7,12 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+from collections import OrderedDict
+from eve.utils import api_prefix
 from flask import request, current_app as app
 
 import eve_swagger
 from validation import validate_info
-from eve.utils import api_prefix
 
 
 def info():
@@ -19,7 +20,7 @@ def info():
 
     cfg = swagger_cfg()['info']
 
-    info = {}
+    info = OrderedDict()
     node(info, cfg, 'title')
     node(info, cfg, 'description')
     node(info, cfg, 'termsOfService')
@@ -33,7 +34,7 @@ def info():
 def host():
     # TODO should probably return None if 'host' has not been set as the host
     # is optional in swagger.
-    return  swagger_cfg().get('host') or request.host
+    return swagger_cfg().get('host') or request.host
 
 
 def base_path():
@@ -43,7 +44,6 @@ def base_path():
 def schemes():
     scheme = request.url.split(':')[0]
     return [scheme] if scheme in ['http', 'https', 'ws', 'wss'] else None
-
 
 
 def consumes():
@@ -57,10 +57,6 @@ def produces():
     if app.config.get('JSON', True):
         produces.append('application/json')
     return produces if produces else None
-
-
-def paths():
-    pass
 
 
 def definitions():
