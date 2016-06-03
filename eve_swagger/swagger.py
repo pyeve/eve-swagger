@@ -21,6 +21,10 @@ swagger = Blueprint('eve_swagger', __name__)
 
 @swagger.route('/api-docs')
 def index():
+    def node(parent, key, value):
+        if value:
+            parent[key] = value
+
     root = OrderedDict()
     root['swagger'] = '2.0'
     node(root, 'info', info())
@@ -39,8 +43,3 @@ def index():
     node(root, 'externalDocs', external_docs())
 
     return jsonify(root)
-
-
-def node(parent, key, value):
-    if value:
-        parent[key] = value
