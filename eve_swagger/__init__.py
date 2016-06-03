@@ -9,6 +9,7 @@
 """
 from swagger import swagger  # noqa
 
-SWAGGER = 'SWAGGER'
+INFO = 'SWAGGER_INFO'
+HOST = 'SWAGGER_HOST'
 
 __version__ = '0.0.1'

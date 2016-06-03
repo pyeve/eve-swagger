@@ -18,7 +18,12 @@ from validation import validate_info
 def info():
     validate_info()
 
-    cfg = swagger_cfg()['info']
+    cfg = app.config[eve_swagger.INFO]
+
+    def node(parent, cfg, key):
+        value = cfg.get(key)
+        if value:
+            parent[key] = cfg[key]
 
     info = OrderedDict()
     node(info, cfg, 'title')
@@ -34,7 +39,7 @@ def info():
 def host():
     # TODO should probably return None if 'host' has not been set as the host
     # is optional in swagger.
-    return swagger_cfg().get('host') or request.host
+    return app.config.get(eve_swagger.HOST) or request.host
 
 
 def base_path():
@@ -87,11 +92,5 @@ def external_docs():
     pass
 
 
-def swagger_cfg():
+def swagger_cfg(swagger_key):
     return app.config[eve_swagger.SWAGGER]
-
-
-def node(parent, cfg, key):
-    value = cfg.get(key)
-    if value:
-        parent[key] = cfg[key]

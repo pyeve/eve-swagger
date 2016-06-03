@@ -18,25 +18,24 @@ Usage
     app = Eve()
     app.register_blueprint(swagger)
 
-    # You might want to simply update the eve settings module instead.
-    SWAGGER = {
-        'info': {
-            'title': 'My Supercool API',
-            'version': '1.0',
-            'description': 'an API description',
-            'termsOfService': 'my terms of service',
-            'contact': {
-                'name': 'nicola',
-                'url': 'http://nicolaiarocci.com'
-            },
-            'license': {
-                'name': 'BSD',
-                'url': 'https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE',
-            }
+    # required. See http://swagger.io/specification/#infoObject for details.
+    app.config['SWAGGER_INFO'] = {
+        'title': 'My Supercool API',
+        'version': '1.0',
+        'description': 'an API description',
+        'termsOfService': 'my terms of service',
+        'contact': {
+            'name': 'nicola',
+            'url': 'http://nicolaiarocci.com'
         },
-        'host': 'myhost.com'
-    }
-    app.config['SWAGGER'] = SWAGGER
+        'license': {
+            'name': 'BSD',
+            'url': 'https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE',
+        }
+    },
+
+    # optional. Will use flask.request.host if missing.
+    app.config['SWAGGER_HOST'] = 'myhost.com'
 
     if __name__ == '__main__':
         app.run()

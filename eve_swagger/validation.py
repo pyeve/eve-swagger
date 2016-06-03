@@ -9,87 +9,50 @@
 """
 from eve.exceptions import ConfigException
 from flask import current_app as app
+from cerberus import Validator
+import urlparse
 
 import eve_swagger
 
 
 def validate_info():
-    _validate_required('info')
-    info = app.config[eve_swagger.SWAGGER].get('info')
+    v = Validator()
+    schema = {
+        'title': {'required': True, 'type': 'string'},
+        'version': {'required': True, 'type': 'string'},
+        'description': {'type': 'string'},
+        'termsOfService': {'type': 'string'},
+        'contact': {
+            'type': 'dict',
+            'schema': {
+                'name': {'type': 'string'},
+                'url': {'type': 'string', 'validator': _validate_url},
+                'email': {
+                    'type': 'string',
+                    'regex':
+                    '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+                }
+            }
+        },
+        'license': {
+            'type': 'dict',
+            'schema': {
+                'name': {'type': 'string', 'required': True},
+                'url': {'type': 'string', 'validator': _validate_url}
+            }
+        },
+    }
+    if eve_swagger.INFO not in app.config:
+        raise ConfigException('%s setting is required in Eve configuration.' %
+                              eve_swagger.INFO)
 
-    allowed = [
-        'title',
-        'description',
-        'termsOfService',
-        'contact',
-        'license',
-        'version'
-    ]
-    _validate_document(info, 'info', allowed)
-
-    _validate_required('info.title')
-    _validate_required('info.version')
-
-    def validate_contact():
-        contact = info.get('contact')
-        if contact is None:
-            return
-
-        allowed = [
-            'name',
-            'url',
-            'email'
-        ]
-        _validate_document(contact, 'info.contact', allowed)
-        _validate_url(contact.get('url'), 'info.contact.url')
-        _validate_email(contact.get('email'), 'info.contact.email')
-
-    def validate_license():
-        license = info.get('license')
-        if license is None:
-            return
-
-        allowed = [
-            'name',
-            'url'
-        ]
-        _validate_document(license, 'info.license', allowed)
-        _validate_required('info.license.name')
-        _validate_url(license.get('url'), 'info.license.url')
-
-    validate_contact()
-    validate_license()
+    if not v.validate(app.config[eve_swagger.INFO], schema):
+        raise ConfigException('%s is misconfigured: %s' % (
+            eve_swagger.INFO, v.errors))
 
 
-def _validate_required(key):
-    key = '%s.%s' % (eve_swagger.SWAGGER, key)
-    node = app.config
-
-    parts = key.split('.')
-    for part in parts:
-        if part not in node:
-            raise ConfigException('%s is required' % key)
-        node = node[part]
-
-
-def _validate_document(value, key, fields):
-    if not isinstance(value, dict):
-        raise ConfigException('%s must be a dictionary' % key)
-    unknown = set(value.keys()) - set(fields)
-    if unknown:
-        raise ConfigException('fields allowed for "%s": %s' % (key, fields))
-
-
-def _validate_url(value, key):
-    # TODO consider *not* validating this as both possible approaches (url
-    # opening/parsing or regex match) take a big performance hit
-    if value is None:
-        pass
-    pass
-
-
-def _validate_email(value, key):
-    # TODO
-    if value is None:
-        pass
-    pass
+def _validate_url(field, value, error):
+    # TODO probably too weak
+    o = urlparse.urlparse(value)
+    if not bool(o.scheme):
+        error(field, 'Invalid URL')
