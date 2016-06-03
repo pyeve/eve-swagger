@@ -1,7 +1,7 @@
 Eve-Swagger
 ===========
 
-Swagger_ extension for Eve, by `popular request`_.
+Swagger_ extension for Eve_ powered RESTful APIs.
 
 Current Status
 --------------
@@ -47,4 +47,5 @@ JSON can then be used with swagger tooling, like the Swagger Editor:
 
 
 .. _Swagger: http://swagger.io/
+.. _Eve: http://python-eve.org/
 .. _`popular request`: https://github.com/nicolaiarocci/eve/issues/574
