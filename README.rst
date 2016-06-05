@@ -46,6 +46,12 @@ Installation
 
     $ pip install eve-swagger
 
+Copyright
+---------
+Cerberus is an open source project by `Nicola Iarocci`_. See the original LICENSE_ for more informations.
+
 .. _Swagger: http://swagger.io/
 .. _Eve: http://python-eve.org/
 .. _`popular request`: https://github.com/nicolaiarocci/eve/issues/574
+.. _LICENSE: https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE
+.. _`Nicola Iarocci`: http://nicolaiarocci.com
