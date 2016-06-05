@@ -3,11 +3,6 @@ Eve-Swagger
 
 Swagger_ extension for Eve_ powered RESTful APIs.
 
-Current Status
---------------
-Experimental playground.
-
-
 Usage
 -----
 .. code-block:: python
@@ -45,6 +40,11 @@ JSON can then be used with swagger tooling, like the Swagger Editor:
 
 .. image:: resources/swagger_editor.png
 
+Installation
+------------
+.. code-block::
+
+    $ pip install eve-swagger
 
 .. _Swagger: http://swagger.io/
 .. _Eve: http://python-eve.org/
