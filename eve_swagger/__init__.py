@@ -12,4 +12,4 @@ from swagger import swagger  # noqa
 INFO = 'SWAGGER_INFO'
 HOST = 'SWAGGER_HOST'
 
-__version__ = '0.0.1'
+__version__ = '0.0.2'
