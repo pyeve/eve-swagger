@@ -6,7 +6,15 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+Version 0.0.2
+~~~~~~~~~~~~~
+
+Released on 6 June, 2016
+
+- Fix: AttributeError: 'module' object has no attribute 'name' when trying to
+  register the Blueprint. Closes #3.
+
 Version 0.0.1
 ~~~~~~~~~~~~~
 
-Not released yet.
+Released on 4 June, 2016
