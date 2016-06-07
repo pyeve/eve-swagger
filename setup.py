@@ -4,11 +4,10 @@ from setuptools import setup, find_packages
 
 DESCRIPTION = ("Swagger extension for Eve powered RESTful APIs")
 LONG_DESCRIPTION = open('README.rst').read()
-VERSION = __import__('eve_swagger').__version__
 
 setup(
     name='Eve-Swagger',
-    version=VERSION,
+    version='0.0.3',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     author='Nicola Iarocci',

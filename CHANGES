@@ -6,6 +6,13 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+Version 0.0.3
+~~~~~~~~~~~~~
+
+Released on 7 June, 2016
+
+- Fix: Crash on pip install. Closes #4.
+
 Version 0.0.2
 ~~~~~~~~~~~~~
 
