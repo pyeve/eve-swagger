@@ -10,9 +10,13 @@
 from eve.exceptions import ConfigException
 from flask import current_app as app
 from cerberus import Validator
-import urlparse
 
 import eve_swagger
+
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 
 def validate_info():
@@ -53,6 +57,6 @@ def validate_info():
 
 def _validate_url(field, value, error):
     # TODO probably too weak
-    o = urlparse.urlparse(value)
+    o = urlparse(value)
     if not bool(o.scheme):
         error(field, 'Invalid URL')
