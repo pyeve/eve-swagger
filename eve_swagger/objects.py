@@ -12,7 +12,7 @@ from eve.utils import api_prefix
 from flask import request, current_app as app
 
 import eve_swagger
-from validation import validate_info
+from .validation import validate_info
 
 
 def info():
