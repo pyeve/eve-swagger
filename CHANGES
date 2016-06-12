@@ -6,10 +6,10 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-Version 0.0.a
+Version 0.0.4
 ~~~~~~~~~~~~~
 
-Not released yet.
+Released on 12 June, 2016
 
 - New: Python 3 compatibility. Closes #6 (Naoko Reeves).
 
