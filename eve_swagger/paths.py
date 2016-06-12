@@ -13,6 +13,7 @@ from flask import current_app as app
 # TODO consider adding at least a 'schema' property to response objects
 # TODO take auth into consideration
 
+
 def paths():
     paths = OrderedDict()
     for rd in app.config['DOMAIN'].values():
@@ -53,17 +54,35 @@ def _item(rd, methods, item_id):
     return item
 
 
+def get_ref_schema(rd):
+    return {'$ref': '#/definitions/%s' % rd['item_title']}
+
+
+def get_parameters(rd):
+    return OrderedDict([
+        ('in', 'body'),
+        ('name', rd['item_title']),
+        ('required', True),
+        ('schema', get_ref_schema(rd)),
+    ])
+
+
 def get_response(rd):
     title = rd['resource_title']
     return OrderedDict([
         ('summary', 'Retrieves one or more %s' % title),
-        ('responses', {'200': {'description': 'An array of %s' % title}})
+        ('responses', {'200': {
+            'description': 'An array of %s' % title,
+            'schema': {
+                'type': 'array',
+                'items': get_ref_schema(rd)}}})
     ])
 
 
 def post_response(rd):
     return OrderedDict([
         ('summary', 'Stores one or more %s' % rd['resource_title']),
+        ('parameters', [get_parameters(rd)]),
         ('responses', {'200':
                        {'description': 'operation has been successful'}})
     ])
@@ -83,8 +102,10 @@ def getitem_response(rd, item_id):
         ('summary', 'Retrieves a %s document' % title),
         ('responses', {
             '200': {
-                'description': '%s document fetched successfully' % title
-            }
+                'description': '%s document fetched successfully' % title,
+                'schema': get_ref_schema(rd)
+            },
+
         }),
         ('parameters', [id_parameter(item_id, rd)])
     ])
@@ -99,7 +120,7 @@ def put_response(rd, item_id):
                 'description': '%s document replaced successfully' % title
             }
         }),
-        ('parameters', [id_parameter(item_id, rd)])
+        ('parameters', [id_parameter(item_id, rd), get_parameters(rd)])
     ])
 
 

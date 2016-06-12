@@ -63,11 +63,6 @@ def produces():
         produces.append('application/json')
     return produces if produces else None
 
-
-def definitions():
-    pass
-
-
 def parameters():
     pass
 
