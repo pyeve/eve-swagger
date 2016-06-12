@@ -1,5 +1,7 @@
-Eve-Swagger
-===========
+Eve-Swagger |latest-version|
+============================
+
+|build-status| |health| |python-support| |downloads| |license|
 
 Swagger_ extension for Eve_ powered RESTful APIs.
 
@@ -48,7 +50,27 @@ Installation
 
 Copyright
 ---------
-Cerberus is an open source project by `Nicola Iarocci`_. See the original LICENSE_ for more informations.
+Eve-Swagger is an open source project by `Nicola Iarocci`_.
+See the original LICENSE_ for more informations.
+
+.. |latest-version| image:: https://img.shields.io/pypi/v/eve-swagger.svg
+   :alt: Latest version on PyPI
+   :target: https://pypi.python.org/pypi/eve-swagger
+.. |build-status| image:: https://travis-ci.org/nicolaiarocci/eve-swagger.svg?branch=master
+   :alt: Build status
+   :target: https://travis-ci.org/nicolaiarocci/eve-swagger
+.. |health| image:: https://landscape.io/github/nicolaiarocci/eve-swagger/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/nicolaiarocci/eve-swagger/master
+   :alt: Code health
+.. |python-support| image:: https://img.shields.io/pypi/pyversions/eve-swagger.svg
+   :target: https://pypi.python.org/pypi/eve-swagger
+   :alt: Python versions
+.. |downloads| image:: https://img.shields.io/pypi/dm/eve-swagger.svg
+   :alt: Monthly downloads from PyPI
+   :target: https://pypi.python.org/pypi/eve-swagger
+.. |license| image:: https://img.shields.io/pypi/l/eve-swagger.svg
+   :alt: Software license
+   :target: https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE
 
 .. _Swagger: http://swagger.io/
 .. _Eve: http://python-eve.org/
