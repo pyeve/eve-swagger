@@ -1,22 +1,53 @@
 #!/usr/bin/env python
-
+"""
+Setup for Swagger extension for Eve powered RESTful APIs
+"""
+from os.path import abspath, dirname, join
+from shlex import split
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand  # noqa N812
 
-DESCRIPTION = ("Swagger extension for Eve powered RESTful APIs")
-LONG_DESCRIPTION = open('README.rst').read()
+
+def read_file(filename):
+    """Read the contents of a file located relative to setup.py"""
+    with open(join(abspath(dirname(__file__)), filename)) as file:
+        return file.read()
+
+
+class Tox(TestCommand):
+    """Integration of tox via the setuptools ``test`` command"""
+    user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.tox_args = None
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        from tox import cmdline
+        args = self.tox_args
+        if args:
+            args = split(self.tox_args)
+        errno = cmdline(args=args)
+        exit(errno)
+
 
 setup(
     name='Eve-Swagger',
     version='0.0.5.dev0',
-    description=DESCRIPTION,
-    long_description=LONG_DESCRIPTION,
+    description='Swagger extension for Eve powered RESTful APIs',
+    long_description=read_file('README.rst'),
     author='Nicola Iarocci',
     author_email='nicola@nicolaiarocci.com',
-    url='http://github.com/nicolaiarocci/cerberus',
-    license=open('LICENSE').read(),
+    url='http://github.com/nicolaiarocci/eve-swagger',
+    license='BSD',
     platforms=["any"],
     packages=find_packages(),
-    install_requires=['eve'],
+    install_requires=read_file('requirements.txt'),
     keywords=['swagger', 'eve', 'rest', 'api'],
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -35,4 +66,8 @@ setup(
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy'
     ],
+    tests_require=['tox'],
+    cmdclass={
+        'test': Tox,
+    },
 )

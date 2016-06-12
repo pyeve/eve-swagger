@@ -13,6 +13,7 @@ from flask import current_app as app
 # TODO consider adding at least a 'schema' property to response objects
 # TODO take auth into consideration
 
+
 def paths():
     paths = OrderedDict()
     for rd in app.config['DOMAIN'].values():
