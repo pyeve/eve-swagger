@@ -7,7 +7,7 @@ LONG_DESCRIPTION = open('README.rst').read()
 
 setup(
     name='Eve-Swagger',
-    version='0.0.4',
+    version='0.0.5.dev0',
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     author='Nicola Iarocci',
