@@ -10,12 +10,13 @@ from setuptools.command.test import test as TestCommand  # noqa N812
 
 def read_file(filename):
     """Read the contents of a file located relative to setup.py"""
-    with open(join(abspath(dirname(__file__)), filename)) as file:
-        return file.read()
+    with open(join(abspath(dirname(__file__)), filename)) as thefile:
+        return thefile.read()
 
 
 class Tox(TestCommand):
     """Integration of tox via the setuptools ``test`` command"""
+    # pylint: disable=attribute-defined-outside-init
     user_options = [('tox-args=', 'a', "Arguments to pass to tox")]
 
     def initialize_options(self):
@@ -28,7 +29,7 @@ class Tox(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        from tox import cmdline
+        from tox import cmdline  # pylint: disable=import-error
         args = self.tox_args
         if args:
             args = split(self.tox_args)
