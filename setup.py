@@ -33,8 +33,7 @@ class Tox(TestCommand):
         args = self.tox_args
         if args:
             args = split(self.tox_args)
-        errno = cmdline(args=args)
-        exit(errno)
+        cmdline(args=args)
 
 
 setup(
