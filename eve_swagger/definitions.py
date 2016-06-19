@@ -46,7 +46,10 @@ def _type_and_format(rules):
         'datetime': ('string', 'date-time'),
     }
 
-    eve_type = rules['type']
+    eve_type = rules.get('type')
+    if eve_type is None:
+        return resp
+
     type = map.get(eve_type, (eve_type,))
 
     resp['type'] = type[0]
@@ -57,7 +60,7 @@ def _type_and_format(rules):
     elif type[0] == 'array':
         type = 'array'
         if 'schema' in rules:
-            resp['items'] = _object(rules['schema'])
+            resp['items'] = _type_and_format(rules['schema'])
         else:
             # 'items' is mandatory for swagger, we assume it's a list of
             # strings
