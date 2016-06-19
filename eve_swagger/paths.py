@@ -133,7 +133,7 @@ def patch_response(rd, item_id):
                 'description': '%s document updated successfully' % title
             }
         }),
-        ('parameters', [id_parameter(item_id, rd)])
+        ('parameters', [id_parameter(item_id, rd), get_parameters(rd)])
     ])
 
 
