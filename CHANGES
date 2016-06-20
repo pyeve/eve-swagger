@@ -11,6 +11,8 @@ Version 0.0.5
 
 Not released  yet.
 
+- New: Support for endpoint fields (swagger parameters). WIP. Closes #5.
+
 Version 0.0.4
 ~~~~~~~~~~~~~
 
