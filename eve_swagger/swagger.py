@@ -10,9 +10,10 @@
 from collections import OrderedDict
 from flask import Blueprint, jsonify
 
+from .definitions import definitions
 from .objects import info, host, base_path, schemes, consumes, produces, \
-    definitions, parameters, responses, security_definitions, security, \
-    tags, external_docs
+    parameters, responses, security_definitions, security, tags, \
+    external_docs
 from .paths import paths
 
 
