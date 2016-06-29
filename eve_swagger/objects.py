@@ -63,6 +63,7 @@ def produces():
         produces.append('application/json')
     return produces if produces else None
 
+
 def parameters():
     pass
 
@@ -85,7 +86,3 @@ def tags():
 
 def external_docs():
     pass
-
-
-def swagger_cfg(swagger_key):
-    return app.config[eve_swagger.SWAGGER]
