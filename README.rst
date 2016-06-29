@@ -1,7 +1,7 @@
 Eve-Swagger |latest-version|
 ============================
 
-|build-status| |python-support| |downloads| |license|
+|build-status| |python-support| |license|
 
 Swagger_ extension for Eve_ powered RESTful APIs.
 
@@ -62,9 +62,6 @@ See the original LICENSE_ for more informations.
 .. |python-support| image:: https://img.shields.io/pypi/pyversions/eve-swagger.svg
    :target: https://pypi.python.org/pypi/eve-swagger
    :alt: Python versions
-.. |downloads| image:: https://img.shields.io/pypi/dm/eve-swagger.svg
-   :alt: Monthly downloads from PyPI
-   :target: https://pypi.python.org/pypi/eve-swagger
 .. |license| image:: https://img.shields.io/pypi/l/eve-swagger.svg
    :alt: Software license
    :target: https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE
