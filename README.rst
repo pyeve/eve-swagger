@@ -1,7 +1,7 @@
 Eve-Swagger |latest-version|
 ============================
 
-|build-status| |python-support| |license|
+|build-status| |python-support| 
 
 Swagger_ extension for Eve_ powered RESTful APIs.
 
