@@ -29,7 +29,7 @@ Usage
             'name': 'BSD',
             'url': 'https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE',
         }
-    },
+    }
 
     # optional. Will use flask.request.host if missing.
     app.config['SWAGGER_HOST'] = 'myhost.com'
