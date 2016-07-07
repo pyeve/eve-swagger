@@ -11,6 +11,8 @@ Version 0.0.5
 
 Not released  yet.
 
+- Fix: README: fix comma that causes a validation error in example script (Luis
+  Fernando Gomes).
 - New: Add tox and build server configuration (Peter Bittner). Addresses #8.
 - New: Support for endpoint fields (swagger parameters). WIP. Closes #5.
 
