@@ -20,8 +20,10 @@ from .paths import paths
 swagger = Blueprint('eve_swagger', __name__)
 swagger.additional_documentation = OrderedDict()
 
+
 def add_documentation(doc):
     _nested_update(swagger.additional_documentation, doc)
+
 
 @swagger.route('/api-docs')
 def index():
@@ -50,6 +52,7 @@ def index():
 
     return jsonify(root)
 
+
 # https://stackoverflow.com/questions/3232943/update-value-of-a-nested-dictionary-of-varying-depth/18394648#comment41407580_18394648
 def _nested_update(orig_dict, new_dict):
     for key, val in new_dict.iteritems():
@@ -61,4 +64,3 @@ def _nested_update(orig_dict, new_dict):
         else:
             orig_dict[key] = new_dict[key]
     return orig_dict
-
