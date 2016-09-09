@@ -53,7 +53,6 @@ def index():
     return jsonify(root)
 
 
-# https://stackoverflow.com/questions/3232943/update-value-of-a-nested-dictionary-of-varying-depth/18394648#comment41407580_18394648
 def _nested_update(orig_dict, new_dict):
     for key, val in new_dict.iteritems():
         if isinstance(val, Mapping):

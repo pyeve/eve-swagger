@@ -10,7 +10,7 @@ Usage
 .. code-block:: python
 
     from eve import Eve
-    from eve_swagger import swagger
+    from eve_swagger import swagger, add_documentation
 
     app = Eve()
     app.register_blueprint(swagger)
@@ -33,6 +33,17 @@ Usage
 
     # optional. Will use flask.request.host if missing.
     app.config['SWAGGER_HOST'] = 'myhost.com'
+
+    # optional. Add/Update elements in the documentation at run-time without deleting subtrees.
+    add_documentation({'paths': {'/status': {'get': {'parameters': [
+        {
+            'in': 'query',
+            'name': 'foobar',
+            'required': False,
+            'description': 'special query parameter',
+            'type': 'string'
+        }]
+    }}}})
 
     if __name__ == '__main__':
         app.run()
