@@ -52,6 +52,9 @@ def _type_and_format(rules):
 
     type = map.get(eve_type, (eve_type,))
 
+    if 'description' in rules:
+        resp['description'] = rules['description']
+
     resp['type'] = type[0]
     if type[0] == 'object':
         # we don't support 'valueschema' rule
