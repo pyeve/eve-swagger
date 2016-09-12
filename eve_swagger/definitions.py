@@ -51,6 +51,9 @@ def _type_and_format(rules):
     if eve_type is None:
         return resp
 
+    if 'description' in rules:
+        resp['description'] = rules['description']
+
     type = map.get(eve_type, (eve_type,))
 
     resp['type'] = type[0]
