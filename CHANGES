@@ -11,6 +11,7 @@ Version 0.0.5
 
 Not released  yet.
 
+- Fix: float type are not properly defined. Closes #13.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
 - New: Add tox and build server configuration (Peter Bittner). Addresses #8.

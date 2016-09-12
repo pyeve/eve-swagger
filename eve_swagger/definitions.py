@@ -44,6 +44,7 @@ def _type_and_format(rules):
         'list': ('array',),
         'objectid': ('string', 'objectid'),
         'datetime': ('string', 'date-time'),
+        'float': ('number', 'float'),
     }
 
     eve_type = rules.get('type')
