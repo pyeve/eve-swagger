@@ -65,6 +65,10 @@ def _type_and_format(rules):
             # 'items' is mandatory for swagger, we assume it's a list of
             # strings
             resp['items'] = {'type': 'string'}
+    # floats in swagger are defined as type: number, format: float
+    elif type[0] == 'float':
+        resp['type'] = 'number'
+        resp['format'] = 'float'
     else:
         try:
             resp['format'] = type[1]
