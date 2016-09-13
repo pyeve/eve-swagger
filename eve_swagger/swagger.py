@@ -7,7 +7,7 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from collections import OrderedDict
+from collections import OrderedDict, Mapping
 from flask import Blueprint, jsonify
 
 from .definitions import definitions
@@ -18,6 +18,11 @@ from .paths import paths
 
 
 swagger = Blueprint('eve_swagger', __name__)
+swagger.additional_documentation = OrderedDict()
+
+
+def add_documentation(doc):
+    _nested_update(swagger.additional_documentation, doc)
 
 
 @swagger.route('/api-docs')
@@ -43,4 +48,19 @@ def index():
     node(root, 'tags', tags())
     node(root, 'externalDocs', external_docs())
 
+    _nested_update(root, swagger.additional_documentation)
+
     return jsonify(root)
+
+
+# https://stackoverflow.com/questions/3232943/update-value-of-a-nested-dictionary-of-varying-depth/18394648#comment41407580_18394648
+def _nested_update(orig_dict, new_dict):
+    for key, val in new_dict.iteritems():
+        if isinstance(val, Mapping):
+            tmp = _nested_update(orig_dict.get(key, {}), val)
+            orig_dict[key] = tmp
+        elif isinstance(val, list):
+            orig_dict[key] = (orig_dict.get(key, []) + val)
+        else:
+            orig_dict[key] = new_dict[key]
+    return orig_dict
