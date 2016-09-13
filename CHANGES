@@ -14,6 +14,7 @@ Not released  yet.
 - Fix: float type are not properly defined. Closes #13.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
+- New: Enable additional documentation to be injected at runtime (otibsa).
 - New: Add tox and build server configuration (Peter Bittner). Addresses #8.
 - New: Support for endpoint fields (swagger parameters). WIP. Closes #5.
 
