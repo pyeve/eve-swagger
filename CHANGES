@@ -14,11 +14,11 @@ Not released  yet.
 - Fix: float type are not properly defined. Closes #13.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
+- New: Ability to include description fields. Just add a `description` field
+  in the schema definitions in `settings.py` (Stratos Gerakakis). 
 - New: Enable additional documentation to be injected at runtime (otibsa).
 - New: Add tox and build server configuration (Peter Bittner). Addresses #8.
 - New: Support for endpoint fields (swagger parameters). WIP. Closes #5.
-- New: Ability to include 'description' fields. Just add a 'description' field
-  in the schema definitions in `settings.py`
 
 Version 0.0.4
 ~~~~~~~~~~~~~
