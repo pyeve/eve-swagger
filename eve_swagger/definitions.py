@@ -16,6 +16,8 @@ def definitions():
     for rd in app.config['DOMAIN'].values():
         title = rd['item_title']
         definitions[title] = _object(rd['schema'])
+        if 'description' in rd:
+            definitions[title]['description'] = rd['description']
 
     return definitions
 
