@@ -64,20 +64,24 @@ Description fields on the swagger docs
 --------------------------------------
 
 If you would like to include description fields to your swagger docs you can
-include a description field in your schema validations in your `settings.py`
+include a description field in your schema validations in your `settings.py`.
+This can be done per field as well as on the resource-level.
 
 As an example:
 
 .. code-block:: python
 
-   ...
-    'userName': {
-        'description': 'The username of the logged in user.',
-        'type': 'string',
-        'minlength': 1,
-        'maxlength': 256,
-        'required': True
-    },
+    ...
+    'description': 'Description of the user resource',
+    'schema': {
+        'userName': {
+            'description': 'The username of the logged in user.',
+            'type': 'string',
+            'minlength': 1,
+            'maxlength': 256,
+            'required': True
+        },
+    }
     ...
     
 **NOTE**: If you do use that feature make sure that the `TRANSPARENT_SCHEMA_RULES`
