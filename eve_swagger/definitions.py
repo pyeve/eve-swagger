@@ -27,7 +27,7 @@ def _object(schema):
         if rules.get('required') is True:
             required.append(field)
 
-        props[field] = _type_and_format(rules)
+        props[field] = _field_props(rules)
 
     field_def = {}
     field_def['type'] = 'object'
@@ -37,7 +37,7 @@ def _object(schema):
     return field_def
 
 
-def _type_and_format(rules):
+def _field_props(rules):
     resp = {}
     map = {
         'dict': ('object',),
@@ -54,6 +54,32 @@ def _type_and_format(rules):
     if 'description' in rules:
         resp['description'] = rules['description']
 
+    if 'allowed' in rules:
+        resp['enum'] = rules['allowed']
+
+    if 'default' in rules:
+        resp['default'] = rules['default']
+
+    if 'minlength' in rules:
+        if eve_type == 'string':
+            resp['minLength'] = rules['minlength']
+        elif eve_type == 'list':
+            resp['minItems'] = rules['minlength']
+
+    if 'maxlength' in rules:
+        if eve_type == 'string':
+            resp['maxLength'] = rules['maxlength']
+        elif eve_type == 'list':
+            resp['maxItems'] = rules['maxlength']
+
+    if 'min' in rules:
+        if eve_type in ['number', 'integer', 'float']:
+            resp['minimum'] = rules['min']
+
+    if 'max' in rules:
+        if eve_type in ['number', 'integer', 'float']:
+            resp['maximum'] = rules['max']
+
     type = map.get(eve_type, (eve_type,))
 
     resp['type'] = type[0]
@@ -64,7 +90,7 @@ def _type_and_format(rules):
     elif type[0] == 'array':
         type = 'array'
         if 'schema' in rules:
-            resp['items'] = _type_and_format(rules['schema'])
+            resp['items'] = _field_props(rules['schema'])
         else:
             # 'items' is mandatory for swagger, we assume it's a list of
             # strings
