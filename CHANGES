@@ -16,6 +16,8 @@ Not released  yet.
   Fernando Gomes).
 - New: Ability to include description fields. Just add a `description` field
   in the schema definitions in `settings.py` (Stratos Gerakakis). 
+- New: Add support for more eve features: `allowed`, `default`, `minlength`,
+  `maxlength`, `min`, `max` (otibsa).
 - New: Enable additional documentation to be injected at runtime (otibsa).
 - New: Add tox and build server configuration (Peter Bittner). Addresses #8.
 - New: Support for endpoint fields (swagger parameters). WIP. Closes #5.
