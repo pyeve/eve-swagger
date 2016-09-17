@@ -153,12 +153,5 @@ def deleteitem_response(rd, item_id):
 
 
 def id_parameter(item_id, rd):
-    return OrderedDict([
-        ('in', 'path'),
-        ('name', item_id),
-        ('required', True),
-        ('description', 'ID of the %s' %
-         rd['item_title']),
-        ('type', 'string'),
-        ('format', 'objectid')
-    ])
+    return {'$ref': '#/parameters/{}_{}'.format(rd['item_title'],
+                                                rd['item_lookup_field'])}
