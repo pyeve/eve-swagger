@@ -88,6 +88,23 @@ As an example:
 in your `settings.py` is also turned ON, otherwise you will get complains from the
 Cerberus library about "unknown field 'description' for field [yourFieldName]"
 
+Disabling the documentation of a resource
+-----------------------------------------
+
+You can disable the documentation of a specific resource by adding a `disable_documentation` field
+to the resource definition in `settings.py`. This means that the resource will not show up in
+the `paths` or `definitions` sections of the swagger docs.
+
+.. code-block:: python
+
+    ...
+    'person': {
+        'item_title': 'person',
+        'disable_documentation': True,
+        'schema': {...}
+    }
+    ...
+
 Copyright
 ---------
 Eve-Swagger is an open source project by `Nicola Iarocci`_.

@@ -17,6 +17,8 @@ from flask import current_app as app
 def paths():
     paths = OrderedDict()
     for rd in app.config['DOMAIN'].values():
+        if rd.get('disable_documentation'):
+            continue
         methods = rd['resource_methods']
         if methods:
             url = '/%s' % rd['url']

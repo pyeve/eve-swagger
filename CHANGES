@@ -14,8 +14,10 @@ Not released  yet.
 - Fix: float type are not properly defined. Closes #13.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
-- New: Ability to include description fields. Just add a `description` field
-  in the schema definitions in `settings.py` (Stratos Gerakakis). 
+- New: Option to disable resource documentation via `disable_documentation` in
+  `settings.py` (otibsa).
+- New: Ability to include description fields. Just add a `description` field in
+  the schema definitions in `settings.py` (Stratos Gerakakis). 
 - New: Add support for more eve features: `allowed`, `default`, `minlength`,
   `maxlength`, `min`, `max` (otibsa).
 - New: Enable additional documentation to be injected at runtime (otibsa).

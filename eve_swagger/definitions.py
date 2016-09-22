@@ -14,6 +14,8 @@ from flask import current_app as app
 def definitions():
     definitions = OrderedDict()
     for rd in app.config['DOMAIN'].values():
+        if rd.get('disable_documentation'):
+            continue
         title = rd['item_title']
         definitions[title] = _object(rd['schema'])
         if 'description' in rd:
