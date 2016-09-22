@@ -67,7 +67,8 @@ def produces():
 def parameters():
     parameters = OrderedDict()
     for (resource_name, rd) in app.config['DOMAIN'].items():
-        if resource_name.endswith('_versions'):
+        if (resource_name.endswith('_versions')
+                or rd.get('disable_documentation')):
             continue
 
         title = rd['item_title']
