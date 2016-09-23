@@ -75,6 +75,22 @@ def parameters():
         lookup_field = rd['item_lookup_field']
         eve_type = rd['schema'][lookup_field]['type']
         descr = rd['schema'][lookup_field].get('description') or ''
+        if 'data_relation' in rd['schema'][lookup_field]:
+            # the lookup field is a copy of another field
+            dr = rd['schema'][lookup_field]['data_relation']
+
+            # resource definition of the data relation source
+            source_rd = app.config['DOMAIN'][dr['resource']]
+
+            # schema of the data relation source field
+            source_def = source_rd['schema'][dr['field']]
+
+            # key in #/definitions/...
+            source_def_name = source_rd['item_title']+'_'+dr['field']
+
+            # copy description if necessary
+            descr = descr or source_def.get('description')
+            descr = descr + ' (links to {})'.format(source_def_name)
 
         p = OrderedDict()
         p['in'] = 'path'
