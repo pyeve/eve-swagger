@@ -65,7 +65,36 @@ def produces():
 
 
 def parameters():
-    pass
+    parameters = OrderedDict()
+    for (resource_name, rd) in app.config['DOMAIN'].items():
+        if (resource_name.endswith('_versions')
+                or rd.get('disable_documentation')):
+            continue
+
+        title = rd['item_title']
+        lookup_field = rd['item_lookup_field']
+        eve_type = rd['schema'][lookup_field]['type']
+        descr = rd['schema'][lookup_field].get('description') or ''
+
+        p = OrderedDict()
+        p['in'] = 'path'
+        p['name'] = title.lower() + 'Id'
+        p['required'] = True
+        p['description'] = descr
+        p['type'] = eve_type
+        if eve_type == 'objectid':
+            p['type'] = 'string'
+            p['format'] = 'objectid'
+        elif eve_type == 'datetime':
+            p['type'] = 'string'
+            p['format'] = 'date-time'
+        elif eve_type == 'float':
+            p['type'] = 'number'
+            p['format'] = 'float'
+
+        parameters[title+'_'+lookup_field] = p
+
+    return parameters
 
 
 def responses():

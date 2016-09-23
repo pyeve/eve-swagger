@@ -28,7 +28,7 @@ def paths():
         if methods:
             item_id = '%sId' % rd['item_title'].lower()
             url = '/%s/{%s}' % (rd['url'], item_id)
-            paths[url] = _item(rd, methods, item_id)
+            paths[url] = _item(rd, methods)
     return paths
 
 
@@ -43,16 +43,16 @@ def _resource(rd, methods):
     return item
 
 
-def _item(rd, methods, item_id):
+def _item(rd, methods):
     item = OrderedDict()
     if 'GET' in methods:
-        item['get'] = getitem_response(rd, item_id)
+        item['get'] = getitem_response(rd)
     if 'PUT' in methods:
-        item['put'] = put_response(rd, item_id)
+        item['put'] = put_response(rd)
     if 'PATCH' in methods:
-        item['patch'] = patch_response(rd, item_id)
+        item['patch'] = patch_response(rd)
     if 'DELETE' in methods:
-        item['delete'] = deleteitem_response(rd, item_id)
+        item['delete'] = deleteitem_response(rd)
     return item
 
 
@@ -98,7 +98,7 @@ def delete_response(rd):
     ])
 
 
-def getitem_response(rd, item_id):
+def getitem_response(rd):
     title = rd['item_title']
     return OrderedDict([
         ('summary', 'Retrieves a %s document' % title),
@@ -109,11 +109,11 @@ def getitem_response(rd, item_id):
             },
 
         }),
-        ('parameters', [id_parameter(item_id, rd)])
+        ('parameters', [id_parameter(rd)])
     ])
 
 
-def put_response(rd, item_id):
+def put_response(rd):
     title = rd['item_title']
     return OrderedDict([
         ('summary', 'Replaces a %s document' % title),
@@ -122,11 +122,11 @@ def put_response(rd, item_id):
                 'description': '%s document replaced successfully' % title
             }
         }),
-        ('parameters', [id_parameter(item_id, rd), get_parameters(rd)])
+        ('parameters', [id_parameter(rd), get_parameters(rd)])
     ])
 
 
-def patch_response(rd, item_id):
+def patch_response(rd):
     title = rd['item_title']
     return OrderedDict([
         ('summary', 'Updates a %s document' % title),
@@ -135,11 +135,11 @@ def patch_response(rd, item_id):
                 'description': '%s document updated successfully' % title
             }
         }),
-        ('parameters', [id_parameter(item_id, rd), get_parameters(rd)])
+        ('parameters', [id_parameter(rd), get_parameters(rd)])
     ])
 
 
-def deleteitem_response(rd, item_id):
+def deleteitem_response(rd):
     title = rd['item_title']
     return OrderedDict([
         ('summary', 'Deletes a %s document' % title),
@@ -148,17 +148,10 @@ def deleteitem_response(rd, item_id):
                 'description': '%s document deleted successfully' % title
             }
         }),
-        ('parameters', [id_parameter(item_id, rd)])
+        ('parameters', [id_parameter(rd)])
     ])
 
 
-def id_parameter(item_id, rd):
-    return OrderedDict([
-        ('in', 'path'),
-        ('name', item_id),
-        ('required', True),
-        ('description', 'ID of the %s' %
-         rd['item_title']),
-        ('type', 'string'),
-        ('format', 'objectid')
-    ])
+def id_parameter(rd):
+    return {'$ref': '#/parameters/{}_{}'.format(rd['item_title'],
+                                                rd['item_lookup_field'])}
