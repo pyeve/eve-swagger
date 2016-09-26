@@ -17,6 +17,7 @@ Not released  yet.
 - New: Move the path parameters (`/people/{personId}`) to their own section of
   the swagger doc. That cleans up the parameters entries in the paths sections
   by referencing the parameters (otibsa).
+- New: Support for data relations (otibsa).
 - New: Option to disable resource documentation via `disable_documentation` in
   `settings.py` (otibsa).
 - New: Ability to include description fields. Just add a `description` field in
