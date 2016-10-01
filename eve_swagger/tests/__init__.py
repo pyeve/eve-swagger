@@ -53,7 +53,7 @@ class TestBase(unittest.TestCase):
 
     def parse_response(self, r):
         try:
-            v = json.loads(r.get_data())
-        except json.JSONDecodeError:
+            v = json.loads(r.get_data().decode('utf-8'))
+        except ValueError:
             v = None
         return v
