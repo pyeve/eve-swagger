@@ -6,7 +6,7 @@ MONGO_DBNAME = 'eve_swagger_test'
 
 TRANSPARENT_SCHEMA_RULES = True
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
-ITEM_METHODS= ['GET', 'PATCH', 'PUT', 'DELETE']
+ITEM_METHODS = ['GET', 'PATCH', 'PUT', 'DELETE']
 
 DOMAIN = {
     'people': {

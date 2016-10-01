@@ -7,6 +7,7 @@ if __name__ == '__main__':
 
 from eve_swagger.tests import TestBase
 
+
 class TestFoobar(TestBase):
     def test_doc_is_dict(self):
         doc = self.swagger_doc
@@ -26,9 +27,10 @@ class TestFoobar(TestBase):
 
         self.assertIn('paths', doc)
         self.assertIn('/'+self.domain['people']['url'], doc['paths'])
-        self.assertIn('/%s/{%sId}' % (self.domain['people']['url'],
-                                      self.domain['people']['item_title'].lower()),
-                      doc['paths'])
+        self.assertIn(
+            '/%s/{%sId}' % (self.domain['people']['url'],
+                            self.domain['people']['item_title'].lower()),
+            doc['paths'])
 
     def test_resource_description(self):
         pass

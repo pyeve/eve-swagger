@@ -8,6 +8,7 @@ from flask_pymongo import MongoClient
 from eve_swagger.tests.test_settings import MONGO_HOST, MONGO_PORT, \
     MONGO_USERNAME, MONGO_PASSWORD, MONGO_DBNAME
 
+
 class TestBase(unittest.TestCase):
     def setUp(self, settings=None):
         self.this_directory = os.path.dirname(os.path.realpath(__file__))
