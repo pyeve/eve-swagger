@@ -1,10 +1,3 @@
-if __name__ == '__main__':
-    import sys
-    import os
-    import unittest
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),
-                                                 '..', '..')))
-
 from eve_swagger.tests import TestBase
 
 
@@ -34,7 +27,3 @@ class TestFoobar(TestBase):
 
     def test_resource_description(self):
         pass
-
-
-if __name__ == '__main__':
-    unittest.main()
