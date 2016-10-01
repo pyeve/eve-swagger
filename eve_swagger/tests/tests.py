@@ -18,9 +18,9 @@ class TestFoobar(TestBase):
 
         self.assertIn('info', doc)
         self.assertIn('title', doc['info'])
-        self.assertIsInstance(doc['info']['title'], basestring)
+        self.assertTrue(isinstance(doc['info']['title'], u''.__class__))
         self.assertIn('version', doc['info'])
-        self.assertIsInstance(doc['info']['version'], basestring)
+        self.assertTrue(isinstance(doc['info']['version'], u''.__class__))
 
     def test_paths(self):
         doc = self.swagger_doc
