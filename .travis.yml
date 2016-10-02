@@ -20,3 +20,9 @@ env:
   - TOX_ENV=flake8
 script:
   - tox -e $TOX_ENV
+services:
+  - mongodb
+before-script:
+  # Timer: https://docs.travis-ci.com/user/database-setup/#MongoDB-does-not-immediately-accept-connections
+  - sleep 15
+  - mongo eve_swagger_test --eval 'db.addUser("test_user", "test_pw");'
