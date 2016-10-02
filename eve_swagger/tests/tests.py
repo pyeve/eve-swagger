@@ -124,7 +124,7 @@ class TestEveSwagger(TestBase):
 
         self.assertIn('description', par)
         self.assertEqual(
-            'foobar copied_field (links to {}_job)'.format(people_it),
+            'foobar copied_field (links to {0}_job)'.format(people_it),
             par['description'])
 
     def test_data_relation_copied_description(self):
@@ -136,7 +136,7 @@ class TestEveSwagger(TestBase):
 
         self.assertIn('description', par)
         self.assertEqual(
-            'the job of the person (links to {}_job)'.format(people_it),
+            'the job of the person (links to {0}_job)'.format(people_it),
             par['description'])
 
 
