@@ -7,11 +7,11 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from collections import OrderedDict
 from eve.utils import api_prefix
 from flask import request, current_app as app
 
 import eve_swagger
+from eve_swagger import OrderedDict
 from .validation import validate_info
 
 

@@ -7,9 +7,10 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from collections import OrderedDict, Mapping
+from collections import Mapping
 from flask import Blueprint, jsonify
 
+from eve_swagger import OrderedDict
 from .definitions import definitions
 from .objects import info, host, base_path, schemes, consumes, produces, \
     parameters, responses, security_definitions, security, tags, \

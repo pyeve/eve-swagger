@@ -9,8 +9,10 @@
 """
 from textwrap import dedent
 
-from collections import OrderedDict
 from flask import current_app as app
+
+from eve_swagger import OrderedDict
+
 
 # TODO consider adding at least a 'schema' property to response objects
 # TODO take auth into consideration
