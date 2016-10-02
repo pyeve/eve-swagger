@@ -7,7 +7,7 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from collections import OrderedDict
+from eve_swagger import OrderedDict
 from flask import current_app as app
 
 # TODO consider adding at least a 'schema' property to response objects
@@ -153,5 +153,5 @@ def deleteitem_response(rd):
 
 
 def id_parameter(rd):
-    return {'$ref': '#/parameters/{}_{}'.format(rd['item_title'],
-                                                rd['item_lookup_field'])}
+    return {'$ref': '#/parameters/{0}_{1}'.format(rd['item_title'],
+                                                  rd['item_lookup_field'])}
