@@ -7,7 +7,7 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from collections import OrderedDict
+from eve_swagger import OrderedDict
 from flask import current_app as app
 
 # TODO consider adding at least a 'schema' property to response objects
