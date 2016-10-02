@@ -90,7 +90,7 @@ def parameters():
 
             # copy description if necessary
             descr = descr or source_def.get('description')
-            descr = descr + ' (links to {})'.format(source_def_name)
+            descr = descr + ' (links to {0})'.format(source_def_name)
 
         p = OrderedDict()
         p['in'] = 'path'
