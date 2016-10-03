@@ -105,6 +105,44 @@ the `paths` or `definitions` sections of the swagger docs.
     }
     ...
 
+Enabling the documentation of Eve event hooks
+---------------------------------------------
+
+By setting ``app.config['ENABLE_HOOK_DESCRIPTION']`` to ``True`` you can enable the description of all Eve event hooks.
+This is done by showing the docstrings of the callback functions in the swagger docs under the appropriate ``paths``.
+
+.. code-block:: python
+
+    def foo(request, lookup):
+        """ Do something before GETting all the people """
+        pass
+    def bar(response):
+        """ Do something when you've fetched the database entries """
+        pass
+    ...
+    app.config['ENABLE_HOOK_DESCRIPTION'] = True
+    ...
+    app.on_pre_GET_people += foo
+    app.on_fetched_resource_people += bar
+
+The swagger docs will now look like this:
+
+.. code-block:: python
+
+    "paths": {
+        "/people": {
+            "get": {
+                ...,
+                "description": "**Hooks**:\n* `on_pre_GET_people`:\n\n  * `foo`:\n\n    Do something before GETting all the people\n\n\n* `on_fetched_resource_people`:\n\n  * `bar`:\n\n    Do something when you've fetched the database entries\n\n"
+            }
+        }
+    }
+
+Which will be rendered by Swagger like this:
+
+.. image:: resources/hook_description.png
+
+
 Copyright
 ---------
 Eve-Swagger is an open source project by `Nicola Iarocci`_.

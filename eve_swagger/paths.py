@@ -7,6 +7,8 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+from textwrap import dedent
+
 from collections import OrderedDict
 from flask import current_app as app
 
@@ -16,35 +18,47 @@ from flask import current_app as app
 
 def paths():
     paths = OrderedDict()
-    for rd in app.config['DOMAIN'].values():
-        if rd.get('disable_documentation'):
+    for resource, rd in app.config['DOMAIN'].items():
+        if (rd.get('disable_documentation')
+                or resource.endswith('_versions')):
             continue
+
         methods = rd['resource_methods']
         if methods:
             url = '/%s' % rd['url']
-            paths[url] = _resource(rd, methods)
+            paths[url] = _resource(resource, rd, methods)
 
         methods = rd['item_methods']
         if methods:
             item_id = '%sId' % rd['item_title'].lower()
             url = '/%s/{%s}' % (rd['url'], item_id)
-            paths[url] = _item(rd, methods)
+            paths[url] = _item(resource, rd, methods)
+
     return paths
 
 
-def _resource(rd, methods):
+def _resource(resource, rd, methods):
     item = OrderedDict()
+    describe_hooks = app.config.get('ENABLE_HOOK_DESCRIPTION', False)
     if 'GET' in methods:
         item['get'] = get_response(rd)
     if 'POST' in methods:
         item['post'] = post_response(rd)
     if 'DELETE' in methods:
         item['delete'] = delete_response(rd)
+
+    if describe_hooks:
+        for m in methods:
+            hook_desc = _hook_descriptions(resource, m)
+            if hook_desc != '':
+                item[m.lower()]['description'] = '**Hooks**:'+hook_desc
+
     return item
 
 
-def _item(rd, methods):
+def _item(resource, rd, methods):
     item = OrderedDict()
+    describe_hooks = app.config.get('ENABLE_HOOK_DESCRIPTION', False)
     if 'GET' in methods:
         item['get'] = getitem_response(rd)
     if 'PUT' in methods:
@@ -53,6 +67,13 @@ def _item(rd, methods):
         item['patch'] = patch_response(rd)
     if 'DELETE' in methods:
         item['delete'] = deleteitem_response(rd)
+
+    if describe_hooks:
+        for m in methods:
+            hook_desc = _hook_descriptions(resource, m, item=True)
+            if hook_desc != '':
+                item[m.lower()]['description'] = '**Hooks**:'+hook_desc
+
     return item
 
 
@@ -155,3 +176,79 @@ def deleteitem_response(rd):
 def id_parameter(rd):
     return {'$ref': '#/parameters/{}_{}'.format(rd['item_title'],
                                                 rd['item_lookup_field'])}
+
+
+def _hook_descriptions(resource, method, item=False):
+    if method == 'GET':
+        if item is True:
+            events = ['on_pre_GET',
+                      'on_pre_GET_'+resource,
+                      'on_fetched_item',
+                      'on_fetched_item_'+resource,
+                      'on_post_GET',
+                      'on_post_GET_'+resource]
+        else:
+            events = ['on_pre_GET',
+                      'on_pre_GET_'+resource,
+                      'on_fetched_resource',
+                      'on_fetched_resource_'+resource,
+                      'on_post_GET',
+                      'on_post_GET_'+resource]
+
+    if method == 'POST':
+        events = ['on_pre_POST',
+                  'on_pre_POST_'+resource,
+                  'on_insert',
+                  'on_insert_'+resource,
+                  'on_inserted',
+                  'on_inserted_'+resource,
+                  'on_post_POST',
+                  'on_post_POST_'+resource]
+    if method == 'PUT':
+        events = ['on_pre_PUT',
+                  'on_pre_PUT_'+resource,
+                  'on_replace',
+                  'on_replace_'+resource,
+                  'on_replaced',
+                  'on_replaced_'+resource,
+                  'on_post_PUT',
+                  'on_post_PUT_'+resource]
+    if method == 'PATCH':
+        events = ['on_pre_PATCH',
+                  'on_pre_PATCH_'+resource,
+                  'on_update',
+                  'on_update_'+resource,
+                  'on_updated',
+                  'on_updated_'+resource,
+                  'on_post_PATCH',
+                  'on_post_PATCH_'+resource]
+    if method == 'DELETE':
+        if item is True:
+            events = ['on_pre_DELETE',
+                      'on_pre_DELETE_'+resource,
+                      'on_delete_item',
+                      'on_delete_item_'+resource,
+                      'on_deleted_item',
+                      'on_deleted_item_'+resource,
+                      'on_post_DELETE',
+                      'on_post_DELETE_'+resource]
+        else:
+            events = ['on_pre_DELETE',
+                      'on_pre_DELETE_'+resource,
+                      'on_delete_resource',
+                      'on_delete_resource_'+resource,
+                      'on_deleted_resource',
+                      'on_deleted_resource_'+resource,
+                      'on_post_DELETE',
+                      'on_post_DELETE_'+resource]
+
+    res = ''
+    for e in events:
+        callbacks = getattr(app, e)
+        if len(callbacks) > 0:
+            res += '\n* `'+e+'`:\n\n'
+        for cb in callbacks:
+            s = '\n    '
+            s += '\n    '.join(dedent(cb.__doc__).strip().split('\n'))
+            res += '  * `'+cb.__name__+'`:\n'+s+'\n\n'
+    return res
