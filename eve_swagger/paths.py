@@ -176,8 +176,8 @@ def deleteitem_response(rd):
 
 
 def id_parameter(rd):
-    return {'$ref': '#/parameters/{}_{}'.format(rd['item_title'],
-                                                rd['item_lookup_field'])}
+    return {'$ref': '#/parameters/{0}_{1}'.format(rd['item_title'],
+                                                  rd['item_lookup_field'])}
 
 
 def _hook_descriptions(resource, method, item=False):
