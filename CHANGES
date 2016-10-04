@@ -14,6 +14,9 @@ Not released  yet.
 - Fix: float type are not properly defined. Closes #13.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
+
+- New: Python 2.6 compatibility (otibsa).
+- New: Add a proper test suite. Closes #8 (otibsa).
 - New: Move the path parameters (`/people/{personId}`) to their own section of
   the swagger doc. That cleans up the parameters entries in the paths sections
   by referencing the parameters (otibsa).

@@ -7,8 +7,9 @@
     :copyright: (c) 2016 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from collections import OrderedDict
 from flask import current_app as app
+
+from eve_swagger import OrderedDict
 
 
 def definitions():
@@ -46,7 +47,7 @@ def _object(rd, dr_sources):
             # replace None in dr_sources with the field properties
             dr_sources[def_name] = OrderedDict(props[field])
 
-            props[field] = {'$ref': '#/definitions/{}'.format(def_name)}
+            props[field] = {'$ref': '#/definitions/{0}'.format(def_name)}
 
         if 'data_relation' in rules:
             # the current field is a copy of another field
@@ -56,7 +57,9 @@ def _object(rd, dr_sources):
                 continue
             title = app.config['DOMAIN'][dr['resource']]['item_title']
             source_def_name = title+'_'+dr['field']
-            props[field] = {'$ref': '#/definitions/{}'.format(source_def_name)}
+            props[field] = {
+                '$ref': '#/definitions/{0}'.format(source_def_name)
+            }
 
     field_def = {}
     field_def['type'] = 'object'

@@ -9,8 +9,10 @@
 """
 from textwrap import dedent
 
-from collections import OrderedDict
 from flask import current_app as app
+
+from eve_swagger import OrderedDict
+
 
 # TODO consider adding at least a 'schema' property to response objects
 # TODO take auth into consideration
@@ -174,8 +176,8 @@ def deleteitem_response(rd):
 
 
 def id_parameter(rd):
-    return {'$ref': '#/parameters/{}_{}'.format(rd['item_title'],
-                                                rd['item_lookup_field'])}
+    return {'$ref': '#/parameters/{0}_{1}'.format(rd['item_title'],
+                                                  rd['item_lookup_field'])}
 
 
 def _hook_descriptions(resource, method, item=False):
