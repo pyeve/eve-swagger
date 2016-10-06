@@ -126,7 +126,15 @@ def security():
 
 
 def tags():
-    pass
+    tags = []
+    for rd in app.config['DOMAIN'].values():
+        tagInfo = {"name": rd['item_title']}
+
+        if 'description' in rd:
+            tagInfo['description'] = rd['description']
+
+        tags.append(tagInfo)
+    return tags
 
 
 def external_docs():
