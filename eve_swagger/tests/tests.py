@@ -139,6 +139,44 @@ class TestEveSwagger(TestBase):
             'the job of the person (links to {0}_job)'.format(people_it),
             par['description'])
 
+    def test_cors_without_origin(self):
+        self.app.config['X_DOMAINS'] = ['http://example.com']
+        self.app.config['X_HEADERS'] = ['Origin', 'X-Requested-With',
+                                        'Content-Type', 'Accept']
+        self.app.config['X_MAX_AGE'] = 2000
+        r = self.test_client.get('/api-docs')
+
+        self.assertEqual(r.status_code, 200)
+        self.assertNotIn('Access-Control-Allow-Origin', r.headers)
+        self.assertNotIn('Access-Control-Allow-Headers', r.headers)
+        self.assertNotIn('Access-Control-Allow-Methods', r.headers)
+        self.assertNotIn('Access-Control-Max-Age', r.headers)
+        self.assertNotIn('Access-Control-Expose-Headers', r.headers)
+
+    def test_cors_with_origin(self):
+        self.app.config['X_DOMAINS'] = 'http://example.com'
+        self.app.config['X_HEADERS'] = ['Origin', 'X-Requested-With',
+                                        'Content-Type', 'Accept']
+        self.app.config['X_MAX_AGE'] = 2000
+        r = self.test_client.get('/api-docs',
+                                 headers={'Origin': 'http://example.com'})
+
+        self.assertEqual(r.status_code, 200)
+        self.assertIn('Access-Control-Allow-Origin', r.headers)
+        self.assertEqual(r.headers['Access-Control-Allow-Origin'],
+                         'http://example.com')
+        self.assertIn('Access-Control-Allow-Headers', r.headers)
+        self.assertEqual(
+            set(r.headers['Access-Control-Allow-Headers'].split(', ')),
+            set(['Origin', 'X-Requested-With', 'Content-Type', 'Accept']))
+        self.assertIn('Access-Control-Allow-Methods', r.headers)
+        self.assertEqual(
+            set(r.headers['Access-Control-Allow-Methods'].split(', ')),
+            set(['HEAD', 'OPTIONS', 'GET']))
+        self.assertIn('Access-Control-Max-Age', r.headers)
+        self.assertEqual(r.headers['Access-Control-Max-Age'],
+                         '2000')
+
 
 if __name__ == '__main__':
     unittest.main()
