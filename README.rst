@@ -48,10 +48,22 @@ Usage
     if __name__ == '__main__':
         app.run()
 
-When API is up and running, visit the ``/api-docs`` endpoint. The resulting
-JSON can then be used with swagger tooling, like the Swagger Editor:
+When the API is up and running, visit the ``/api-docs`` endpoint. The resulting
+JSON can then be used with swagger tooling, like the Swagger UI or Swagger Editor:
 
 .. image:: resources/swagger_editor.png
+
+If you get the error "*Can't read from server. It may not have the appropriate
+access-control-origin settings*" from Swagger UI, you might want to enable CORS
+support with the ``X_DOMAINS`` and ``X_HEADERS`` configuration in your Eve
+``settings.py``:
+
+.. code-block:: python
+
+    X_DOMAINS = 'http://localhost:8000'  # the domain where Swagger UI is running
+
+For more information check the CORS documentation of `Swagger UI`_ and `Swagger
+Editor`_.
 
 Installation
 ------------
@@ -64,7 +76,7 @@ Description fields on the swagger docs
 --------------------------------------
 
 If you would like to include description fields to your swagger docs you can
-include a description field in your schema validations in your `settings.py`.
+include a description field in your schema validations in your ``settings.py``.
 This can be done per field as well as on the resource-level.
 
 As an example:
@@ -84,16 +96,16 @@ As an example:
     }
     ...
     
-**NOTE**: If you do use that feature make sure that the `TRANSPARENT_SCHEMA_RULES`
-in your `settings.py` is also turned ON, otherwise you will get complains from the
+**NOTE**: If you do use that feature make sure that the ``TRANSPARENT_SCHEMA_RULES``
+in your ``settings.py`` is also turned ON, otherwise you will get complains from the
 Cerberus library about "unknown field 'description' for field [yourFieldName]"
 
 Disabling the documentation of a resource
 -----------------------------------------
 
-You can disable the documentation of a specific resource by adding a `disable_documentation` field
-to the resource definition in `settings.py`. This means that the resource will not show up in
-the `paths` or `definitions` sections of the swagger docs.
+You can disable the documentation of a specific resource by adding a ``disable_documentation`` field
+to the resource definition in ``settings.py``. This means that the resource will not show up in
+the ``paths`` or ``definitions`` sections of the swagger docs.
 
 .. code-block:: python
 
@@ -166,3 +178,5 @@ See the original LICENSE_ for more informations.
 .. _`popular request`: https://github.com/nicolaiarocci/eve/issues/574
 .. _LICENSE: https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE
 .. _`Nicola Iarocci`: http://nicolaiarocci.com
+.. _`Swagger UI`: https://github.com/swagger-api/swagger-ui#enabling-cors
+.. _`Swagger Editor`: https://github.com/swagger-api/swagger-editor/blob/master/docs/cors.md
