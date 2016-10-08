@@ -60,7 +60,10 @@ support with the ``X_DOMAINS`` and ``X_HEADERS`` configuration in your Eve
 
 .. code-block:: python
 
-    X_DOMAINS = 'http://localhost:8000'  # the domain where Swagger UI is running
+    X_DOMAINS = ['http://localhost:8000',  # The domain where Swagger UI is running
+                 'http://editor.swagger.io',
+                 'http://petstore.swagger.io']
+    X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
 
 For more information check the CORS documentation of `Swagger UI`_ and `Swagger
 Editor`_.
