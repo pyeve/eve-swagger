@@ -139,6 +139,30 @@ class TestEveSwagger(TestBase):
             'the job of the person (links to {0}_job)'.format(people_it),
             par['description'])
 
+    def test_header_parameters(self):
+        doc = self.swagger_doc
+        url = self.domain['people']['url']
+        item_title = self.domain['people']['item_title']
+        url = '/%s/{%sId}' % (url, item_title.lower())
+
+        header_parameters = []
+        # assume that header parameters are equal for PUT, PATCH, and DELETE
+        for method in ['put', 'patch', 'delete']:
+            for p in doc['paths'][url][method]['parameters']:
+                if 'in' not in p:
+                    continue
+                if p['in'] == 'header':
+                    if method in ['patch', 'delete']:
+                        # already added in 'put'
+                        self.assertIn(p, header_parameters)
+                    else:
+                        header_parameters += [p]
+
+        self.assertTrue(len(header_parameters) == 1)
+        h = header_parameters[0]
+        self.assertIn('name', h)
+        self.assertEqual(h['name'], 'If-Match')
+
     def test_cors_without_origin(self):
         self.app.config['X_DOMAINS'] = ['http://example.com']
         self.app.config['X_HEADERS'] = ['Origin', 'X-Requested-With',
