@@ -145,7 +145,9 @@ def put_response(rd):
                 'description': '%s document replaced successfully' % title
             }
         }),
-        ('parameters', [id_parameter(rd), get_parameters(rd)])
+        ('parameters', [id_parameter(rd),
+                        get_parameters(rd),
+                        header_parameters()])
     ])
 
 
@@ -158,7 +160,9 @@ def patch_response(rd):
                 'description': '%s document updated successfully' % title
             }
         }),
-        ('parameters', [id_parameter(rd), get_parameters(rd)])
+        ('parameters', [id_parameter(rd),
+                        get_parameters(rd),
+                        header_parameters()])
     ])
 
 
@@ -171,13 +175,23 @@ def deleteitem_response(rd):
                 'description': '%s document deleted successfully' % title
             }
         }),
-        ('parameters', [id_parameter(rd)])
+        ('parameters', [id_parameter(rd), header_parameters()])
     ])
 
 
 def id_parameter(rd):
     return {'$ref': '#/parameters/{0}_{1}'.format(rd['item_title'],
                                                   rd['item_lookup_field'])}
+
+
+def header_parameters():
+    r = OrderedDict()
+    r['in'] = 'header'
+    r['name'] = 'If-Match'
+    r['description'] = 'Current value of the _etag field'
+    r['required'] = True
+    r['type'] = 'string'
+    return r
 
 
 def _hook_descriptions(resource, method, item=False):
