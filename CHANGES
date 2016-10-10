@@ -15,6 +15,7 @@ Not released  yet.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
 
+- New: add CORS support (otibsa).
 - New: Python 2.6 compatibility (otibsa).
 - New: Add a proper test suite. Closes #8 (otibsa).
 - New: Move the path parameters (`/people/{personId}`) to their own section of

@@ -7,8 +7,11 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+import re
 from collections import Mapping
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, make_response, request, \
+    current_app as app
+from functools import wraps
 
 from eve_swagger import OrderedDict
 from .definitions import definitions
@@ -26,7 +29,60 @@ def add_documentation(doc):
     _nested_update(swagger.additional_documentation, doc)
 
 
+def _modify_response(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if request.method == 'OPTIONS':
+            resp = app.make_default_options_response()
+        else:
+            resp = make_response(f(*args, **kwargs))
+
+        # CORS
+        domains = app.config['X_DOMAINS']
+        headers = app.config['X_HEADERS']
+        max_age = app.config['X_MAX_AGE']
+        allow_credentials = app.config['X_ALLOW_CREDENTIALS']
+        expose_headers = app.config['X_EXPOSE_HEADERS']
+        origin = request.headers.get('Origin')
+        if origin and domains:
+            if isinstance(domains, str):
+                domains = [domains]
+
+            if headers is None:
+                headers = []
+            elif isinstance(headers, str):
+                headers = [headers]
+
+            if expose_headers is None:
+                expose_headers = []
+            elif isinstance(expose_headers, str):
+                expose_headers = [expose_headers]
+
+            allow_credentials = allow_credentials is True
+            methods = app.make_default_options_response().headers.get(
+                'allow', '')
+
+            h = resp.headers
+            if '*' in domains:
+                h['Access-Control-Allow-Origin'] = origin
+                h['Vary'] = 'Origin'
+            elif any(re.match(re.escape(domain), origin)
+                     for domain in domains):
+                h['Access-Control-Allow-Origin'] = origin
+            else:
+                h['Access-Control-Allow-Origin'] = ''
+
+            h['Access-Control-Allow-Headers'] = ', '.join(headers)
+            h['Access-Control-Expose-Headers'] = ', '.join(expose_headers)
+            h['Access-Control-Allow-Methods'] = methods
+            h['Access-Control-Max-Age'] = str(max_age)
+
+        return resp
+    return decorated
+
+
 @swagger.route('/api-docs')
+@_modify_response
 def index():
     def node(parent, key, value):
         if value:

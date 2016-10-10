@@ -139,6 +139,68 @@ class TestEveSwagger(TestBase):
             'the job of the person (links to {0}_job)'.format(people_it),
             par['description'])
 
+    def test_header_parameters(self):
+        doc = self.swagger_doc
+        url = self.domain['people']['url']
+        item_title = self.domain['people']['item_title']
+        url = '/%s/{%sId}' % (url, item_title.lower())
+
+        header_parameters = []
+        # assume that header parameters are equal for PUT, PATCH, and DELETE
+        for method in ['put', 'patch', 'delete']:
+            for p in doc['paths'][url][method]['parameters']:
+                if 'in' not in p:
+                    continue
+                if p['in'] == 'header':
+                    if method in ['patch', 'delete']:
+                        # already added in 'put'
+                        self.assertIn(p, header_parameters)
+                    else:
+                        header_parameters += [p]
+
+        self.assertTrue(len(header_parameters) == 1)
+        h = header_parameters[0]
+        self.assertIn('name', h)
+        self.assertEqual(h['name'], 'If-Match')
+
+    def test_cors_without_origin(self):
+        self.app.config['X_DOMAINS'] = ['http://example.com']
+        self.app.config['X_HEADERS'] = ['Origin', 'X-Requested-With',
+                                        'Content-Type', 'Accept']
+        self.app.config['X_MAX_AGE'] = 2000
+        r = self.test_client.get('/api-docs')
+
+        self.assertEqual(r.status_code, 200)
+        self.assertNotIn('Access-Control-Allow-Origin', r.headers)
+        self.assertNotIn('Access-Control-Allow-Headers', r.headers)
+        self.assertNotIn('Access-Control-Allow-Methods', r.headers)
+        self.assertNotIn('Access-Control-Max-Age', r.headers)
+        self.assertNotIn('Access-Control-Expose-Headers', r.headers)
+
+    def test_cors_with_origin(self):
+        self.app.config['X_DOMAINS'] = 'http://example.com'
+        self.app.config['X_HEADERS'] = ['Origin', 'X-Requested-With',
+                                        'Content-Type', 'Accept']
+        self.app.config['X_MAX_AGE'] = 2000
+        r = self.test_client.get('/api-docs',
+                                 headers={'Origin': 'http://example.com'})
+
+        self.assertEqual(r.status_code, 200)
+        self.assertIn('Access-Control-Allow-Origin', r.headers)
+        self.assertEqual(r.headers['Access-Control-Allow-Origin'],
+                         'http://example.com')
+        self.assertIn('Access-Control-Allow-Headers', r.headers)
+        self.assertEqual(
+            set(r.headers['Access-Control-Allow-Headers'].split(', ')),
+            set(['Origin', 'X-Requested-With', 'Content-Type', 'Accept']))
+        self.assertIn('Access-Control-Allow-Methods', r.headers)
+        self.assertEqual(
+            set(r.headers['Access-Control-Allow-Methods'].split(', ')),
+            set(['HEAD', 'OPTIONS', 'GET']))
+        self.assertIn('Access-Control-Max-Age', r.headers)
+        self.assertEqual(r.headers['Access-Control-Max-Age'],
+                         '2000')
+
 
 if __name__ == '__main__':
     unittest.main()
