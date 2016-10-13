@@ -53,7 +53,7 @@ def _resource(resource, rd, methods):
         for m in methods:
             hook_desc = _hook_descriptions(resource, m)
             if hook_desc != '':
-                item[m.lower()]['description'] = '**Hooks**:'+hook_desc
+                item[m.lower()]['description'] = '**Hooks**:' + hook_desc
 
     return item
 
@@ -74,7 +74,7 @@ def _item(resource, rd, methods):
         for m in methods:
             hook_desc = _hook_descriptions(resource, m, item=True)
             if hook_desc != '':
-                item[m.lower()]['description'] = '**Hooks**:'+hook_desc
+                item[m.lower()]['description'] = '**Hooks**:' + hook_desc
 
     return item
 
@@ -100,7 +100,8 @@ def get_response(rd):
             'description': 'An array of %s' % title,
             'schema': {
                 'type': 'array',
-                'items': get_ref_schema(rd)}}})
+                'items': get_ref_schema(rd)}}}),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -109,7 +110,8 @@ def post_response(rd):
         ('summary', 'Stores one or more %s' % rd['resource_title']),
         ('parameters', [get_parameters(rd)]),
         ('responses', {'200':
-                       {'description': 'operation has been successful'}})
+                       {'description': 'operation has been successful'}}),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -118,6 +120,7 @@ def delete_response(rd):
         ('summary', 'Deletes all %s' % rd['resource_title']),
         ('responses', {'200':
                        {'description': 'operation has been successful'}}),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -132,7 +135,8 @@ def getitem_response(rd):
             },
 
         }),
-        ('parameters', [id_parameter(rd)])
+        ('parameters', [id_parameter(rd)]),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -147,7 +151,8 @@ def put_response(rd):
         }),
         ('parameters', [id_parameter(rd),
                         get_parameters(rd),
-                        header_parameters()])
+                        header_parameters()]),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -162,7 +167,8 @@ def patch_response(rd):
         }),
         ('parameters', [id_parameter(rd),
                         get_parameters(rd),
-                        header_parameters()])
+                        header_parameters()]),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -175,7 +181,8 @@ def deleteitem_response(rd):
                 'description': '%s document deleted successfully' % title
             }
         }),
-        ('parameters', [id_parameter(rd), header_parameters()])
+        ('parameters', [id_parameter(rd), header_parameters()]),
+        ('tags', [rd['item_title']])
     ])
 
 
@@ -198,73 +205,73 @@ def _hook_descriptions(resource, method, item=False):
     if method == 'GET':
         if item is True:
             events = ['on_pre_GET',
-                      'on_pre_GET_'+resource,
+                      'on_pre_GET_' + resource,
                       'on_fetched_item',
-                      'on_fetched_item_'+resource,
+                      'on_fetched_item_' + resource,
                       'on_post_GET',
-                      'on_post_GET_'+resource]
+                      'on_post_GET_' + resource]
         else:
             events = ['on_pre_GET',
-                      'on_pre_GET_'+resource,
+                      'on_pre_GET_' + resource,
                       'on_fetched_resource',
-                      'on_fetched_resource_'+resource,
+                      'on_fetched_resource_' + resource,
                       'on_post_GET',
-                      'on_post_GET_'+resource]
+                      'on_post_GET_' + resource]
 
     if method == 'POST':
         events = ['on_pre_POST',
-                  'on_pre_POST_'+resource,
+                  'on_pre_POST_' + resource,
                   'on_insert',
-                  'on_insert_'+resource,
+                  'on_insert_' + resource,
                   'on_inserted',
-                  'on_inserted_'+resource,
+                  'on_inserted_' + resource,
                   'on_post_POST',
-                  'on_post_POST_'+resource]
+                  'on_post_POST_' + resource]
     if method == 'PUT':
         events = ['on_pre_PUT',
-                  'on_pre_PUT_'+resource,
+                  'on_pre_PUT_' + resource,
                   'on_replace',
-                  'on_replace_'+resource,
+                  'on_replace_' + resource,
                   'on_replaced',
-                  'on_replaced_'+resource,
+                  'on_replaced_' + resource,
                   'on_post_PUT',
-                  'on_post_PUT_'+resource]
+                  'on_post_PUT_' + resource]
     if method == 'PATCH':
         events = ['on_pre_PATCH',
-                  'on_pre_PATCH_'+resource,
+                  'on_pre_PATCH_' + resource,
                   'on_update',
-                  'on_update_'+resource,
+                  'on_update_' + resource,
                   'on_updated',
-                  'on_updated_'+resource,
+                  'on_updated_' + resource,
                   'on_post_PATCH',
-                  'on_post_PATCH_'+resource]
+                  'on_post_PATCH_' + resource]
     if method == 'DELETE':
         if item is True:
             events = ['on_pre_DELETE',
-                      'on_pre_DELETE_'+resource,
+                      'on_pre_DELETE_' + resource,
                       'on_delete_item',
-                      'on_delete_item_'+resource,
+                      'on_delete_item_' + resource,
                       'on_deleted_item',
-                      'on_deleted_item_'+resource,
+                      'on_deleted_item_' + resource,
                       'on_post_DELETE',
-                      'on_post_DELETE_'+resource]
+                      'on_post_DELETE_' + resource]
         else:
             events = ['on_pre_DELETE',
-                      'on_pre_DELETE_'+resource,
+                      'on_pre_DELETE_' + resource,
                       'on_delete_resource',
-                      'on_delete_resource_'+resource,
+                      'on_delete_resource_' + resource,
                       'on_deleted_resource',
-                      'on_deleted_resource_'+resource,
+                      'on_deleted_resource_' + resource,
                       'on_post_DELETE',
-                      'on_post_DELETE_'+resource]
+                      'on_post_DELETE_' + resource]
 
     res = ''
     for e in events:
         callbacks = getattr(app, e)
         if len(callbacks) > 0:
-            res += '\n* `'+e+'`:\n\n'
+            res += '\n* `' + e + '`:\n\n'
         for cb in callbacks:
             s = '\n    '
             s += '\n    '.join(dedent(cb.__doc__).strip().split('\n'))
-            res += '  * `'+cb.__name__+'`:\n'+s+'\n\n'
+            res += '  * `' + cb.__name__ + '`:\n' + s + '\n\n'
     return res
