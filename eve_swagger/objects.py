@@ -127,7 +127,11 @@ def security():
 
 def tags():
     tags = []
-    for rd in app.config['DOMAIN'].values():
+    for (resource_name, rd) in app.config['DOMAIN'].items():
+        if (resource_name.endswith('_versions')
+                or rd.get('disable_documentation')):
+            continue
+
         tagInfo = {"name": rd['item_title']}
 
         if 'description' in rd:
