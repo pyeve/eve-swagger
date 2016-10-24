@@ -201,6 +201,26 @@ class TestEveSwagger(TestBase):
         self.assertEqual(r.headers['Access-Control-Max-Age'],
                          '2000')
 
+    def test_tags(self):
+        doc = self.swagger_doc
+        item_title = self.domain['people']['item_title']
+
+        self.assertIn('tags', doc)
+        tag_names = [tag['name'] for tag in doc['tags']]
+        self.assertTrue(len([n for n in tag_names if n == item_title]) == 1)
+
+        url = '/' + self.domain['people']['url']
+        for m in ['get', 'post', 'delete']:
+            path_m = doc['paths'][url][m]
+            self.assertIn('tags', path_m)
+            self.assertIn(item_title, path_m['tags'])
+
+        url = '/%s/{%sId}' % (self.domain['people']['url'], item_title.lower())
+        for m in ['get', 'patch', 'put', 'delete']:
+            path_m = doc['paths'][url][m]
+            self.assertIn('tags', path_m)
+            self.assertIn(item_title, path_m['tags'])
+
 
 if __name__ == '__main__':
     unittest.main()
