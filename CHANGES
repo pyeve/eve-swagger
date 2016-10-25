@@ -9,9 +9,9 @@ In Development
 Version 0.0.5
 ~~~~~~~~~~~~~
 
-Not released  yet.
+Released on 25 October, 2016
 
-- Fix: float type are not properly defined. Closes #13.
+- Fix: float type are not p:Groperly defined. Closes #13.
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
 
