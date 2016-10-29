@@ -161,7 +161,7 @@ Which will be rendered by Swagger like this:
 Copyright
 ---------
 Eve-Swagger is an open source project by `Nicola Iarocci`_.
-See the original LICENSE_ for more informations.
+See the original LICENSE_ for more information.
 
 .. |latest-version| image:: https://img.shields.io/pypi/v/eve-swagger.svg
    :alt: Latest version on PyPI
