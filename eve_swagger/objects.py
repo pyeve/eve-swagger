@@ -73,6 +73,8 @@ def parameters():
 
         title = rd['item_title']
         lookup_field = rd['item_lookup_field']
+        if lookup_field not in rd['schema']:
+            rd['schema'][lookup_field] = {'type': 'objectid'}
         eve_type = rd['schema'][lookup_field]['type']
         descr = rd['schema'][lookup_field].get('description') or ''
         if 'data_relation' in rd['schema'][lookup_field]:
