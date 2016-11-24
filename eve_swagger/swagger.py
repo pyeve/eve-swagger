@@ -38,11 +38,11 @@ def _modify_response(f):
             resp = make_response(f(*args, **kwargs))
 
         # CORS
-        domains = app.config['X_DOMAINS']
-        headers = app.config['X_HEADERS']
-        max_age = app.config['X_MAX_AGE']
-        allow_credentials = app.config['X_ALLOW_CREDENTIALS']
-        expose_headers = app.config['X_EXPOSE_HEADERS']
+        domains = app.config.get('X_DOMAINS')
+        headers = app.config.get('X_HEADERS')
+        max_age = app.config.get('X_MAX_AGE')
+        allow_credentials = app.config.get('X_ALLOW_CREDENTIALS')
+        expose_headers = app.config.get('X_EXPOSE_HEADERS')
         origin = request.headers.get('Origin')
         if origin and domains:
             if isinstance(domains, str):

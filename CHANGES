@@ -6,6 +6,11 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+Unreleased
+~~~~~~~~~~
+
+- Fix: handle missing fields and settings. Closes #31 (otibsa).
+
 Version 0.0.5
 ~~~~~~~~~~~~~
 
