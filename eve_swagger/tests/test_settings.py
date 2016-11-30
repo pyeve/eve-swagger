@@ -24,6 +24,25 @@ DOMAIN = {
                 'required': True,
                 'unique': True,
                 'description': 'the job of the person'
+            },
+            'relations': {
+                'type': 'list',
+                'schema': {
+                    'type': 'dict',
+                    'schema': {
+                        'relation_type': {
+                            'type': 'string',
+                            'required': True
+                        },
+                        'relation': {
+                            'type': 'objectid',
+                            'data_relation': {
+                                'resource': 'people',
+                                'field': '_id'
+                            }
+                        }
+                    }
+                }
             }
         }
     },

@@ -157,7 +157,11 @@ def _get_dr_sources(schema):
             title = app.config['DOMAIN'][dr['resource']]['item_title']
             def_name = title+'_'+dr['field']
             dr_sources[def_name] = None
-        elif 'schema' in rules and rules.get('type') == 'dict':
-            # recursively handle data_relations in subdicts
-            dr_sources.update(_get_dr_sources(rules['schema']))
+        elif 'schema' in rules:
+            if rules.get('type') in 'dict':
+                # recursively handle data_relations in subdicts
+                dr_sources.update(_get_dr_sources(rules['schema']))
+            elif rules.get('type') == 'list' and 'schema' in rules['schema']:
+                # recursively handle data_relations in lists
+                dr_sources.update(_get_dr_sources(rules['schema']['schema']))
     return dr_sources

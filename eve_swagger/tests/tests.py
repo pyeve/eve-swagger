@@ -56,7 +56,7 @@ class TestEveSwagger(TestBase):
         self.assertIn('properties', doc['definitions'][item_title])
         self.assertEqual(
             set(doc['definitions'][item_title]['properties'].keys()),
-            set(['name', 'job', '_id']))
+            set(['name', 'job', '_id', 'relations']))
 
     def test_parameters_people(self):
         doc = self.swagger_doc
@@ -110,10 +110,18 @@ class TestEveSwagger(TestBase):
         self.assertIn('$ref', people_props['job'])
         self.assertEqual('#/definitions/%s' % key,
                          people_props['job']['$ref'])
+        self.assertIn(key, doc['definitions'])
 
         self.assertIn('$ref', dr_1_props['copied_field_with_description'])
         self.assertEqual('#/definitions/%s' % key,
                          dr_1_props['copied_field_with_description']['$ref'])
+
+        key = people_it + '__id'
+        people_rels_props = people_props['relations']['items']['properties']
+        self.assertIn('$ref', people_rels_props['relation'])
+        self.assertEqual('#/definitions/%s' % key,
+                         people_rels_props['relation']['$ref'])
+        self.assertIn(key, doc['definitions'])
 
     def test_data_relation_extended_description(self):
         doc = self.swagger_doc
