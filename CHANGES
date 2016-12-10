@@ -9,7 +9,7 @@ In Development
 Unreleased
 ~~~~~~~~~~
 
-- Fix: crash if no docstring is available for hook (Hermann).
+- Fix: crash if no docstring is available for hook (hermannsblum).
 - Fix: support for data_relation nested in lists (Patrick Decat).
 - Fix: handle missing fields and settings. Closes #31 (otibsa).
 
