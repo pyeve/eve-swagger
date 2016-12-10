@@ -267,16 +267,20 @@ def _hook_descriptions(resource, method, item=False):
 
     res = ''
     for e in events:
+        event_doc = ''
+
         callbacks = getattr(app, e)
-        if len(callbacks) > 0:
-            res += '\n* `' + e + '`:\n\n'
         for cb in callbacks:
+            if cb.__name__ in app.config.get('HIDE_HOOK_FUNCTIONS', []):
+                continue
             if cb.__doc__:
-                s = '\n    '
-                s += '\n    '.join(dedent(cb.__doc__).strip().split('\n'))
-                res += '  * `' + cb.__name__ + '`:\n' + s + '\n\n'
+                s = '\n    '.join(dedent(cb.__doc__).strip().split('\n'))
+                event_doc += '  * `' + cb.__name__ + '`:\n' + s + '\n'
             else:
-                # there is no docstring provided, still add the hook name for
-                # information
-                res += '  * `' + cb.__name__ + '`:\nno documentation\n\n'
+                event_doc += '  * `' + cb.__name__ + '`:\nno documentation\n'
+
+        if len(event_doc) > 0:
+            # we actually documented some hooks
+            event_doc = '\n* `' + e + '`:\n' + event_doc
+        res += event_doc
     return res
