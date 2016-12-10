@@ -271,7 +271,12 @@ def _hook_descriptions(resource, method, item=False):
         if len(callbacks) > 0:
             res += '\n* `' + e + '`:\n\n'
         for cb in callbacks:
-            s = '\n    '
-            s += '\n    '.join(dedent(cb.__doc__).strip().split('\n'))
-            res += '  * `' + cb.__name__ + '`:\n' + s + '\n\n'
+            if cb.__doc__:
+                s = '\n    '
+                s += '\n    '.join(dedent(cb.__doc__).strip().split('\n'))
+                res += '  * `' + cb.__name__ + '`:\n' + s + '\n\n'
+            else:
+                # there is no docstring provided, still add the hook name for
+                # information
+                res += '  * `' + cb.__name__ + '`:\nno documentation\n\n'
     return res
