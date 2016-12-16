@@ -56,7 +56,7 @@ class TestEveSwagger(TestBase):
         self.assertIn('properties', doc['definitions'][item_title])
         self.assertEqual(
             set(doc['definitions'][item_title]['properties'].keys()),
-            set(['name', 'job', '_id', 'relations']))
+            set(['name', 'job', 'email', 'position', '_id', 'relations']))
 
     def test_parameters_people(self):
         doc = self.swagger_doc
