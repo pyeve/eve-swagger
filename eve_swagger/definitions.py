@@ -112,6 +112,12 @@ def _field_props(rules, dr_sources, prefix):
         if eve_type in ['number', 'integer', 'float']:
             resp['maximum'] = rules['max']
 
+    if 'readonly' in rules:
+        resp['readOnly'] = rules['readonly']
+
+    if 'regex' in rules:
+        resp['pattern'] = rules['regex']
+
     type = map.get(eve_type, (eve_type,))
 
     resp['type'] = type[0]
