@@ -6,8 +6,10 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-Unreleased
-~~~~~~~~~~
+Version 0.0.6
+~~~~~~~~~~~~~
+
+Released on 3 January, 2017
 
 - New: support for swagger 2.0/openAPI 'readOnly' and 'pattern' rules
   (hermannsblum).
