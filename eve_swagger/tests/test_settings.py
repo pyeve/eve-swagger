@@ -25,6 +25,15 @@ DOMAIN = {
                 'unique': True,
                 'description': 'the job of the person'
             },
+            'email': {
+                'type': 'string',
+                'required': True,
+                'regex': '^.+@.+$'
+            },
+            'position': {
+                'type': 'string',
+                'readonly': True
+            },
             'relations': {
                 'type': 'list',
                 'schema': {

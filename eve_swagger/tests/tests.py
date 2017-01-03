@@ -1,4 +1,5 @@
 import json
+from jsonschema import validate, ValidationError
 
 
 if __name__ == '__main__':
@@ -56,7 +57,18 @@ class TestEveSwagger(TestBase):
         self.assertIn('properties', doc['definitions'][item_title])
         self.assertEqual(
             set(doc['definitions'][item_title]['properties'].keys()),
-            set(['name', 'job', '_id', 'relations']))
+            set(['name', 'job', 'email', 'position', '_id', 'relations']))
+
+    def test_definitions_are_jsonschema(self):
+        doc = self.swagger_doc
+        item_title = self.domain['people']['item_title']
+
+        # validate if schema is jsonschema
+        try:
+            validate({}, doc['definitions'][item_title])
+        except ValidationError:
+            # validation errors are only thrown after schema is checked
+            self.assertTrue(True)
 
     def test_parameters_people(self):
         doc = self.swagger_doc
