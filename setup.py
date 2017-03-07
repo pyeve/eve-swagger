@@ -43,7 +43,7 @@ setup(
     long_description=read_file('README.rst'),
     author='Nicola Iarocci',
     author_email='nicola@nicolaiarocci.com',
-    url='http://github.com/nicolaiarocci/eve-swagger',
+    url='http://github.com/pyeve/eve-swagger',
     license='BSD',
     platforms=["any"],
     packages=find_packages(),

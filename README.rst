@@ -27,7 +27,7 @@ Usage
         },
         'license': {
             'name': 'BSD',
-            'url': 'https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE',
+            'url': 'https://github.com/pyeve/eve-swagger/blob/master/LICENSE',
         }
     }
 
@@ -166,20 +166,20 @@ See the original LICENSE_ for more information.
 .. |latest-version| image:: https://img.shields.io/pypi/v/eve-swagger.svg
    :alt: Latest version on PyPI
    :target: https://pypi.python.org/pypi/eve-swagger
-.. |build-status| image:: https://travis-ci.org/nicolaiarocci/eve-swagger.svg?branch=master
+.. |build-status| image:: https://travis-ci.org/pyeve/eve-swagger.svg?branch=master
    :alt: Build status
-   :target: https://travis-ci.org/nicolaiarocci/eve-swagger
+   :target: https://travis-ci.org/pyeve/eve-swagger
 .. |python-support| image:: https://img.shields.io/pypi/pyversions/eve-swagger.svg
    :target: https://pypi.python.org/pypi/eve-swagger
    :alt: Python versions
 .. |license| image:: https://img.shields.io/pypi/l/eve-swagger.svg
    :alt: Software license
-   :target: https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE
+   :target: https://github.com/pyeve/eve-swagger/blob/master/LICENSE
 
 .. _Swagger: http://swagger.io/
 .. _Eve: http://python-eve.org/
-.. _`popular request`: https://github.com/nicolaiarocci/eve/issues/574
-.. _LICENSE: https://github.com/nicolaiarocci/eve-swagger/blob/master/LICENSE
+.. _`popular request`: https://github.com/pyeve/eve/issues/574
+.. _LICENSE: https://github.com/pyeve/eve-swagger/blob/master/LICENSE
 .. _`Nicola Iarocci`: http://nicolaiarocci.com
 .. _`Swagger UI`: https://github.com/swagger-api/swagger-ui#enabling-cors
 .. _`Swagger Editor`: https://github.com/swagger-api/swagger-editor/blob/master/docs/cors.md
