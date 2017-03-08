@@ -6,7 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- Nothing to be seen here (yet).
+- Fix: tests failure since jsonschema dropped Python 2.6. Closes #40.
 
 Released
 --------
