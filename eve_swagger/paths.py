@@ -109,7 +109,7 @@ def post_response(rd):
     return OrderedDict([
         ('summary', 'Stores one or more %s' % rd['resource_title']),
         ('parameters', [get_parameters(rd)]),
-        ('responses', {'200':
+        ('responses', {'201':
                        {'description': 'operation has been successful'}}),
         ('tags', [rd['item_title']])
     ])
@@ -177,7 +177,7 @@ def deleteitem_response(rd):
     return OrderedDict([
         ('summary', 'Deletes a %s document' % title),
         ('responses', {
-            '200': {
+            '204': {
                 'description': '%s document deleted successfully' % title
             }
         }),
