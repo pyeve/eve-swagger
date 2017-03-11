@@ -118,7 +118,7 @@ def post_response(rd):
 def delete_response(rd):
     return OrderedDict([
         ('summary', 'Deletes all %s' % rd['resource_title']),
-        ('responses', {'200':
+        ('responses', {'204':
                        {'description': 'operation has been successful'}}),
         ('tags', [rd['item_title']])
     ])
