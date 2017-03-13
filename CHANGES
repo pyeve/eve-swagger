@@ -6,12 +6,19 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- Fix: All responses claim to return a status code of 200 (Alexander
-  Dietmüller).
-- Fix: tests failure since jsonschema dropped Python 2.6. Closes #40.
+- Hic sunt leones.
 
 Released
 --------
+
+Version 0.0.7
+~~~~~~~~~~~~~
+
+Released on 13 March, 2017
+
+- Fix: All responses claim to return a status code of 200 (Alexander
+  Dietmüller).
+- Fix: tests failure since jsonschema dropped Python 2.6. Closes #40.
 
 Version 0.0.6
 ~~~~~~~~~~~~~
