@@ -60,3 +60,5 @@ _build
 
 # PyCharm
 .idea
+
+.cache
