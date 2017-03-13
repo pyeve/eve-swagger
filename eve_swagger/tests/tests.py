@@ -241,6 +241,22 @@ class TestEveSwagger(TestBase):
             self.assertIn('tags', path_m)
             self.assertIn(item_title, path_m['tags'])
 
+    def test_status_codes(self):
+        doc = self.swagger_doc
+        url = self.domain['people']['url']
+
+        people = doc['paths']['/'+url]
+        self.assertIn('200', people['get']['responses'])
+        self.assertIn('201', people['post']['responses'])
+        self.assertIn('204', people['delete']['responses'])
+
+        item_title = self.domain['people']['item_title']
+        person = doc['paths']['/%s/{%sId}' % (url, item_title.lower())]
+        self.assertIn('200', person['get']['responses'])
+        self.assertIn('200', person['patch']['responses'])
+        self.assertIn('200', person['put']['responses'])
+        self.assertIn('204', person['delete']['responses'])
+
 
 if __name__ == '__main__':
     unittest.main()
