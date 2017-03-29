@@ -120,6 +120,9 @@ def _field_props(rules, dr_sources, prefix):
 
     type = map.get(eve_type, (eve_type,))
 
+    if 'description' in rules:
+        resp['description'] = rules['description']
+
     resp['type'] = type[0]
     if type[0] == 'object':
         # we don't support 'valueschema' rule
@@ -136,6 +139,10 @@ def _field_props(rules, dr_sources, prefix):
             # 'items' is mandatory for swagger, we assume it's a list of
             # strings
             resp['items'] = {'type': 'string'}
+    # floats in swagger are defined as type: number, format: float
+    elif type[0] == 'float':
+        resp['type'] = 'number'
+        resp['format'] = 'float'
     else:
         try:
             resp['format'] = type[1]
