@@ -57,7 +57,8 @@ class TestEveSwagger(TestBase):
         self.assertIn('properties', doc['definitions'][item_title])
         self.assertEqual(
             set(doc['definitions'][item_title]['properties'].keys()),
-            set(['name', 'job', 'email', 'position', '_id', 'relations']))
+            set(['name', 'job', 'email', 'position', '_id',
+                 'relations', 'location']))
 
     def test_definitions_are_jsonschema(self):
         doc = self.swagger_doc
