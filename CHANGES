@@ -6,7 +6,8 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- Hic sunt leones.
+- New: add support for geometric data types `point`, `linestring`,
+  `multilinestring', `polygon` and `multipolygon`. Closes #44 (Damien Aboss).
 
 Released
 --------
