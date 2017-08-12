@@ -47,6 +47,10 @@ def base_path():
 
 
 def schemes():
+    cfg = app.config[eve_swagger.INFO]
+    if hasattr(cfg, 'schemes'):
+        return cfg['schemes']
+
     scheme = request.url.split(':')[0]
     return [scheme] if scheme in ['http', 'https', 'ws', 'wss'] else None
 

@@ -45,6 +45,12 @@ def validate_info():
                 'url': {'type': 'string', 'validator': _validate_url}
             }
         },
+        'schemes': {
+            'type': 'list',
+            'schema': {
+                'type': 'string'
+            }
+        }
     }
     if eve_swagger.INFO not in app.config:
         raise ConfigException('%s setting is required in Eve configuration.' %
