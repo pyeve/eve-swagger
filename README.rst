@@ -28,7 +28,8 @@ Usage
         'license': {
             'name': 'BSD',
             'url': 'https://github.com/pyeve/eve-swagger/blob/master/LICENSE',
-        }
+        },
+        schemes: ['http', 'https'],
     }
 
     # optional. Will use flask.request.host if missing.

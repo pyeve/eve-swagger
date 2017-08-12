@@ -258,6 +258,11 @@ class TestEveSwagger(TestBase):
         self.assertIn('200', person['put']['responses'])
         self.assertIn('204', person['delete']['responses'])
 
+    def test_schemes_override(self):
+        self.app.config['SWAGGER_INFO']['schemes'] = ['https']
+        r = self.test_client.get('/api-docs')
+        self.assertEqual(r.status_code, 200)
+
 
 if __name__ == '__main__':
     unittest.main()
