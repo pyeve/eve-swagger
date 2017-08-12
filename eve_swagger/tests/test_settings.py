@@ -52,6 +52,9 @@ DOMAIN = {
                         }
                     }
                 }
+            },
+            'location': {
+                'type': 'point'
             }
         }
     },

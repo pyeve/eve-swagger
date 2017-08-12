@@ -77,6 +77,13 @@ def _field_props(rules, dr_sources, prefix):
         'objectid': ('string', 'objectid'),
         'datetime': ('string', 'date-time'),
         'float': ('number', 'float'),
+        'point': ('geometry', 'Point'),
+        'multipoint': ('geometry', 'MultiPoint'),
+        'linestring': ('geometry', 'LineString'),
+        'multilinestring': ('geometry', 'MultiLineString'),
+        'polygon': ('geometry', 'Polygon'),
+        'multipolygon': ('geometry', 'MultiPolygon'),
+        'geometrycollection': ('geometry', 'GeometryCollection')
     }
 
     eve_type = rules.get('type')
@@ -136,6 +143,57 @@ def _field_props(rules, dr_sources, prefix):
             # 'items' is mandatory for swagger, we assume it's a list of
             # strings
             resp['items'] = {'type': 'string'}
+    elif type[0] == 'geometry':
+        # create a pseudo object
+        pseudo_rd = {
+            'item_title': prefix, 'schema': {
+                'type': {
+                    'type': 'string',
+                    'allowed': [type[1]],
+                    'required': True
+                },
+                'coordinates': {
+                    'type': 'list',
+                    'required': True
+                }
+            }
+        }
+        point2D_rd = {
+            'schema': {
+                'type': 'integer'
+            },
+            'minlength': 2,
+            'maxlength': 2
+        }
+        array_rd = {
+            'schema': {
+                'type': 'list'
+            }
+        }
+        s = 'schema'
+        c = 'coordinates'
+        if type[1] == 'Point':
+            # 1st level array of point 2D
+            pseudo_rd[s][c].update(point2D_rd)
+        elif type[1] in ['LineString', 'MultiPoint']:
+            # 2nd level array of point 2D
+            pseudo_rd[s][c].update(array_rd)
+            pseudo_rd[s][c][s].update(point2D_rd)
+        elif type[1] in ['MultiLineString', 'Polygon']:
+            # 3rd level array of point 2D
+            pseudo_rd[s][c].update(array_rd)
+            pseudo_rd[s][c][s].update(array_rd)
+            pseudo_rd[s][c][s][s].update(point2D_rd)
+        elif type[1] in ['MultiPolygon']:
+            # 4th level array of point 2D
+            pseudo_rd[s][c].update(array_rd)
+            pseudo_rd[s][c][s].update(array_rd)
+            pseudo_rd[s][c][s][s].update(array_rd)
+            pseudo_rd[s][c][s][s][s].update(point2D_rd)
+        elif type[1] in ['GeometryCollection']:
+            # GeometryCollection require external defs
+            pass
+        resp.update(_object(pseudo_rd, dr_sources))
     else:
         try:
             resp['format'] = type[1]
