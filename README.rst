@@ -1,7 +1,7 @@
 Eve-Swagger |latest-version|
 ============================
 
-|build-status| |python-support| 
+|build-status| |python-support|
 
 Swagger_ extension for Eve_ powered RESTful APIs.
 
@@ -29,7 +29,7 @@ Usage
             'name': 'BSD',
             'url': 'https://github.com/pyeve/eve-swagger/blob/master/LICENSE',
         },
-        schemes: ['http', 'https'],
+        'schemes': ['http', 'https'],
     }
 
     # optional. Will use flask.request.host if missing.
@@ -99,7 +99,7 @@ As an example:
         },
     }
     ...
-    
+
 **NOTE**: If you do use that feature make sure that the ``TRANSPARENT_SCHEMA_RULES``
 in your ``settings.py`` is also turned ON, otherwise you will get complains from the
 Cerberus library about "unknown field 'description' for field [yourFieldName]"
