@@ -196,7 +196,7 @@ def header_parameters():
     r['in'] = 'header'
     r['name'] = 'If-Match'
     r['description'] = 'Current value of the _etag field'
-    r['required'] = True
+    r['required'] = app.config['IF_MATCH'] and app.config['ENFORCE_IF_MATCH']
     r['type'] = 'string'
     return r
 
