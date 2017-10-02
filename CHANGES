@@ -6,6 +6,8 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Fix: `If-Match` header required when concurrency control is disabled. Closes
+  #49 (Aleksi Pekkala).
 - Fix: If the user provides a 'schemes' configuration value use that instead of
   auto-discovering the value. This is useful in the scenario where Eve is
   running on http behind a proxy running https, so auto-discovery would yield

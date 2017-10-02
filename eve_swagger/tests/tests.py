@@ -183,6 +183,25 @@ class TestEveSwagger(TestBase):
         h = header_parameters[0]
         self.assertIn('name', h)
         self.assertEqual(h['name'], 'If-Match')
+        self.assertTrue(h['required'])
+
+    def test_header_parameters_without_concurrency_control(self):
+        url = self.domain['people']['url']
+        item_title = self.domain['people']['item_title']
+        url = '/%s/{%sId}' % (url, item_title.lower())
+
+        def get_etag_param(doc):
+            params = doc['paths'][url]['delete']['parameters']
+            return next(p for p in params if p.get('name') == 'If-Match')
+
+        self.app.config['IF_MATCH'] = False
+        etag_param = get_etag_param(self.get_swagger_doc())
+        self.assertFalse(etag_param['required'])
+
+        self.app.config['IF_MATCH'] = True
+        self.app.config['ENFORCE_IF_MATCH'] = False
+        etag_param = get_etag_param(self.get_swagger_doc())
+        self.assertFalse(etag_param['required'])
 
     def test_cors_without_origin(self):
         self.app.config['X_DOMAINS'] = ['http://example.com']
