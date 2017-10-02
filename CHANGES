@@ -6,6 +6,15 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+
+Released
+--------
+
+Version 0.0.8
+~~~~~~~~~~~~~
+
+Released on 2 October, 2017
+
 - Fix: `If-Match` header required when concurrency control is disabled. Closes
   #49 (Aleksi Pekkala).
 - Fix: If the user provides a 'schemes' configuration value use that instead of
@@ -14,9 +23,6 @@ In Development
   the wrong value (Jim Kennedy).
 - New: add support for geometric data types `point`, `linestring`,
   `multilinestring', `polygon` and `multipolygon`. Closes #44 (Damien Aboss).
-
-Released
---------
 
 Version 0.0.7
 ~~~~~~~~~~~~~
