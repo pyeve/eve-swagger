@@ -48,7 +48,7 @@ def base_path():
 
 def schemes():
     cfg = app.config[eve_swagger.INFO]
-    if hasattr(cfg, 'schemes'):
+    if 'schemes' in cfg:
         return cfg['schemes']
 
     scheme = request.url.split(':')[0]

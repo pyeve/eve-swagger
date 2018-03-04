@@ -280,6 +280,7 @@ class TestEveSwagger(TestBase):
     def test_schemes_override(self):
         self.app.config['SWAGGER_INFO']['schemes'] = ['https']
         r = self.test_client.get('/api-docs')
+        self.assertEqual(json.loads(r.data)['schemes'], ['https'])
         self.assertEqual(r.status_code, 200)
 
 
