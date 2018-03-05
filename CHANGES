@@ -10,6 +10,11 @@ In Development
 Released
 --------
 
+Version 0.0.9
+~~~~~~~~~~~~~
+
+- Fix: Override schemes in SWAGGER_INFO does not work (Cuong Manh Le).
+
 Version 0.0.8
 ~~~~~~~~~~~~~
 
