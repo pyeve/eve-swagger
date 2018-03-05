@@ -281,6 +281,9 @@ class TestEveSwagger(TestBase):
         self.app.config['SWAGGER_INFO']['schemes'] = ['https']
         r = self.test_client.get('/api-docs')
         self.assertEqual(r.status_code, 200)
+        s = r.get_data().decode('utf-8')
+        d = json.loads(s)
+        self.assertEqual(d.get('schemes'), ['https'])
 
 
 if __name__ == '__main__':
