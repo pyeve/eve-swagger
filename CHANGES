@@ -13,6 +13,8 @@ Released
 Version 0.0.9
 ~~~~~~~~~~~~~
 
+Released on 6 March, 2018
+
 - Fix: Override schemes in SWAGGER_INFO does not work (Cuong Manh Le).
 
 Version 0.0.8
