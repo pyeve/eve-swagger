@@ -94,6 +94,13 @@ class TestEveSwagger(TestBase):
         self.assertEqual('the last name of the person',
                          props['name']['description'])
 
+    def test_field_example(self):
+        doc = self.swagger_doc
+        item_title = self.domain['people']['item_title']
+        props = doc['definitions'][item_title]['properties']
+
+        self.assertEqual('Doe', props['name']['example'])
+
     def test_disabled_resource(self):
         doc = self.swagger_doc
         url = self.domain['disabled_resource']['url']
