@@ -10,6 +10,13 @@ In Development
 Released
 --------
 
+Version 0.0.10
+~~~~~~~~~~~~~
+
+Unreleased
+
+- New: Add support for adding schema examples. Closes #59 (Nils Verheyen).
+
 Version 0.0.9
 ~~~~~~~~~~~~~
 
