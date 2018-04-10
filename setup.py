@@ -38,7 +38,7 @@ class Tox(TestCommand):
 
 setup(
     name='Eve-Swagger',
-    version='0.0.9',
+    version='0.0.10',
     description='Swagger extension for Eve powered RESTful APIs',
     long_description=read_file('README.rst'),
     author='Nicola Iarocci',
