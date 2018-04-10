@@ -17,7 +17,8 @@ DOMAIN = {
                 'type': 'string',
                 'required': True,
                 'unique': True,
-                'description': 'the last name of the person'
+                'description': 'the last name of the person',
+                'example': 'Doe'
             },
             'job': {
                 'type': 'string',

@@ -81,6 +81,7 @@ def parameters():
             rd['schema'][lookup_field] = {'type': 'objectid'}
         eve_type = rd['schema'][lookup_field]['type']
         descr = rd['schema'][lookup_field].get('description') or ''
+        example = rd['schema'][lookup_field].get('example') or ''
         if 'data_relation' in rd['schema'][lookup_field]:
             # the lookup field is a copy of another field
             dr = rd['schema'][lookup_field]['data_relation']
@@ -103,6 +104,7 @@ def parameters():
         p['name'] = title.lower() + 'Id'
         p['required'] = True
         p['description'] = descr
+        p['example'] = example
         p['type'] = eve_type
         if eve_type == 'objectid':
             p['type'] = 'string'

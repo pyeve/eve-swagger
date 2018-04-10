@@ -158,6 +158,46 @@ Which will be rendered by Swagger like this:
 
 .. image:: resources/hook_description.png
 
+Example fields on the docs
+--------------------------
+
+Like a description, an example can be added to a field.
+
+.. code-block:: python
+
+    ...
+    'schema': {
+        'lastName': {
+            'example': 'Doe',
+            'type': 'string',
+            'minlength': 1,
+        },
+    }
+    ...
+
+The example is shown in the swagger ui in the model and the responses.
+
+.. image:: resources/example_field.png
+
+**NOTE**: As with the description, the field ``TRANSPARENT_SCHEMA_RULES``
+must be enabled in your ``settings.py``, otherwise the Cerberus library 
+will display an error about "unknown field 'example' for field[yourFieldName]".
+
+If you do not want to use this rule for the entire schema, you can also use 
+your own validator.
+
+.. code-block:: python
+
+    from eve.io.mongo import Validator
+
+    class MyValidator(Validator):
+        def _validate_example(self, example, field, value):
+            if example and not isinstance(value, str):
+                self._error(field, "Value must be a string")
+
+    ...
+
+    app = Eve(validator=MyValidator)
 
 Copyright
 ---------
