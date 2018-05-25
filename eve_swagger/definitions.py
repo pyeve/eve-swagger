@@ -127,6 +127,9 @@ def _field_props(rules, dr_sources, prefix):
 
     if 'regex' in rules:
         resp['pattern'] = rules['regex']
+        
+    if 'nullable' in rules:
+        resp['nullable'] = rules['nullable']
 
     type = map.get(eve_type, (eve_type,))
 
