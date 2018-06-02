@@ -4,7 +4,7 @@ import json
 
 import eve
 import eve_swagger
-from flask_pymongo import MongoClient
+from pymongo import MongoClient
 from eve_swagger.tests.test_settings import MONGO_HOST, MONGO_PORT, \
     MONGO_USERNAME, MONGO_PASSWORD, MONGO_DBNAME
 

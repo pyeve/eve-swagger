@@ -6,6 +6,10 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Fix: tests fail on flask_pymongo import. (`#63`_)
+
+.. _`#63`: https://github.com/pyeve/eve-swagger/issues/63
+
 
 Released
 --------
