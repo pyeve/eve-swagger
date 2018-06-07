@@ -6,10 +6,11 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- Add support for `nullable` property. (hermannsblumm)
+- Add support for `nullable` property. (`#61`_))
 - Fix: tests fail on flask_pymongo import. (`#63`_)
 
 .. _`#63`: https://github.com/pyeve/eve-swagger/issues/63
+.. _`61`: https://github.com/pyeve/eve-swagger/pull/61
 
 
 Released
