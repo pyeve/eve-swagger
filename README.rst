@@ -102,7 +102,21 @@ As an example:
 
 **NOTE**: If you do use that feature make sure that the ``TRANSPARENT_SCHEMA_RULES``
 in your ``settings.py`` is also turned ON, otherwise you will get complains from the
-Cerberus library about "unknown field 'description' for field [yourFieldName]"
+Cerberus library about "unknown field 'description' for field [yourFieldName]", or use 
+a custom schema validator, as below:
+
+.. code-block:: python
+
+    from eve.io.mongo import Validator
+
+    class MyValidator(Validator):
+        def _validate_description(self, description, field, value):
+            """ {'type': 'string'} """
+            # Accept description attribute, used for swagger doc generation
+            pass
+
+    app = Eve(validator=MyValidator)
+
 
 Disabling the documentation of a resource
 -----------------------------------------
