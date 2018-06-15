@@ -59,6 +59,17 @@ DOMAIN = {
             }
         }
     },
+    'sub_resource': {
+        'description': 'A sub resource to test regex urls.',
+        'url': 'people/<regex("[a-f0-9]{24}"):personid>/related',
+        'personid': {
+            'type': 'objectid',
+            'data_relation': {
+                'resource': 'people',
+                'field': '_id', },
+        },
+        'subject': {'type': 'string'},
+    },
     'disabled_resource': {
         'disable_documentation': True,
         'type': 'dict',
