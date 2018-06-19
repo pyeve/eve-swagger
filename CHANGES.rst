@@ -6,7 +6,9 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- hit sunt leones
+- Add a stale-bot to automatically close stale issues and pull requests (`#68`_)
+
+.. _`#68`: https://github.com/pyeve/eve-swagger/issues/68
 
 Released
 --------
