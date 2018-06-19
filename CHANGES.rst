@@ -7,11 +7,12 @@ In Development
 --------------
 
 - Remove regexes from urls and resource titles (`#66`_)
-- Changelog is now in .rst format
+- Changelog is now in .rst format (`#65`_)
 - Add support for `nullable` property (`#61`_)
 - Fix: tests fail on flask_pymongo import (`#63`_)
 
 .. _`#66`: https://github.com/pyeve/eve-swagger/issues/66
+.. _`#65`: https://github.com/pyeve/eve-swagger/issues/65
 .. _`#63`: https://github.com/pyeve/eve-swagger/issues/63
 .. _`#61`: https://github.com/pyeve/eve-swagger/pull/61
 
