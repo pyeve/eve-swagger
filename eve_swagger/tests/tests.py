@@ -44,7 +44,7 @@ class TestEveSwagger(TestBase):
 
         self.assertIn('paths', doc)
         self.assertIsInstance(doc['paths'], dict)
-        self.assertIn('/'+url, doc['paths'])
+        self.assertIn('/' + url, doc['paths'])
         self.assertIn('/%s/{%sId}' % (url, item_title.lower()), doc['paths'])
 
     def test_definitions(self):
@@ -77,7 +77,7 @@ class TestEveSwagger(TestBase):
         lookup_field = self.domain['people']['item_lookup_field']
 
         self.assertIn('parameters', doc)
-        self.assertIn(item_title+'_'+lookup_field, doc['parameters'])
+        self.assertIn(item_title + '_' + lookup_field, doc['parameters'])
 
     def test_resource_description(self):
         doc = self.swagger_doc
@@ -107,16 +107,16 @@ class TestEveSwagger(TestBase):
         item_title = self.domain['disabled_resource']['item_title']
         lookup_field = self.domain['disabled_resource']['item_lookup_field']
 
-        self.assertNotIn('/'+url, doc['paths'])
+        self.assertNotIn('/' + url, doc['paths'])
         self.assertNotIn('/%s/{%sId}' % (url, item_title.lower()),
                          doc['paths'])
         self.assertNotIn(item_title, doc['definitions'])
-        self.assertNotIn(item_title+'_'+lookup_field, doc['parameters'])
+        self.assertNotIn(item_title + '_' + lookup_field, doc['parameters'])
 
     def test_data_relation_source_field(self):
         doc = self.swagger_doc
 
-        source_field = self.domain['people']['item_title']+'_job'
+        source_field = self.domain['people']['item_title'] + '_job'
         self.assertIn(source_field, doc['definitions'])
 
     def test_reference_to_data_relation_source_field(self):
@@ -147,7 +147,7 @@ class TestEveSwagger(TestBase):
         doc = self.swagger_doc
         item_title = self.domain['dr_resource_1']['item_title']
         lookup_field = self.domain['dr_resource_1']['item_lookup_field']
-        par = doc['parameters'][item_title+'_'+lookup_field]
+        par = doc['parameters'][item_title + '_' + lookup_field]
         people_it = self.domain['people']['item_title']
 
         self.assertIn('description', par)
@@ -159,7 +159,7 @@ class TestEveSwagger(TestBase):
         doc = self.swagger_doc
         item_title = self.domain['dr_resource_2']['item_title']
         lookup_field = self.domain['dr_resource_2']['item_lookup_field']
-        par = doc['parameters'][item_title+'_'+lookup_field]
+        par = doc['parameters'][item_title + '_' + lookup_field]
         people_it = self.domain['people']['item_title']
 
         self.assertIn('description', par)
@@ -272,7 +272,7 @@ class TestEveSwagger(TestBase):
         doc = self.swagger_doc
         url = self.domain['people']['url']
 
-        people = doc['paths']['/'+url]
+        people = doc['paths']['/' + url]
         self.assertIn('200', people['get']['responses'])
         self.assertIn('201', people['post']['responses'])
         self.assertIn('204', people['delete']['responses'])
@@ -291,6 +291,13 @@ class TestEveSwagger(TestBase):
         s = r.get_data().decode('utf-8')
         d = json.loads(s)
         self.assertEqual(d.get('schemes'), ['https'])
+
+    def test_sub_resource_regex(self):
+        url = self.domain['sub_resource']['url']
+        resource_title = self.domain['sub_resource']['resource_title']
+
+        self.assertEqual('people/<personid>/related', url)
+        self.assertEqual('people/<personid>/related', resource_title)
 
 
 if __name__ == '__main__':

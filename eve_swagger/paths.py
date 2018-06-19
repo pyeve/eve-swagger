@@ -3,10 +3,11 @@
     eve-swagger.paths
     ~~~~~~~~~~~~~~~~~
     swagger.io extension for Eve-powered REST APIs.
-
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+import re
+
 from textwrap import dedent
 
 from flask import current_app as app
@@ -17,13 +18,19 @@ from eve_swagger import OrderedDict
 # TODO consider adding at least a 'schema' property to response objects
 # TODO take auth into consideration
 
-
 def paths():
+    def _clear_regex(_str):
+        return '/'.join(map(lambda x: re.sub('regex(.*):', '', x),
+                            _str.split('/')))
+
     paths = OrderedDict()
     for resource, rd in app.config['DOMAIN'].items():
         if (rd.get('disable_documentation')
                 or resource.endswith('_versions')):
             continue
+
+        rd['url'] = _clear_regex(rd['url'])
+        rd['resource_title'] = _clear_regex(rd['resource_title'])
 
         methods = rd['resource_methods']
         if methods:
