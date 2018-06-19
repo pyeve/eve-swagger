@@ -6,12 +6,14 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- Changelog is now in .rst format.
-- Add support for `nullable` property. (`#61`_)
-- Fix: tests fail on flask_pymongo import. (`#63`_)
+- Remove regexes from urls and resource titles (`#66`_)
+- Changelog is now in .rst format
+- Add support for `nullable` property (`#61`_)
+- Fix: tests fail on flask_pymongo import (`#63`_)
 
+.. _`#66`: https://github.com/pyeve/eve-swagger/issues/66
 .. _`#63`: https://github.com/pyeve/eve-swagger/issues/63
-.. _`61`: https://github.com/pyeve/eve-swagger/pull/61
+.. _`#61`: https://github.com/pyeve/eve-swagger/pull/61
 
 
 Released
