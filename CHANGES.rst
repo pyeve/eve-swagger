@@ -6,6 +6,16 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- hit sunt leones
+
+Released
+--------
+
+Version 0.0.11
+~~~~~~~~~~~~~~
+
+Released on June 19, 2018.
+
 - Remove regexes from urls and resource titles (`#66`_)
 - Changelog is now in .rst format (`#65`_)
 - Add support for `nullable` property (`#61`_)
@@ -15,10 +25,6 @@ In Development
 .. _`#65`: https://github.com/pyeve/eve-swagger/issues/65
 .. _`#63`: https://github.com/pyeve/eve-swagger/issues/63
 .. _`#61`: https://github.com/pyeve/eve-swagger/pull/61
-
-
-Released
---------
 
 Version 0.0.10
 ~~~~~~~~~~~~~~
