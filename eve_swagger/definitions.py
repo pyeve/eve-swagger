@@ -25,6 +25,8 @@ def definitions():
         definitions[title] = _object(rd, dr_sources)
         if 'description' in rd:
             definitions[title]['description'] = rd['description']
+        if 'example' in rd:
+            definitions[title]['example'] = rd['example']
 
     # add data_relation source fields to #/definitions/
     definitions.update(dr_sources)
@@ -38,7 +40,7 @@ def _object(rd, dr_sources):
         if rules.get('required') is True:
             required.append(field)
 
-        def_name = rd['item_title']+'_'+field
+        def_name = rd['item_title'] + '_' + field
         props[field] = _field_props(rules, dr_sources, def_name)
 
         if def_name in dr_sources:
@@ -56,7 +58,7 @@ def _object(rd, dr_sources):
                 # source of data_relation does not exist
                 continue
             title = app.config['DOMAIN'][dr['resource']]['item_title']
-            source_def_name = title+'_'+dr['field']
+            source_def_name = title + '_' + dr['field']
             props[field] = {
                 '$ref': '#/definitions/{0}'.format(source_def_name)
             }
@@ -225,7 +227,7 @@ def _get_dr_sources(schema):
                 # source of data_relation does not exist
                 continue
             title = app.config['DOMAIN'][dr['resource']]['item_title']
-            def_name = title+'_'+dr['field']
+            def_name = title + '_' + dr['field']
             dr_sources[def_name] = None
         elif 'schema' in rules:
             if rules.get('type') in 'dict':

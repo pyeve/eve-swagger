@@ -299,6 +299,12 @@ class TestEveSwagger(TestBase):
         self.assertEqual('people/<personid>/related', url)
         self.assertEqual('people/<personid>/related', resource_title)
 
+    def test_resource_example(self):
+        doc = self.swagger_doc
+        item_title = self.domain['sub_resource']['item_title']
+
+        self.assertIn('example', doc['definitions'][item_title])
+
 
 if __name__ == '__main__':
     unittest.main()
