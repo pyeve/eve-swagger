@@ -213,6 +213,35 @@ your own validator.
 
     app = Eve(validator=MyValidator)
 
+Example resources on the docs
+-----------------------------
+
+Like a description, an example can be added to a resource.
+
+.. code-block:: python
+
+    ...
+    'sub_resource': {
+        'description': 'A sub resource to test regex urls.',
+        'url': 'people/<regex("[a-f0-9]{24}"):personid>/related',
+        'example': {'subject': 'A sub_resource object example'},
+
+        'schema': {
+            'personid': {
+                'type': 'objectid',
+                'data_relation': {
+                    'resource': 'people',
+                    'field': '_id', },
+            },
+            'subject': {'type': 'string'},
+        }
+    },
+    ...
+
+The resource example overrides the example generated from the schema definition, and can be used to hide fields that are defined on the server side.
+The example is shown in the swagger ui in the parameters only.
+
+
 Copyright
 ---------
 Eve-Swagger is an open source project by `Nicola Iarocci`_.

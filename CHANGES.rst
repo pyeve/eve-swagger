@@ -6,9 +6,11 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Add support for resource-level ``example`` definition (`#69`_)
 - Add a stale-bot to automatically close stale issues and pull requests (`#68`_)
 
 .. _`#68`: https://github.com/pyeve/eve-swagger/issues/68
+.. _`#68`: https://github.com/pyeve/eve-swagger/pull/68
 
 Released
 --------
