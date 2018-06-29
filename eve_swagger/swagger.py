@@ -15,9 +15,9 @@ from functools import wraps
 
 from eve_swagger import OrderedDict
 from .definitions import definitions
-from .objects import info, host, base_path, schemes, consumes, produces, \
-    parameters, responses, security_definitions, security, tags, \
-    external_docs
+from .objects import info, servers, parameters, responses, request_bodies,\
+    security_schemes, security, tags, external_docs, headers, links,\
+    callbacks, examples
 from .paths import paths
 
 
@@ -89,18 +89,23 @@ def index():
             parent[key] = value
 
     root = OrderedDict()
-    root['swagger'] = '2.0'
+    root['openapi'] = '3.0.0'
     node(root, 'info', info())
-    node(root, 'host', host())
-    node(root, 'basePath', base_path())
-    node(root, 'schemes', schemes())
-    node(root, 'consumes', consumes())
-    node(root, 'produces', produces())
+    node(root, 'servers', servers())
     node(root, 'paths', paths())
-    node(root, 'definitions', definitions())
-    node(root, 'parameters', parameters())
-    node(root, 'responses', responses())
-    node(root, 'securityDefinitions', security_definitions())
+
+    components = OrderedDict()
+    node(components, 'schemas', definitions())
+    node(components, 'responses', responses())
+    node(components, 'parameters', parameters())
+    node(components, 'examples', examples())
+    node(components, 'requestBodies', request_bodies())
+    node(components, 'headers', headers())
+    node(components, 'securitySchemes', security_schemes())
+    node(components, 'links', links())
+    node(components, 'callbacks', callbacks())
+    node(root, 'components', components)
+
     node(root, 'security', security())
     node(root, 'tags', tags())
     node(root, 'externalDocs', external_docs())
