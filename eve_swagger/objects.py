@@ -7,12 +7,12 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from eve.utils import api_prefix
 from flask import request, current_app as app
 
 import eve_swagger
 from eve_swagger import OrderedDict
 from .validation import validate_info
+from .paths import get_ref_schema
 
 
 def info():
@@ -36,40 +36,27 @@ def info():
     return info
 
 
-def host():
-    # TODO should probably return None if 'host' has not been set as the host
-    # is optional in swagger.
-    return app.config.get(eve_swagger.HOST) or request.host
+def servers():
+    return [{'url': 'https://' +
+             (app.config.get(eve_swagger.HOST) or request.host)}]
 
 
-def base_path():
-    return api_prefix()
-
-
-def schemes():
-    cfg = app.config[eve_swagger.INFO]
-    if 'schemes' in cfg:
-        return cfg['schemes']
-
-    scheme = request.url.split(':')[0]
-    return [scheme] if scheme in ['http', 'https', 'ws', 'wss'] else None
-
-
-def consumes():
-    return ['application/json']
-
-
-def produces():
-    produces = []
-    if app.config.get('XML', True):
-        produces.append('application/xml')
-    if app.config.get('JSON', True):
-        produces.append('application/json')
-    return produces if produces else None
+def responses():
+    return {
+        'error': {
+            'description': 'An error message',
+            'content': {
+                'application/json': {
+                    'schema': {'$ref': '#/components/schemas/Error'}
+                }
+            }
+        }
+    }
 
 
 def parameters():
     parameters = OrderedDict()
+    # resource parameters
     for (resource_name, rd) in app.config['DOMAIN'].items():
         if (resource_name.endswith('_versions')
                 or rd.get('disable_documentation')):
@@ -93,7 +80,7 @@ def parameters():
             source_def = source_rd['schema'][dr['field']]
 
             # key in #/definitions/...
-            source_def_name = source_rd['item_title']+'_'+dr['field']
+            source_def_name = source_rd['item_title'] + '_' + dr['field']
 
             # copy description if necessary
             descr = descr or source_def.get('description')
@@ -105,32 +92,122 @@ def parameters():
         p['required'] = True
         p['description'] = descr
         p['example'] = example
-        p['type'] = eve_type
-        if eve_type == 'objectid':
-            p['type'] = 'string'
-            p['format'] = 'objectid'
-        elif eve_type == 'datetime':
-            p['type'] = 'string'
-            p['format'] = 'date-time'
-        elif eve_type == 'float':
-            p['type'] = 'number'
-            p['format'] = 'float'
 
-        parameters[title+'_'+lookup_field] = p
+        ptype = ''
+        if eve_type == 'objectid' or eve_type == 'datetime':
+            ptype = 'string'
+        elif eve_type == 'float':
+            ptype = 'number'
+        else:
+            # TODO define default
+            pass
+
+        p['schema'] = {'type': ptype, }
+        parameters[title + '_' + lookup_field] = p
+
+    # add header parameters
+    parameters.update(_header_parameters())
 
     return parameters
 
 
-def responses():
+def _header_parameters():
+    r = OrderedDict()
+    r['in'] = 'header'
+    r['name'] = 'If-Match'
+    r['description'] = 'Current value of the _etag field'
+    r['required'] = app.config['IF_MATCH'] and app.config['ENFORCE_IF_MATCH']
+    r['schema'] = {'type': 'string'}
+    return {'If-Match': r}
+
+
+def examples():
+    examples = OrderedDict()
+
+    for (resource_name, rd) in app.config['DOMAIN'].items():
+        if (resource_name.endswith('_versions')
+                or rd.get('disable_documentation')):
+            continue
+
+        title = rd['item_title']
+        ex = OrderedDict()
+        ex['summary'] = 'An example {0} document.'
+        ex['description'] = 'An example for {0} documents request bodies. \
+                            Used in POST, PUT, PATCH methods.'.format(title)
+        if 'example' in rd:
+            ex['value'] = rd['example']
+
+        examples[title] = ex
+
+    return examples
+
+
+def request_bodies():
+    def _get_ref_examples(rd):
+        return {'$ref': '#/components/examples/%s' % rd['item_title']}
+
+    rbodies = OrderedDict()
+
+    for (resource_name, rd) in app.config['DOMAIN'].items():
+        if (resource_name.endswith('_versions')
+                or rd.get('disable_documentation')):
+            continue
+
+        title = rd['item_title']
+        rb = OrderedDict()
+        description = 'A {0} document.'.format(title)
+        if(rd['bulk_enabled']):
+            description = 'A {0} or list of {0} documents'.format(title)
+
+        rb['description'] = description
+        rb['required'] = True
+        rb['content'] = {
+            # TODO what about other methods
+            'application/json': {
+                'schema': get_ref_schema(rd),
+                'examples': {title: _get_ref_examples(rd)}
+                # {
+                #    title: ,
+                # }
+            }
+        }
+        rbodies[title] = rb
+
+    return rbodies
+
+
+def headers():
     pass
 
 
-def security_definitions():
+def security_schemes():
+    if('SENTINEL_ROUTE_PREFIX' in app.config.keys()):
+        return {
+            "oAuth2": {
+                "type": "oauth2",
+                "description": "oAuth2 password credentials.",
+                "flows": {
+                    "password": {
+                        # TODO why does this not work with a relative path?
+                        "tokenUrl": 'https://' + app.config['SERVER_NAME'] +
+                                    app.config['SENTINEL_ROUTE_PREFIX'] + \
+                                    app.config['SENTINEL_TOKEN_URL'],
+                        "scopes": {}}
+                }
+            }
+        }
+
+
+def links():
+    pass
+
+
+def callbacks():
     pass
 
 
 def security():
-    pass
+    return [{'oAuth2': []}]
 
 
 def tags():

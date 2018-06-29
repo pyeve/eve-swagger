@@ -25,11 +25,24 @@ def definitions():
         definitions[title] = _object(rd, dr_sources)
         if 'description' in rd:
             definitions[title]['description'] = rd['description']
-        if 'example' in rd:
-            definitions[title]['example'] = rd['example']
 
-    # add data_relation source fields to #/definitions/
+    # add data_relation source fields to #/components/schemas/
     definitions.update(dr_sources)
+    # add default error response eve schema
+    error_schema = {
+        'type': 'object',
+        'properties': {
+            '_status': {'type': 'integer'},
+            '_error': {
+                'type': 'object',
+                'properties': {
+                    'code': {'type': 'integer'},
+                    'message': {'type': 'string'}
+                }
+            }},
+        'required': ['_status', '_error']
+    }
+    definitions['Error'] = error_schema
     return definitions
 
 
@@ -49,7 +62,8 @@ def _object(rd, dr_sources):
             # replace None in dr_sources with the field properties
             dr_sources[def_name] = OrderedDict(props[field])
 
-            props[field] = {'$ref': '#/definitions/{0}'.format(def_name)}
+            props[field] = {
+                '$ref': '#/components/schemas/{0}'.format(def_name)}
 
         if 'data_relation' in rules:
             # the current field is a copy of another field
@@ -60,7 +74,7 @@ def _object(rd, dr_sources):
             title = app.config['DOMAIN'][dr['resource']]['item_title']
             source_def_name = title + '_' + dr['field']
             props[field] = {
-                '$ref': '#/definitions/{0}'.format(source_def_name)
+                '$ref': '#/components/schemas/{0}'.format(source_def_name)
             }
 
     field_def = {}

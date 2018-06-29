@@ -15,13 +15,13 @@ from flask import current_app as app
 from eve_swagger import OrderedDict
 
 
-# TODO consider adding at least a 'schema' property to response objects
-# TODO take auth into consideration
-
 def paths():
     def _clear_regex(_str):
-        return '/'.join(map(lambda x: re.sub('regex(.*):', '', x),
-                            _str.split('/')))
+        noregex = '/'.join(map(lambda x: re.sub('regex(.*):', '', x),
+                               _str.split('/')))
+        noregex = noregex.replace('<', '{')
+        noregex = noregex.replace('>', '}')
+        return noregex
 
     paths = OrderedDict()
     for resource, rd in app.config['DOMAIN'].items():
@@ -31,7 +31,6 @@ def paths():
 
         rd['url'] = _clear_regex(rd['url'])
         rd['resource_title'] = _clear_regex(rd['resource_title'])
-
         methods = rd['resource_methods']
         if methods:
             url = '/%s' % rd['url']
@@ -87,27 +86,52 @@ def _item(resource, rd, methods):
 
 
 def get_ref_schema(rd):
-    return {'$ref': '#/definitions/%s' % rd['item_title']}
+    return {'$ref': '#/components/schemas/%s' % rd['item_title']}
 
 
-def get_parameters(rd):
-    return OrderedDict([
-        ('in', 'body'),
-        ('name', rd['item_title']),
-        ('required', True),
-        ('schema', get_ref_schema(rd)),
-    ])
+def get_ref_parameter(rd):
+    return {
+        '$ref': '#/components/parameters/%s' %
+        rd['item_title'] + '_' + rd['item_lookup_field']}
+
+
+def get_ref_ifmatch():
+    return {'$ref': '#/components/parameters/If-Match'}
+
+
+def get_ref_requestBody(rd):
+    return {'$ref': '#/components/requestBodies/%s' % rd['item_title']}
+
+
+def get_ref_response(label):
+    return {'$ref': '#/components/responses/%s' % label}
+
+
+def get_parameters_dr(rd):
+    """ Add path parameters when using sub-resources."""
+    lookup_field = re.match(r"^.*\{(.*)\}.*$", rd['url'])
+    if lookup_field:
+        lookup_field = lookup_field.group(1)
+
+        if('data_relation' in rd['schema'][lookup_field]):
+            dr = rd['schema'][lookup_field]['data_relation']
+            return get_ref_parameter(app.config['DOMAIN'][dr['resource']])
 
 
 def get_response(rd):
     title = rd['resource_title']
     return OrderedDict([
         ('summary', 'Retrieves one or more %s' % title),
-        ('responses', {'200': {
-            'description': 'An array of %s' % title,
-            'schema': {
-                'type': 'array',
-                'items': get_ref_schema(rd)}}}),
+        ('responses', {
+            '200': {
+                'description': 'An array of %s' % title,
+                'content': {
+                    # TODO what about other methods?
+                    'application/json': {'schema': get_ref_schema(rd)}
+                }},
+            'default': get_ref_response('error')
+        }),
+        ('parameters', [get_parameters_dr(rd), ]),
         ('tags', [rd['item_title']])
     ])
 
@@ -115,9 +139,12 @@ def get_response(rd):
 def post_response(rd):
     return OrderedDict([
         ('summary', 'Stores one or more %s' % rd['resource_title']),
-        ('parameters', [get_parameters(rd)]),
-        ('responses', {'201':
-                       {'description': 'operation has been successful'}}),
+        ('requestBody', get_ref_requestBody(rd)),
+        ('responses', {
+            '201': {'description': 'operation has been successful'},
+            'default': get_ref_response('error')
+        }),
+        ('parameters', [get_parameters_dr(rd)]),
         ('tags', [rd['item_title']])
     ])
 
@@ -125,8 +152,11 @@ def post_response(rd):
 def delete_response(rd):
     return OrderedDict([
         ('summary', 'Deletes all %s' % rd['resource_title']),
-        ('responses', {'204':
-                       {'description': 'operation has been successful'}}),
+        ('responses', {
+            '204': {'description': 'operation has been successful'},
+            'default': get_ref_response('error')
+        }),
+        ('parameters', [get_parameters_dr(rd)]),
         ('tags', [rd['item_title']])
     ])
 
@@ -138,11 +168,15 @@ def getitem_response(rd):
         ('responses', {
             '200': {
                 'description': '%s document fetched successfully' % title,
-                'schema': get_ref_schema(rd)
+                'content': {
+                    # TODO what about other methods?
+                    'application/json': {'schema': get_ref_schema(rd)}
+                }
             },
-
+            'default': get_ref_response('error')
         }),
-        ('parameters', [id_parameter(rd)]),
+        ('parameters', [id_parameter(rd),
+                        get_parameters_dr(rd)]),
         ('tags', [rd['item_title']])
     ])
 
@@ -154,11 +188,13 @@ def put_response(rd):
         ('responses', {
             '200': {
                 'description': '%s document replaced successfully' % title
-            }
+            },
+            'default': get_ref_response('error')
         }),
+        ('requestBody', get_ref_requestBody(rd)),
         ('parameters', [id_parameter(rd),
-                        get_parameters(rd),
-                        header_parameters()]),
+                        get_ref_ifmatch(),
+                        get_parameters_dr(rd)]),
         ('tags', [rd['item_title']])
     ])
 
@@ -170,11 +206,13 @@ def patch_response(rd):
         ('responses', {
             '200': {
                 'description': '%s document updated successfully' % title
-            }
+            },
+            'default': get_ref_response('error')
         }),
+        ('requestBody', get_ref_requestBody(rd)),
         ('parameters', [id_parameter(rd),
-                        get_parameters(rd),
-                        header_parameters()]),
+                        get_ref_ifmatch(),
+                        get_parameters_dr(rd)]),
         ('tags', [rd['item_title']])
     ])
 
@@ -186,26 +224,19 @@ def deleteitem_response(rd):
         ('responses', {
             '204': {
                 'description': '%s document deleted successfully' % title
-            }
+            },
+            'default': get_ref_response('error')
         }),
-        ('parameters', [id_parameter(rd), header_parameters()]),
+        ('parameters', [id_parameter(rd),
+                        get_ref_ifmatch(),
+                        get_parameters_dr(rd)]),
         ('tags', [rd['item_title']])
     ])
 
 
 def id_parameter(rd):
-    return {'$ref': '#/parameters/{0}_{1}'.format(rd['item_title'],
-                                                  rd['item_lookup_field'])}
-
-
-def header_parameters():
-    r = OrderedDict()
-    r['in'] = 'header'
-    r['name'] = 'If-Match'
-    r['description'] = 'Current value of the _etag field'
-    r['required'] = app.config['IF_MATCH'] and app.config['ENFORCE_IF_MATCH']
-    r['type'] = 'string'
-    return r
+    return {'$ref': '#/components/parameters/{0}_{1}'.
+                    format(rd['item_title'], rd['item_lookup_field'])}
 
 
 def _hook_descriptions(resource, method, item=False):
