@@ -107,7 +107,7 @@ def get_ref_response(label):
     return {'$ref': '#/components/responses/%s' % label}
 
 
-def get_parameters_dr(rd):
+def add_parameters_dr(rd, parameters):
     """ Add path parameters when using sub-resources."""
     lookup_field = re.match(r"^.*\{(.*)\}.*$", rd['url'])
     if lookup_field:
@@ -115,12 +115,13 @@ def get_parameters_dr(rd):
 
         if('data_relation' in rd['schema'][lookup_field]):
             dr = rd['schema'][lookup_field]['data_relation']
-            return get_ref_parameter(app.config['DOMAIN'][dr['resource']])
+            parameters.append(get_ref_parameter(
+                app.config['DOMAIN'][dr['resource']]))
 
 
 def get_response(rd):
     title = rd['resource_title']
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Retrieves one or more %s' % title),
         ('responses', {
             '200': {
@@ -131,39 +132,51 @@ def get_response(rd):
                 }},
             'default': get_ref_response('error')
         }),
-        ('parameters', [get_parameters_dr(rd), ]),
+        ('parameters', []),
+        ('operationId', 'get' + title),
         ('tags', [rd['item_title']])
     ])
 
+    add_parameters_dr(rd, r['parameters'])
+    return r
+
 
 def post_response(rd):
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Stores one or more %s' % rd['resource_title']),
         ('requestBody', get_ref_requestBody(rd)),
         ('responses', {
             '201': {'description': 'operation has been successful'},
             'default': get_ref_response('error')
         }),
-        ('parameters', [get_parameters_dr(rd)]),
+        ('parameters', []),
+        ('operationId', 'post' + rd['resource_title']),
         ('tags', [rd['item_title']])
     ])
 
+    add_parameters_dr(rd, r['parameters'])
+    return r
+
 
 def delete_response(rd):
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Deletes all %s' % rd['resource_title']),
         ('responses', {
             '204': {'description': 'operation has been successful'},
             'default': get_ref_response('error')
         }),
-        ('parameters', [get_parameters_dr(rd)]),
+        ('parameters', []),
+        ('operationId', 'delete' + rd['resource_title']),
         ('tags', [rd['item_title']])
     ])
+
+    add_parameters_dr(rd, r['parameters'])
+    return r
 
 
 def getitem_response(rd):
     title = rd['item_title']
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Retrieves a %s document' % title),
         ('responses', {
             '200': {
@@ -175,15 +188,18 @@ def getitem_response(rd):
             },
             'default': get_ref_response('error')
         }),
-        ('parameters', [id_parameter(rd),
-                        get_parameters_dr(rd)]),
+        ('parameters', [id_parameter(rd), ]),
+        ('operationId', 'get' + title + 'Item'),
         ('tags', [rd['item_title']])
     ])
+
+    add_parameters_dr(rd, r['parameters'])
+    return r
 
 
 def put_response(rd):
     title = rd['item_title']
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Replaces a %s document' % title),
         ('responses', {
             '200': {
@@ -193,15 +209,18 @@ def put_response(rd):
         }),
         ('requestBody', get_ref_requestBody(rd)),
         ('parameters', [id_parameter(rd),
-                        get_ref_ifmatch(),
-                        get_parameters_dr(rd)]),
-        ('tags', [rd['item_title']])
+                        get_ref_ifmatch(), ]),
+        ('operationId', 'put' + title + 'Item'),
+        ('tags', [title])
     ])
+
+    add_parameters_dr(rd, r['parameters'])
+    return r
 
 
 def patch_response(rd):
     title = rd['item_title']
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Updates a %s document' % title),
         ('responses', {
             '200': {
@@ -211,15 +230,18 @@ def patch_response(rd):
         }),
         ('requestBody', get_ref_requestBody(rd)),
         ('parameters', [id_parameter(rd),
-                        get_ref_ifmatch(),
-                        get_parameters_dr(rd)]),
-        ('tags', [rd['item_title']])
+                        get_ref_ifmatch()]),
+        ('operationId', 'patch' + title + 'Item'),
+        ('tags', [title])
     ])
+
+    add_parameters_dr(rd, r['parameters'])
+    return r
 
 
 def deleteitem_response(rd):
     title = rd['item_title']
-    return OrderedDict([
+    r = OrderedDict([
         ('summary', 'Deletes a %s document' % title),
         ('responses', {
             '204': {
@@ -228,10 +250,13 @@ def deleteitem_response(rd):
             'default': get_ref_response('error')
         }),
         ('parameters', [id_parameter(rd),
-                        get_ref_ifmatch(),
-                        get_parameters_dr(rd)]),
+                        get_ref_ifmatch()]),
+        ('operationId', 'delete' + title + 'Item'),
         ('tags', [rd['item_title']])
     ])
+
+    add_parameters_dr(rd, r['parameters'])
+    return r
 
 
 def id_parameter(rd):
