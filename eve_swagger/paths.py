@@ -142,8 +142,16 @@ def get_response(rd):
 
 
 def post_response(rd):
+    def _get_description():
+        prefix = 'Stores one '
+        title = rd['item_title']
+        if rd['bulk_enabled']:
+            prefix += 'or more '
+            title = rd['resource_title']
+        return '%s%s.' % (prefix, title)
+        
     r = OrderedDict([
-        ('summary', 'Stores one or more %s' % rd['resource_title']),
+        ('summary', _get_description()),
         ('requestBody', get_ref_requestBody(rd)),
         ('responses', {
             '201': {'description': 'operation has been successful'},
