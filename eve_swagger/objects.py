@@ -136,8 +136,9 @@ def examples():
         title = rd['item_title']
         ex = OrderedDict()
         ex['summary'] = 'An example {0} document.'
-        ex['description'] = 'An example for {0} documents request bodies. Used in POST, PUT, PATCH methods.'.format(
-            title)
+        ex['description'] = ('An example for {0} documents request bodies.'
+                             ' Used in POST, PUT, PATCH methods.')\
+            .format(title)
         if 'example' in rd:
             ex['value'] = rd['example']
 

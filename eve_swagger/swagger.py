@@ -8,7 +8,6 @@
     :license: BSD, see LICENSE for more details.
 """
 import re
-import sys
 from collections import Mapping
 from flask import Blueprint, jsonify, make_response, request, \
     current_app as app, render_template
@@ -55,6 +54,7 @@ def _compile_docs():
 
     _nested_update(root, swagger.additional_documentation)
     return root
+
 
 def add_documentation(doc):
     _nested_update(swagger.additional_documentation, doc)
@@ -121,7 +121,8 @@ def index_json():
 @swagger.route('/docs')
 @_modify_response
 def index():
-    return render_template('index.html', spec_url=servers()[0]['url']+'/api-docs')
+    return render_template('index.html', spec_url=servers()[
+                           0]['url'] + '/api-docs')
 
 
 def _nested_update(orig_dict, new_dict):
