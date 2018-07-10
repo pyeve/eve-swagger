@@ -15,6 +15,10 @@ from .validation import validate_info
 from .paths import get_ref_schema
 
 
+def _get_scheme():
+    return 'http' if app.auth is None else 'https'
+
+
 def info():
     validate_info()
 
@@ -37,7 +41,7 @@ def info():
 
 
 def servers():
-    return [{'url': 'https://' +
+    return [{'url': '%s://' % _get_scheme() +
              (app.config.get(eve_swagger.HOST) or request.host)}]
 
 
@@ -132,8 +136,8 @@ def examples():
         title = rd['item_title']
         ex = OrderedDict()
         ex['summary'] = 'An example {0} document.'
-        ex['description'] = 'An example for {0} documents request bodies. \
-                            Used in POST, PUT, PATCH methods.'.format(title)
+        ex['description'] = 'An example for {0} documents request bodies. Used in POST, PUT, PATCH methods.'.format(
+            title)
         if 'example' in rd:
             ex['value'] = rd['example']
 
@@ -181,7 +185,8 @@ def headers():
 
 
 def security_schemes():
-    if('SENTINEL_ROUTE_PREFIX' in app.config.keys()):
+    if(app.auth is not None):
+        # TODO use app.auth to build the security scheme
         return {
             "oAuth2": {
                 "type": "oauth2",
@@ -189,7 +194,8 @@ def security_schemes():
                 "flows": {
                     "password": {
                         # TODO why does this not work with a relative path?
-                        "tokenUrl": 'https://' + app.config['SERVER_NAME'] +
+                        "tokenUrl": '%s://' % _get_scheme() +
+                                    app.config['SERVER_NAME'] +
                                     app.config['SENTINEL_ROUTE_PREFIX'] + \
                                     app.config['SENTINEL_TOKEN_URL'],
                         "scopes": {}}
