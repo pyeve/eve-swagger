@@ -121,8 +121,7 @@ def index_json():
 @swagger.route('/docs')
 @_modify_response
 def index():
-    return render_template('index.html', spec_url=servers()[
-                           0]['url'] + '/api-docs')
+    return render_template('index.html', spec_url='/api-docs')
 
 
 def _nested_update(orig_dict, new_dict):
