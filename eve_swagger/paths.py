@@ -149,7 +149,7 @@ def post_response(rd):
             prefix += 'or more '
             title = rd['resource_title']
         return '%s%s.' % (prefix, title)
-        
+
     r = OrderedDict([
         ('summary', _get_description()),
         ('requestBody', get_ref_requestBody(rd)),
