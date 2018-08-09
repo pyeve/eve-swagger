@@ -75,7 +75,11 @@ DOMAIN = {
                     'resource': 'people',
                     'field': '_id', },
             },
-            'subject': {'type': 'string'},
+            'dictprop': {
+                'type': 'dict',
+                'keyschema': {'type': 'string'},
+                'valueschema': {'type': 'float'}
+            },
         }
     },
     'disabled_resource': {
