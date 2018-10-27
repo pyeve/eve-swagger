@@ -89,6 +89,8 @@ def _item(resource, rd, methods):
 def get_ref_schema(rd):
     return {'$ref': '#/definitions/%s' % rd['item_title']}
 
+def get_ref_meta_parameter(param_name):
+    return {'$ref': '#/parameters/%s' % param_name}
 
 def get_parameters(rd):
     return OrderedDict([
@@ -99,17 +101,21 @@ def get_parameters(rd):
     ])
 
 
+def _build_meta_parameters(rd):
+    meta_parameters = []
+    if rd['projection']:
+        meta_parameters.append(get_ref_meta_parameter('projection'))
+    if rd['embedding']:
+        meta_parameters.append(get_ref_meta_parameter('embedded'))
+    if rd['sorting']:
+        meta_parameters.append(get_ref_meta_parameter('sort'))
+    if rd['allowed_filters']:
+        meta_parameters.append(get_ref_meta_parameter('where'))
+    return meta_parameters
+
 def get_response(rd):
     title = rd['resource_title']
-    meta_parameters = {}
-    if rd['projection']:
-        meta_parameters['projection'] = get_ref_schema({'item_title': 'projection'})
-    if rd['embedding']:
-        meta_parameters['embedded'] = get_ref_schema({'item_title': 'embedded'})
-    if rd['sorting']:
-        meta_parameters['sort'] = get_ref_schema({'item_title': 'sort'})
-    if rd['allowed_filters']:
-        meta_parameters['where'] = get_ref_schema({'item_title': 'where'})
+    meta_parameters = _build_meta_parameters(rd)
     return OrderedDict([
         ('summary', 'Retrieves one or more %s' % title),
         ('parameters', meta_parameters),
@@ -143,6 +149,7 @@ def delete_response(rd):
 
 def getitem_response(rd):
     title = rd['item_title']
+    meta_parameters = _build_meta_parameters(rd)
     return OrderedDict([
         ('summary', 'Retrieves a %s document' % title),
         ('responses', {
@@ -152,7 +159,7 @@ def getitem_response(rd):
             },
 
         }),
-        ('parameters', [id_parameter(rd)]),
+        ('parameters', [id_parameter(rd)] + meta_parameters),
         ('tags', [rd['item_title']])
     ])
 
