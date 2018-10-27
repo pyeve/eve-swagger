@@ -101,8 +101,18 @@ def get_parameters(rd):
 
 def get_response(rd):
     title = rd['resource_title']
+    meta_parameters = {}
+    if rd['projection']:
+        meta_parameters['projection'] = get_ref_schema({'item_title': 'projection'})
+    if rd['embedding']:
+        meta_parameters['embedded'] = get_ref_schema({'item_title': 'embedded'})
+    if rd['sorting']:
+        meta_parameters['sort'] = get_ref_schema({'item_title': 'sort'})
+    if rd['allowed_filters']:
+        meta_parameters['where'] = get_ref_schema({'item_title': 'where'})
     return OrderedDict([
         ('summary', 'Retrieves one or more %s' % title),
+        ('parameters', meta_parameters),
         ('responses', {'200': {
             'description': 'An array of %s' % title,
             'schema': {
