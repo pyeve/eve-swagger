@@ -5,9 +5,9 @@ name = "pypi"
 
 [packages]
 Eve = "*"
-jsonschema = "*"
 
 [dev-packages]
+jsonschema = "*"
 
 [requires]
 python_version = "3.7"
