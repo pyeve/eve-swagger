@@ -308,7 +308,7 @@ class TestEveSwagger(TestBase):
 
 class TestMetaParams(TestBase):
     def setUp(self, settings=None):
-        super(TestMetaParams, self).setUp() # gee python 2 :)
+        super(TestMetaParams, self).setUp()  # gee python 2 :)
         self.domain = self.app.config['DOMAIN']
         self.domain['people']['sorting'] = True
         self.domain['people']['projection'] = True

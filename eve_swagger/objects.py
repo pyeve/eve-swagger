@@ -126,7 +126,7 @@ def parameters():
         p['name'] = 'projection'
         p['required'] = False
         p['description'] = 'Allow to select fields :\n' \
-                           ' by addition : {"lastname": 1, "born": 1}=> only ' \
+                           ' by addition : {"lastname": 1, "born": 1}=> only '\
                            'these two fields\n' \
                            ' or by subtraction {"born": 0} => wihtout ' \
                            'the "born" field'
@@ -168,7 +168,8 @@ def parameters():
         p['required'] = False
         p['description'] = 'see https://eve-sqlalchemy.readthedocs.io/en' \
                            '/latest/tutorial.html#sqlalchemy-sorting'
-        p['example'] = '[("lastname", -1, "nullslast")] or lastname,-created_at'
+        p['example'] = '[("lastname", -1, "nullslast")] ' \
+                       'or lastname,-created_at'
         p['type'] = 'string'
         parameters[p['name']] = p
 
