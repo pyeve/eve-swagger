@@ -89,8 +89,10 @@ def _item(resource, rd, methods):
 def get_ref_schema(rd):
     return {'$ref': '#/definitions/%s' % rd['item_title']}
 
+
 def get_ref_meta_parameter(param_name):
     return {'$ref': '#/parameters/%s' % param_name}
+
 
 def get_parameters(rd):
     return OrderedDict([

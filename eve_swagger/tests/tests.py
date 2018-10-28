@@ -306,5 +306,25 @@ class TestEveSwagger(TestBase):
         self.assertIn('example', doc['definitions'][item_title])
 
 
+class TestMetaParams(TestBase):
+    def setUp(self, settings=None):
+        super(TestMetaParams, self).setUp() # gee python 2 :)
+        self.domain = self.app.config['DOMAIN']
+        self.domain['people']['sorting'] = True
+        self.domain['people']['projection'] = True
+        self.domain['people']['embedding'] = True
+        self.domain['people']['allowed_filters'] = ['*']
+        # This is not as neat at one would expect because it only sets the "people" and not the people/peopl_id, etc ..
+        # because there is no propagation of cascading parameters after init
+        self.swagger_doc = self.get_swagger_doc()
+
+    def test_meta_params(self):
+        doc = self.swagger_doc
+        expected = [{'$ref': '#/parameters/projection'}, {'$ref': '#/parameters/embedded'},
+                    {'$ref': '#/parameters/sort'}, {'$ref': '#/parameters/where'}]
+        params = self.swagger_doc['paths']['/people']['get']['parameters']
+        self.assertListEqual(expected, params)
+
+
 if __name__ == '__main__':
     unittest.main()

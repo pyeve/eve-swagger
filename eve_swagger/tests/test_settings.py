@@ -8,6 +8,11 @@ TRANSPARENT_SCHEMA_RULES = True
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 ITEM_METHODS = ['GET', 'PATCH', 'PUT', 'DELETE']
 
+SORTING = False
+PROJECTION = False
+ALLOWED_FILTERS = []
+EMBEDDING = False
+
 DOMAIN = {
     'people': {
         'description': 'the people resource',

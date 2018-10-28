@@ -19,7 +19,6 @@ class TestBase(unittest.TestCase):
         self.this_directory = os.path.dirname(os.path.realpath(__file__))
         if settings is None:
             settings = os.path.join(self.this_directory, 'test_settings.py')
-
         self.setupDB()
 
         self.settings = settings
@@ -28,8 +27,9 @@ class TestBase(unittest.TestCase):
         self.app.register_blueprint(eve_swagger.swagger)
         self.app.config['SWAGGER_INFO'] = {
             'title': 'Test eve-swagger',
-            'version': '0.0.1'
+            'version': '0.0.1',
         }
+        self.app.config['SORTING'] = False
 
         self.test_client = self.app.test_client()
         self.domain = self.app.config['DOMAIN']
