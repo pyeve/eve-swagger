@@ -115,6 +115,7 @@ def _build_meta_parameters(rd):
         meta_parameters.append(get_ref_meta_parameter('where'))
     return meta_parameters
 
+
 def get_response(rd):
     title = rd['resource_title']
     meta_parameters = _build_meta_parameters(rd)

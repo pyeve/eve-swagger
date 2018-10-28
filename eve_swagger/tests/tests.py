@@ -319,7 +319,6 @@ class TestMetaParams(TestBase):
         self.swagger_doc = self.get_swagger_doc()
 
     def test_meta_params(self):
-        doc = self.swagger_doc
         expected = [{'$ref': '#/parameters/projection'}, {'$ref': '#/parameters/embedded'},
                     {'$ref': '#/parameters/sort'}, {'$ref': '#/parameters/where'}]
         params = self.swagger_doc['paths']['/people']['get']['parameters']

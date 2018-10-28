@@ -93,7 +93,7 @@ def parameters():
             source_def = source_rd['schema'][dr['field']]
 
             # key in #/definitions/...
-            source_def_name = source_rd['item_title']+'_'+dr['field']
+            source_def_name = source_rd['item_title'] + '_' + dr['field']
 
             # copy description if necessary
             descr = descr or source_def.get('description')
@@ -116,7 +116,7 @@ def parameters():
             p['type'] = 'number'
             p['format'] = 'float'
 
-        parameters[title+'_'+lookup_field] = p
+        parameters[title + '_' + lookup_field] = p
 
     # Let's add the technical eve parameters : projection(field selection), embedded(relationship) and where (sort)
     # @TODO we could test if we have at least one embeddable field or we are in eve-SQLAchemy for where and sort ...
@@ -130,7 +130,7 @@ def parameters():
                            ' or by subtraction {"born": 0} => wihtout the "born" field'
         p['example'] = '{"lastname": 1, "born": 1} or {"born": 0}'
         p['type'] = 'string'
-        parameters[p['name']]= p
+        parameters[p['name']] = p
 
     if rd['embedding']:
         p = OrderedDict()
@@ -138,11 +138,11 @@ def parameters():
         p['name'] = 'embedded'
         p['required'] = False
         p['description'] = 'Allow to embed the other side of a relationship into the current payload :\n' \
-                           ' format {"author":1, "phones":0} => embed the author but don\'t embed the phone relationship\n' \
+                           ' format {"author":1, "phones":0} => embed the author but don\'t embed the phone\n' \
                            'see http://docs.python-eve.org/en/latest/features.html#projections'
         p['example'] = '{"author":1,"cosignees":1}'
         p['type'] = 'string'
-        parameters[p['name']]= p
+        parameters[p['name']] = p
 
     if rd['sorting']:
         p = OrderedDict()
@@ -152,7 +152,7 @@ def parameters():
         p['description'] = 'see https://eve-sqlalchemy.readthedocs.io/en/latest/tutorial.html#sqlalchemy-expressions'
         p['example'] = '{"firstname":"in(\"(\'John\',\'Fred\'\"))" or {"lastname":"like(\"Smi%\")"}'
         p['type'] = 'string'
-        parameters[p['name']]= p
+        parameters[p['name']] = p
 
     if rd['allowed_filters']:
         p = OrderedDict()
@@ -162,7 +162,7 @@ def parameters():
         p['description'] = 'see https://eve-sqlalchemy.readthedocs.io/en/latest/tutorial.html#sqlalchemy-sorting'
         p['example'] = '[("lastname", -1, "nullslast")] or lastname,-created_at'
         p['type'] = 'string'
-        parameters[p['name']]= p
+        parameters[p['name']] = p
 
     return parameters
 
