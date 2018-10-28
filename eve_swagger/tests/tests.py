@@ -314,13 +314,16 @@ class TestMetaParams(TestBase):
         self.domain['people']['projection'] = True
         self.domain['people']['embedding'] = True
         self.domain['people']['allowed_filters'] = ['*']
-        # This is not as neat at one would expect because it only sets the "people" and not the people/peopl_id, etc ..
+        # This is not as neat at one would expect because it only sets
+        # the "people" and not the people/peopl_id, etc ..
         # because there is no propagation of cascading parameters after init
         self.swagger_doc = self.get_swagger_doc()
 
     def test_meta_params(self):
-        expected = [{'$ref': '#/parameters/projection'}, {'$ref': '#/parameters/embedded'},
-                    {'$ref': '#/parameters/sort'}, {'$ref': '#/parameters/where'}]
+        expected = [{'$ref': '#/parameters/projection'},
+                    {'$ref': '#/parameters/embedded'},
+                    {'$ref': '#/parameters/sort'},
+                    {'$ref': '#/parameters/where'}]
         params = self.swagger_doc['paths']['/people']['get']['parameters']
         self.assertListEqual(expected, params)
 
