@@ -311,6 +311,19 @@ class TestEveSwagger(TestBase):
 
         self.assertIn(item_title, examples)
 
+    def test_dict_valueschema(self):
+        components = self.swagger_doc['components']
+        item_title = 'Sub_resource'
+        props = components['schemas'][item_title]['properties']
+        thedict = props['dictprop']
+        itemschema = self.domain['sub_resource']['schema']
+
+        self.assertEqual(thedict['type'], 'object')
+        self.assertIn('properties', thedict)
+        self.assertEqual(
+            thedict['properties']['values']['type'],
+            itemschema['dictprop']['valueschema']['type'])
+
 
 if __name__ == '__main__':
     unittest.main()

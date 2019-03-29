@@ -151,12 +151,25 @@ def _field_props(rules, dr_sources, prefix):
 
     resp['type'] = type[0]
     if type[0] == 'object':
-        # we don't support 'valueschema' rule
         if 'schema' in rules:
             # set prefix as item_title to avoid name collisions of nested
             # fields with higher up fields
             pseudo_rd = {'item_title': prefix, 'schema': rules['schema']}
             resp.update(_object(pseudo_rd, dr_sources))
+        # TODO add support for more elaborate cases using additionalProperties
+        elif 'valueschema' in rules:
+            keytype = {'type': 'string'}
+            if 'keyschema' in rules:
+                keytype = rules['keyschema']
+
+            pseudo_rd = {
+                'item_title': prefix,
+                'properties': {
+                    'keys': keytype,
+                    'values': rules['valueschema']
+                }
+            }
+            resp.update(pseudo_rd)
     elif type[0] == 'array':
         type = 'array'
         if 'schema' in rules:
