@@ -4,6 +4,10 @@ MONGO_USERNAME = 'test_user'
 MONGO_PASSWORD = 'test_pw'
 MONGO_DBNAME = 'eve_swagger_test'
 
+SERVER_NAME = 'localhost:5000'
+SENTINEL_ROUTE_PREFIX = '/oauth'
+SENTINEL_TOKEN_URL = '/token'
+
 TRANSPARENT_SCHEMA_RULES = True
 RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 ITEM_METHODS = ['GET', 'PATCH', 'PUT', 'DELETE']
@@ -71,7 +75,11 @@ DOMAIN = {
                     'resource': 'people',
                     'field': '_id', },
             },
-            'subject': {'type': 'string'},
+            'dictprop': {
+                'type': 'dict',
+                'keyschema': {'type': 'string'},
+                'valueschema': {'type': 'float'}
+            },
         }
     },
     'disabled_resource': {

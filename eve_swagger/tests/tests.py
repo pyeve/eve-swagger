@@ -47,16 +47,22 @@ class TestEveSwagger(TestBase):
         self.assertIn('/' + url, doc['paths'])
         self.assertIn('/%s/{%sId}' % (url, item_title.lower()), doc['paths'])
 
-    def test_definitions(self):
+    def test_components(self):
         doc = self.swagger_doc
+
+        self.assertIn('components', doc)
+        self.assertIsInstance(doc['components'], dict)
+
+    def test_components_schemas(self):
+        components = self.swagger_doc['components']
         item_title = self.domain['people']['item_title']
 
-        self.assertIn('definitions', doc)
-        self.assertIsInstance(doc['definitions'], dict)
-        self.assertIn(item_title, doc['definitions'])
-        self.assertIn('properties', doc['definitions'][item_title])
+        self.assertIn('schemas', components)
+        self.assertIsInstance(components['schemas'], dict)
+        self.assertIn(item_title, components['schemas'])
+        self.assertIn('properties', components['schemas'][item_title])
         self.assertEqual(
-            set(doc['definitions'][item_title]['properties'].keys()),
+            set(components['schemas'][item_title]['properties'].keys()),
             set(['name', 'job', 'email', 'position', '_id',
                  'relations', 'location']))
 
@@ -66,38 +72,40 @@ class TestEveSwagger(TestBase):
 
         # validate if schema is jsonschema
         try:
-            validate({}, doc['definitions'][item_title])
+            validate({}, doc['components']['schemas'][item_title])
         except ValidationError:
             # validation errors are only thrown after schema is checked
             self.assertTrue(True)
 
     def test_parameters_people(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         item_title = self.domain['people']['item_title']
         lookup_field = self.domain['people']['item_lookup_field']
 
-        self.assertIn('parameters', doc)
-        self.assertIn(item_title + '_' + lookup_field, doc['parameters'])
+        self.assertIn('parameters', components)
+        self.assertIn(
+            item_title + '_' + lookup_field,
+            components['parameters'])
 
     def test_resource_description(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         item_title = self.domain['people']['item_title']
 
         self.assertEqual('the people resource',
-                         doc['definitions'][item_title]['description'])
+                         components['schemas'][item_title]['description'])
 
     def test_field_description(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         item_title = self.domain['people']['item_title']
-        props = doc['definitions'][item_title]['properties']
+        props = components['schemas'][item_title]['properties']
 
         self.assertEqual('the last name of the person',
                          props['name']['description'])
 
     def test_field_example(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         item_title = self.domain['people']['item_title']
-        props = doc['definitions'][item_title]['properties']
+        props = components['schemas'][item_title]['properties']
 
         self.assertEqual('Doe', props['name']['example'])
 
@@ -110,44 +118,47 @@ class TestEveSwagger(TestBase):
         self.assertNotIn('/' + url, doc['paths'])
         self.assertNotIn('/%s/{%sId}' % (url, item_title.lower()),
                          doc['paths'])
-        self.assertNotIn(item_title, doc['definitions'])
-        self.assertNotIn(item_title + '_' + lookup_field, doc['parameters'])
+        self.assertNotIn(item_title, doc['components']['schemas'])
+        self.assertNotIn(
+            item_title + '_' + lookup_field,
+            doc['components']['parameters'])
 
     def test_data_relation_source_field(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
 
         source_field = self.domain['people']['item_title'] + '_job'
-        self.assertIn(source_field, doc['definitions'])
+        self.assertIn(source_field, components['schemas'])
 
     def test_reference_to_data_relation_source_field(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         people_it = self.domain['people']['item_title']
-        people_props = doc['definitions'][people_it]['properties']
+
+        people_props = components['schemas'][people_it]['properties']
         dr_1_it = self.domain['dr_resource_1']['item_title']
-        dr_1_props = doc['definitions'][dr_1_it]['properties']
+        dr_1_props = components['schemas'][dr_1_it]['properties']
         key = people_it + '_job'
 
         self.assertIn('$ref', people_props['job'])
-        self.assertEqual('#/definitions/%s' % key,
+        self.assertEqual('#/components/schemas/%s' % key,
                          people_props['job']['$ref'])
-        self.assertIn(key, doc['definitions'])
+        self.assertIn(key, components['schemas'])
 
         self.assertIn('$ref', dr_1_props['copied_field_with_description'])
-        self.assertEqual('#/definitions/%s' % key,
+        self.assertEqual('#/components/schemas/%s' % key,
                          dr_1_props['copied_field_with_description']['$ref'])
 
         key = people_it + '__id'
         people_rels_props = people_props['relations']['items']['properties']
         self.assertIn('$ref', people_rels_props['relation'])
-        self.assertEqual('#/definitions/%s' % key,
+        self.assertEqual('#/components/schemas/%s' % key,
                          people_rels_props['relation']['$ref'])
-        self.assertIn(key, doc['definitions'])
+        self.assertIn(key, components['schemas'])
 
     def test_data_relation_extended_description(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         item_title = self.domain['dr_resource_1']['item_title']
         lookup_field = self.domain['dr_resource_1']['item_lookup_field']
-        par = doc['parameters'][item_title + '_' + lookup_field]
+        par = components['parameters'][item_title + '_' + lookup_field]
         people_it = self.domain['people']['item_title']
 
         self.assertIn('description', par)
@@ -156,10 +167,10 @@ class TestEveSwagger(TestBase):
             par['description'])
 
     def test_data_relation_copied_description(self):
-        doc = self.swagger_doc
+        components = self.swagger_doc['components']
         item_title = self.domain['dr_resource_2']['item_title']
         lookup_field = self.domain['dr_resource_2']['item_lookup_field']
-        par = doc['parameters'][item_title + '_' + lookup_field]
+        par = components['parameters'][item_title + '_' + lookup_field]
         people_it = self.domain['people']['item_title']
 
         self.assertIn('description', par)
@@ -173,24 +184,28 @@ class TestEveSwagger(TestBase):
         item_title = self.domain['people']['item_title']
         url = '/%s/{%sId}' % (url, item_title.lower())
 
+        parameters = doc['components']['parameters']
+        self.assertIn('If-Match', parameters)
+        h = parameters['If-Match']
+        self.assertIn('name', h)
+        self.assertEqual(h['name'], 'If-Match')
+        self.assertTrue(h['required'])
+
+        ifmatch_url = '#/components/parameters/If-Match'
         header_parameters = []
         # assume that header parameters are equal for PUT, PATCH, and DELETE
         for method in ['put', 'patch', 'delete']:
             for p in doc['paths'][url][method]['parameters']:
-                if 'in' not in p:
+                if p is None:
                     continue
-                if p['in'] == 'header':
+                if p['$ref'] == ifmatch_url:
                     if method in ['patch', 'delete']:
                         # already added in 'put'
-                        self.assertIn(p, header_parameters)
+                        self.assertIn(p['$ref'], header_parameters)
                     else:
-                        header_parameters += [p]
+                        header_parameters += [p['$ref']]
 
         self.assertTrue(len(header_parameters) == 1)
-        h = header_parameters[0]
-        self.assertIn('name', h)
-        self.assertEqual(h['name'], 'If-Match')
-        self.assertTrue(h['required'])
 
     def test_header_parameters_without_concurrency_control(self):
         url = self.domain['people']['url']
@@ -198,8 +213,7 @@ class TestEveSwagger(TestBase):
         url = '/%s/{%sId}' % (url, item_title.lower())
 
         def get_etag_param(doc):
-            params = doc['paths'][url]['delete']['parameters']
-            return next(p for p in params if p.get('name') == 'If-Match')
+            return doc['components']['parameters']['If-Match']
 
         self.app.config['IF_MATCH'] = False
         etag_param = get_etag_param(self.get_swagger_doc())
@@ -284,26 +298,31 @@ class TestEveSwagger(TestBase):
         self.assertIn('200', person['put']['responses'])
         self.assertIn('204', person['delete']['responses'])
 
-    def test_schemes_override(self):
-        self.app.config['SWAGGER_INFO']['schemes'] = ['https']
-        r = self.test_client.get('/api-docs')
-        self.assertEqual(r.status_code, 200)
-        s = r.get_data().decode('utf-8')
-        d = json.loads(s)
-        self.assertEqual(d.get('schemes'), ['https'])
-
     def test_sub_resource_regex(self):
         url = self.domain['sub_resource']['url']
         resource_title = self.domain['sub_resource']['resource_title']
 
-        self.assertEqual('people/<personid>/related', url)
-        self.assertEqual('people/<personid>/related', resource_title)
+        self.assertEqual('people/{personid}/related', url)
+        self.assertEqual('people/{personid}/related', resource_title)
 
     def test_resource_example(self):
-        doc = self.swagger_doc
+        examples = self.swagger_doc['components']['examples']
         item_title = self.domain['sub_resource']['item_title']
 
-        self.assertIn('example', doc['definitions'][item_title])
+        self.assertIn(item_title, examples)
+
+    def test_dict_valueschema(self):
+        components = self.swagger_doc['components']
+        item_title = 'Sub_resource'
+        props = components['schemas'][item_title]['properties']
+        thedict = props['dictprop']
+        itemschema = self.domain['sub_resource']['schema']
+
+        self.assertEqual(thedict['type'], 'object')
+        self.assertIn('properties', thedict)
+        self.assertEqual(
+            thedict['properties']['values']['type'],
+            itemschema['dictprop']['valueschema']['type'])
 
 
 if __name__ == '__main__':

@@ -10,19 +10,50 @@
 import re
 from collections import Mapping
 from flask import Blueprint, jsonify, make_response, request, \
-    current_app as app
+    current_app as app, render_template
 from functools import wraps
 
 from eve_swagger import OrderedDict
 from .definitions import definitions
-from .objects import info, host, base_path, schemes, consumes, produces, \
-    parameters, responses, security_definitions, security, tags, \
-    external_docs
+from .objects import info, servers, parameters, responses, request_bodies,\
+    security_schemes, security, tags, external_docs, headers, links,\
+    callbacks, examples
 from .paths import paths
 
 
-swagger = Blueprint('eve_swagger', __name__)
+swagger = Blueprint('eve_swagger', __name__, template_folder='templates')
 swagger.additional_documentation = OrderedDict()
+
+
+def _compile_docs():
+    def node(parent, key, value):
+        if value:
+            parent[key] = value
+
+    root = OrderedDict()
+    root['openapi'] = '3.0.0'
+    node(root, 'info', info())
+    node(root, 'servers', servers())
+    node(root, 'paths', paths())
+
+    components = OrderedDict()
+    node(components, 'schemas', definitions())
+    node(components, 'responses', responses())
+    node(components, 'parameters', parameters())
+    node(components, 'examples', examples())
+    node(components, 'requestBodies', request_bodies())
+    node(components, 'headers', headers())
+    node(components, 'securitySchemes', security_schemes())
+    node(components, 'links', links())
+    node(components, 'callbacks', callbacks())
+    node(root, 'components', components)
+
+    node(root, 'security', security())
+    node(root, 'tags', tags())
+    node(root, 'externalDocs', external_docs())
+
+    _nested_update(root, swagger.additional_documentation)
+    return root
 
 
 def add_documentation(doc):
@@ -83,31 +114,14 @@ def _modify_response(f):
 
 @swagger.route('/api-docs')
 @_modify_response
+def index_json():
+    return jsonify(_compile_docs())
+
+
+@swagger.route('/docs')
+@_modify_response
 def index():
-    def node(parent, key, value):
-        if value:
-            parent[key] = value
-
-    root = OrderedDict()
-    root['swagger'] = '2.0'
-    node(root, 'info', info())
-    node(root, 'host', host())
-    node(root, 'basePath', base_path())
-    node(root, 'schemes', schemes())
-    node(root, 'consumes', consumes())
-    node(root, 'produces', produces())
-    node(root, 'paths', paths())
-    node(root, 'definitions', definitions())
-    node(root, 'parameters', parameters())
-    node(root, 'responses', responses())
-    node(root, 'securityDefinitions', security_definitions())
-    node(root, 'security', security())
-    node(root, 'tags', tags())
-    node(root, 'externalDocs', external_docs())
-
-    _nested_update(root, swagger.additional_documentation)
-
-    return jsonify(root)
+    return render_template('index.html', spec_url='/api-docs')
 
 
 def _nested_update(orig_dict, new_dict):
