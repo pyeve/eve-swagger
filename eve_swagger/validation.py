@@ -22,47 +22,44 @@ except ImportError:
 def validate_info():
     v = Validator()
     schema = {
-        'title': {'required': True, 'type': 'string'},
-        'version': {'required': True, 'type': 'string'},
-        'description': {'type': 'string'},
-        'termsOfService': {'type': 'string'},
-        'contact': {
-            'type': 'dict',
-            'schema': {
-                'name': {'type': 'string'},
-                'url': {'type': 'string', 'validator': _validate_url},
-                'email': {
-                    'type': 'string',
-                    'regex':
-                    r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-                }
-            }
+        "title": {"required": True, "type": "string"},
+        "version": {"required": True, "type": "string"},
+        "description": {"type": "string"},
+        "termsOfService": {"type": "string"},
+        "contact": {
+            "type": "dict",
+            "schema": {
+                "name": {"type": "string"},
+                "url": {"type": "string", "validator": _validate_url},
+                "email": {
+                    "type": "string",
+                    "regex": r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+"
+                    r"\.[a-zA-Z0-9-.]+$",
+                },
+            },
         },
-        'license': {
-            'type': 'dict',
-            'schema': {
-                'name': {'type': 'string', 'required': True},
-                'url': {'type': 'string', 'validator': _validate_url}
-            }
+        "license": {
+            "type": "dict",
+            "schema": {
+                "name": {"type": "string", "required": True},
+                "url": {"type": "string", "validator": _validate_url},
+            },
         },
-        'schemes': {
-            'type': 'list',
-            'schema': {
-                'type': 'string'
-            }
-        }
+        "schemes": {"type": "list", "schema": {"type": "string"}},
     }
     if eve_swagger.INFO not in app.config:
-        raise ConfigException('%s setting is required in Eve configuration.' %
-                              eve_swagger.INFO)
+        raise ConfigException(
+            "%s setting is required in Eve configuration." % eve_swagger.INFO
+        )
 
     if not v.validate(app.config[eve_swagger.INFO], schema):
-        raise ConfigException('%s is misconfigured: %s' % (
-            eve_swagger.INFO, v.errors))
+        raise ConfigException(
+            "%s is misconfigured: %s" % (eve_swagger.INFO, v.errors)
+        )
 
 
 def _validate_url(field, value, error):
     # TODO probably too weak
     o = urlparse(value)
     if not bool(o.scheme):
-        error(field, 'Invalid URL')
+        error(field, "Invalid URL")

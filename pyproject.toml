@@ -1,0 +1,4 @@
+[tool.black]
+line-length = 79
+safe = true
+quiet = true
