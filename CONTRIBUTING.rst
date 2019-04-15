@@ -4,19 +4,18 @@ How to Contribute
 Contributions are welcome! Not familiar with the codebase yet? No problem!
 There are many ways to contribute to open source projects: reporting bugs,
 helping with the documentation, spreading the word and of course, adding
-new features and patches. 
+new features and patches.
 
 Getting Started
 ---------------
 #. Make sure you have a GitHub_ account.
 #. Open a `new issue`_, assuming one does not already exist.
 #. Clearly describe the issue including steps to reproduce when it is a bug.
-
 Making Changes
 --------------
 * Fork_ the repository on GitHub.
 * Create a topic branch from where you want to base your work.
-* This is usually the ``master`` branch. 
+* This is usually the ``master`` branch.
 * Please avoid working directly on the ``master`` branch.
 * Make commits of logical units (if needed rebase your feature branch before
   submitting it).
@@ -25,6 +24,7 @@ Making Changes
 * If your commit fixes an open issue, reference it in the commit message (#15).
 * Make sure your code conforms to PEP8_ (we're using flake8_ for PEP8 and extra checks).
 * Make sure you have added the necessary tests for your changes.
+* Make sure to install pre-commit_ ``pip install --user pre-commit`` and ``pre-commit install``
 * Run all the tests to assure nothing else was accidentally broken.
 * Run again the entire suite via tox_ to check your changes against multiple
   python versions. ``pip install tox; tox``
@@ -45,7 +45,7 @@ First time contributor?
 -----------------------
 It's alright. We've all been there. See next chapter.
 
-Don't know where to start? 
+Don't know where to start?
 --------------------------
 There are usually several TODO comments scattered around the codebase, maybe
 check them out and see if you have ideas, or can help with them. Also, check
@@ -71,5 +71,4 @@ case, other than GitHub help_ pages, you might want to check this excellent
 .. _`fork and edit`: https://github.com/blog/844-forking-with-the-edit-button
 .. _`Pull Request`: https://help.github.com/articles/creating-a-pull-request
 .. _`running the tests`: http://python-eve.org/testing#running-the-tests
-
-
+.. _pre-commit: https://pre-commit.com/
