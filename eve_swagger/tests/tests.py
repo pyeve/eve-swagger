@@ -45,7 +45,9 @@ class TestEveSwagger(TestBase):
         self.assertIn('paths', doc)
         self.assertIsInstance(doc['paths'], dict)
         self.assertIn('/' + url, doc['paths'])
-        self.assertIn('/%s/{%sId}' % (url, item_title.lower()), doc['paths'])
+        self.assertIn('/{}/{{{}Id}}'.format(
+            url, item_title.lower()), doc['paths']
+        )
 
     def test_components(self):
         doc = self.swagger_doc
@@ -63,8 +65,8 @@ class TestEveSwagger(TestBase):
         self.assertIn('properties', components['schemas'][item_title])
         self.assertEqual(
             set(components['schemas'][item_title]['properties'].keys()),
-            set(['name', 'job', 'email', 'position', '_id',
-                 'relations', 'location']))
+            {'name', 'job', 'email', 'position', '_id',
+             'relations', 'location'})
 
     def test_definitions_are_jsonschema(self):
         doc = self.swagger_doc
@@ -116,7 +118,7 @@ class TestEveSwagger(TestBase):
         lookup_field = self.domain['disabled_resource']['item_lookup_field']
 
         self.assertNotIn('/' + url, doc['paths'])
-        self.assertNotIn('/%s/{%sId}' % (url, item_title.lower()),
+        self.assertNotIn('/{}/{{{}Id}}'.format(url, item_title.lower()),
                          doc['paths'])
         self.assertNotIn(item_title, doc['components']['schemas'])
         self.assertNotIn(
@@ -163,7 +165,7 @@ class TestEveSwagger(TestBase):
 
         self.assertIn('description', par)
         self.assertEqual(
-            'foobar copied_field (links to {0}_job)'.format(people_it),
+            'foobar copied_field (links to {}_job)'.format(people_it),
             par['description'])
 
     def test_data_relation_copied_description(self):
@@ -175,14 +177,14 @@ class TestEveSwagger(TestBase):
 
         self.assertIn('description', par)
         self.assertEqual(
-            'the job of the person (links to {0}_job)'.format(people_it),
+            'the job of the person (links to {}_job)'.format(people_it),
             par['description'])
 
     def test_header_parameters(self):
         doc = self.swagger_doc
         url = self.domain['people']['url']
         item_title = self.domain['people']['item_title']
-        url = '/%s/{%sId}' % (url, item_title.lower())
+        url = '/{}/{{{}Id}}'.format(url, item_title.lower())
 
         parameters = doc['components']['parameters']
         self.assertIn('If-Match', parameters)
@@ -210,7 +212,7 @@ class TestEveSwagger(TestBase):
     def test_header_parameters_without_concurrency_control(self):
         url = self.domain['people']['url']
         item_title = self.domain['people']['item_title']
-        url = '/%s/{%sId}' % (url, item_title.lower())
+        url = '/{}/{{{}Id}}'.format(url, item_title.lower())
 
         def get_etag_param(doc):
             return doc['components']['parameters']['If-Match']
@@ -253,11 +255,11 @@ class TestEveSwagger(TestBase):
         self.assertIn('Access-Control-Allow-Headers', r.headers)
         self.assertEqual(
             set(r.headers['Access-Control-Allow-Headers'].split(', ')),
-            set(['Origin', 'X-Requested-With', 'Content-Type', 'Accept']))
+            {'Origin', 'X-Requested-With', 'Content-Type', 'Accept'})
         self.assertIn('Access-Control-Allow-Methods', r.headers)
         self.assertEqual(
             set(r.headers['Access-Control-Allow-Methods'].split(', ')),
-            set(['HEAD', 'OPTIONS', 'GET']))
+            {'HEAD', 'OPTIONS', 'GET'})
         self.assertIn('Access-Control-Max-Age', r.headers)
         self.assertEqual(r.headers['Access-Control-Max-Age'],
                          '2000')
@@ -276,7 +278,9 @@ class TestEveSwagger(TestBase):
             self.assertIn('tags', path_m)
             self.assertIn(item_title, path_m['tags'])
 
-        url = '/%s/{%sId}' % (self.domain['people']['url'], item_title.lower())
+        url = '/{}/{{{}Id}}'.format(
+            self.domain['people']['url'], item_title.lower()
+        )
         for m in ['get', 'patch', 'put', 'delete']:
             path_m = doc['paths'][url][m]
             self.assertIn('tags', path_m)
@@ -292,7 +296,7 @@ class TestEveSwagger(TestBase):
         self.assertIn('204', people['delete']['responses'])
 
         item_title = self.domain['people']['item_title']
-        person = doc['paths']['/%s/{%sId}' % (url, item_title.lower())]
+        person = doc['paths']['/{}/{{{}Id}}'.format(url, item_title.lower())]
         self.assertIn('200', person['get']['responses'])
         self.assertIn('200', person['patch']['responses'])
         self.assertIn('200', person['put']['responses'])

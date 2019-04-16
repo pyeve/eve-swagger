@@ -88,7 +88,7 @@ def parameters():
 
             # copy description if necessary
             descr = descr or source_def.get('description')
-            descr = descr + ' (links to {0})'.format(source_def_name)
+            descr = descr + ' (links to {})'.format(source_def_name)
 
         p = OrderedDict()
         p['in'] = 'path'
@@ -160,7 +160,7 @@ def request_bodies():
 
         title = rd['item_title']
         rb = OrderedDict()
-        description = 'A {0} document.'.format(title)
+        description = 'A {} document.'.format(title)
         if(rd['bulk_enabled']):
             description = 'A {0} or list of {0} documents'.format(title)
 

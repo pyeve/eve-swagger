@@ -62,7 +62,7 @@ def _object(rd, dr_sources):
             dr_sources[def_name] = OrderedDict(props[field])
 
             props[field] = {
-                '$ref': '#/components/schemas/{0}'.format(def_name)}
+                '$ref': '#/components/schemas/{}'.format(def_name)}
 
         if 'data_relation' in rules:
             # the current field is a copy of another field
@@ -73,7 +73,7 @@ def _object(rd, dr_sources):
             title = app.config['DOMAIN'][dr['resource']]['item_title']
             source_def_name = title + '_' + dr['field']
             props[field] = {
-                '$ref': '#/components/schemas/{0}'.format(source_def_name)
+                '$ref': '#/components/schemas/{}'.format(source_def_name)
             }
 
     field_def = {}
