@@ -7,10 +7,6 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict  # noqa: F401
 from .swagger import swagger, add_documentation  # noqa
 
 INFO = 'SWAGGER_INFO'

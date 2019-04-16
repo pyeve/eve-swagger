@@ -8,11 +8,10 @@
 """
 import re
 
+from collections import OrderedDict
 from textwrap import dedent
 
 from flask import current_app as app
-
-from eve_swagger import OrderedDict
 
 
 def paths():

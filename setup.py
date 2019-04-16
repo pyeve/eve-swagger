@@ -49,6 +49,7 @@ setup(
     packages=find_packages(),
     install_requires=read_file('requirements.txt'),
     keywords=['swagger', 'eve', 'rest', 'api'],
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
@@ -57,7 +58,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',

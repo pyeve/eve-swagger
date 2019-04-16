@@ -8,12 +8,11 @@
     :license: BSD, see LICENSE for more details.
 """
 import re
-from collections import Mapping
+from collections import Mapping, OrderedDict
 from flask import Blueprint, jsonify, make_response, request, \
     current_app as app, render_template
 from functools import wraps
 
-from eve_swagger import OrderedDict
 from .definitions import definitions
 from .objects import info, servers, parameters, responses, request_bodies,\
     security_schemes, security, tags, external_docs, headers, links,\

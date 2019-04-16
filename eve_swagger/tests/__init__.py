@@ -1,17 +1,12 @@
-import sys
 import os
 import json
+import unittest
 
 import eve
 import eve_swagger
 from pymongo import MongoClient
 from eve_swagger.tests.test_settings import MONGO_HOST, MONGO_PORT, \
     MONGO_USERNAME, MONGO_PASSWORD, MONGO_DBNAME
-
-if sys.version_info >= (2, 7):
-    import unittest  # noqa
-else:
-    import unittest2 as unittest  # noqa
 
 
 class TestBase(unittest.TestCase):
