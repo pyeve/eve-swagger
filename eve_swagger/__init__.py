@@ -9,5 +9,5 @@
 """
 from .swagger import swagger, add_documentation  # noqa
 
-INFO = 'SWAGGER_INFO'
-HOST = 'SWAGGER_HOST'
+INFO = "SWAGGER_INFO"
+HOST = "SWAGGER_HOST"

@@ -1,7 +1,7 @@
 Eve-Swagger |latest-version|
 ============================
 
-|build-status| |python-support|
+|latest-version| |build-status| |python-support| |license| |black-formatting|
 
 Swagger_ extension for Eve_ powered RESTful APIs.
 
@@ -102,7 +102,7 @@ As an example:
 
 **NOTE**: If you do use that feature make sure that the ``TRANSPARENT_SCHEMA_RULES``
 in your ``settings.py`` is also turned ON, otherwise you will get complains from the
-Cerberus library about "unknown field 'description' for field [yourFieldName]", or use 
+Cerberus library about "unknown field 'description' for field [yourFieldName]", or use
 a custom schema validator, as below:
 
 .. code-block:: python
@@ -194,10 +194,10 @@ The example is shown in the swagger ui in the model and the responses.
 .. image:: resources/example_field.png
 
 **NOTE**: As with the description, the field ``TRANSPARENT_SCHEMA_RULES``
-must be enabled in your ``settings.py``, otherwise the Cerberus library 
+must be enabled in your ``settings.py``, otherwise the Cerberus library
 will display an error about "unknown field 'example' for field[yourFieldName]".
 
-If you do not want to use this rule for the entire schema, you can also use 
+If you do not want to use this rule for the entire schema, you can also use
 your own validator.
 
 .. code-block:: python
@@ -259,6 +259,9 @@ See the original LICENSE_ for more information.
 .. |license| image:: https://img.shields.io/pypi/l/eve-swagger.svg
    :alt: Software license
    :target: https://github.com/pyeve/eve-swagger/blob/master/LICENSE
+.. |black-formatting| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :alt: Black code formatting
+   :target: https://github.com/ambv/black
 
 .. _Swagger: http://swagger.io/
 .. _Eve: http://python-eve.org/
