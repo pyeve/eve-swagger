@@ -57,7 +57,7 @@ def validate_info():
                               eve_swagger.INFO)
 
     if not v.validate(app.config[eve_swagger.INFO], schema):
-        raise ConfigException('%s is misconfigured: %s' % (
+        raise ConfigException('{} is misconfigured: {}'.format(
             eve_swagger.INFO, v.errors))
 
 

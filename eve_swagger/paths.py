@@ -8,11 +8,10 @@
 """
 import re
 
+from collections import OrderedDict
 from textwrap import dedent
 
 from flask import current_app as app
-
-from eve_swagger import OrderedDict
 
 
 def paths():
@@ -39,7 +38,7 @@ def paths():
         methods = rd['item_methods']
         if methods:
             item_id = '%sId' % rd['item_title'].lower()
-            url = '/%s/{%s}' % (rd['url'], item_id)
+            url = '/{}/{{{}}}'.format(rd['url'], item_id)
             paths[url] = _item(resource, rd, methods)
 
     return paths
@@ -148,7 +147,7 @@ def post_response(rd):
         if rd['bulk_enabled']:
             prefix += 'or more '
             title = rd['resource_title']
-        return '%s%s.' % (prefix, title)
+        return '{}{}.'.format(prefix, title)
 
     r = OrderedDict([
         ('summary', _get_description()),
@@ -268,7 +267,7 @@ def deleteitem_response(rd):
 
 
 def id_parameter(rd):
-    return {'$ref': '#/components/parameters/{0}_{1}'.
+    return {'$ref': '#/components/parameters/{}_{}'.
                     format(rd['item_title'], rd['item_lookup_field'])}
 
 
