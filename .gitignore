@@ -63,3 +63,4 @@ _build
 
 .cache
 .vscode/
+.pytest_cache/

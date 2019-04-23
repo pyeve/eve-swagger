@@ -6,12 +6,16 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Adopt Black code formatting style (`#82`_)
+- Add Python 3.6 and 3.7 to CI matrix (`#81`_)
 - Drop Python 2.6, 3.3, and 3.4 support (`#80`_)
 - Support for OpenAPI 3 (`#70`_, `#79`_)
 - Add support for resource-level ``example`` definition (`#69`_)
 - Add a stale-bot to automatically close stale issues and pull requests (`#68`_)
 
-.. _`#80`: https://github.com/pyeve/eve-swagger/pull/80
+.. _`#82`: https://github.com/pyeve/eve-swagger/issues/82
+.. _`#81`: https://github.com/pyeve/eve-swagger/issues/81
+.. _`#80`: https://github.com/pyeve/eve-swagger/issues/80
 .. _`#79`: https://github.com/pyeve/eve-swagger/pull/79
 .. _`#70`: https://github.com/pyeve/eve-swagger/pull/70
 .. _`#69`: https://github.com/pyeve/eve-swagger/issues/69
@@ -92,7 +96,7 @@ Released on 25 October, 2016
 - Fix: README: fix comma that causes a validation error in example script (Luis
   Fernando Gomes).
 
-- New: Ability to generate Swagger tags (Stratos Gerakakis). 
+- New: Ability to generate Swagger tags (Stratos Gerakakis).
 - New: add CORS support (otibsa).
 - New: Python 2.6 compatibility (otibsa).
 - New: Add a proper test suite. Closes #8 (otibsa).
@@ -105,7 +109,7 @@ Released on 25 October, 2016
 - New: Option to disable resource documentation via `disable_documentation` in
   `settings.py` (otibsa).
 - New: Ability to include description fields. Just add a `description` field in
-  the schema definitions in `settings.py` (Stratos Gerakakis). 
+  the schema definitions in `settings.py` (Stratos Gerakakis).
 - New: Add support for more eve features: `allowed`, `default`, `minlength`,
   `maxlength`, `min`, `max` (otibsa).
 - New: Enable additional documentation to be injected at runtime (otibsa).

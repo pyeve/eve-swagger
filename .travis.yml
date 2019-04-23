@@ -1,25 +1,34 @@
+dist: xenial
+sudo: false
 language: python
+stages:
+  - linting
+  - test
+cache: pip
+script: tox --recreate
 python:
-  - "2.7"
-addons:
-  apt:
-    sources:
-      - deadsnakes
-    packages:
-      - python3.5
-install:
-  - pip install tox
-env:
-  - TOX_ENV=py27
-  - TOX_ENV=py35
-    #- TOX_ENV=pypy
-    #- TOX_ENV=pypy3
-  - TOX_ENV=flake8
-script:
-  - tox -e $TOX_ENV
+  - 2.7
+  - 3.5
+  - 3.6
+  - 3.7
+  - pypy3.5-6.0
+install: travis_retry pip install tox-travis
 services:
   - mongodb
 before-script:
-  # Timer: https://docs.travis-ci.com/user/database-setup/#MongoDB-does-not-immediately-accept-connections
   - sleep 15
   - mongo eve_swagger_test --eval 'db.addUser("test_user", "test_pw");'
+
+
+jobs:
+    include:
+    - stage: linting
+      python: '3.7'
+      env:
+      install:
+      - pip install pre-commit
+      - pre-commit install-hooks
+      before_script:
+      services:
+      script:
+      - pre-commit run --all-files

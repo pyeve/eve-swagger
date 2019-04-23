@@ -4,7 +4,7 @@ How to Contribute
 Contributions are welcome! Not familiar with the codebase yet? No problem!
 There are many ways to contribute to open source projects: reporting bugs,
 helping with the documentation, spreading the word and of course, adding
-new features and patches. 
+new features and patches.
 
 Getting Started
 ---------------
@@ -16,7 +16,7 @@ Making Changes
 --------------
 * Fork_ the repository on GitHub.
 * Create a topic branch from where you want to base your work.
-* This is usually the ``master`` branch. 
+* This is usually the ``master`` branch.
 * Please avoid working directly on the ``master`` branch.
 * Make commits of logical units (if needed rebase your feature branch before
   submitting it).
@@ -45,7 +45,7 @@ First time contributor?
 -----------------------
 It's alright. We've all been there. See next chapter.
 
-Don't know where to start? 
+Don't know where to start?
 --------------------------
 There are usually several TODO comments scattered around the codebase, maybe
 check them out and see if you have ideas, or can help with them. Also, check
@@ -71,5 +71,3 @@ case, other than GitHub help_ pages, you might want to check this excellent
 .. _`fork and edit`: https://github.com/blog/844-forking-with-the-edit-button
 .. _`Pull Request`: https://help.github.com/articles/creating-a-pull-request
 .. _`running the tests`: http://python-eve.org/testing#running-the-tests
-
-
