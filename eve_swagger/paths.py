@@ -106,6 +106,15 @@ def get_ref_response(label):
     return {"$ref": "#/components/responses/%s" % label}
 
 
+def get_ref_query():
+    return [
+        {"$ref": "#/components/parameters/query__where"},
+        {"$ref": "#/components/parameters/query__sort"},
+        {"$ref": "#/components/parameters/query__page"},
+        {"$ref": "#/components/parameters/query__max_results"},
+    ]
+
+
 def add_parameters_dr(rd, parameters):
     """ Add path parameters when using sub-resources."""
     lookup_field = re.match(r"^.*\{(.*)\}.*$", rd["url"])
@@ -129,13 +138,23 @@ def get_response(rd):
                         "description": "An array of %s" % title,
                         "content": {
                             # TODO what about other methods?
-                            "application/json": {"schema": get_ref_schema(rd)}
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        app.config["ITEMS"]: {
+                                            "type": "array",
+                                            "items": get_ref_schema(rd),
+                                        }
+                                    },
+                                }
+                            }
                         },
                     },
                     "default": get_ref_response("error"),
                 },
             ),
-            ("parameters", []),
+            ("parameters", get_ref_query()),
             ("operationId", "get" + title),
             ("tags", [rd["item_title"]]),
         ]

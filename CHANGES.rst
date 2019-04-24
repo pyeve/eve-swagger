@@ -6,6 +6,11 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Query parameters: where; sort; page; max_results (`#86`_)
+- Basic and Token authorization support (`#86`_)
+- Allow use of SWAGGER_HOST https server (`#86`_)
+- Add support for API_VERSION and URL_PREFIX (`#86`_)
+- GET response now correctly returns ``_items`` as an array (`#86`_)
 - Adopt Black code formatting style (`#82`_)
 - Add Python 3.6 and 3.7 to CI matrix (`#81`_)
 - Drop Python 2.6, 3.3, and 3.4 support (`#80`_)
@@ -13,6 +18,7 @@ In Development
 - Add support for resource-level ``example`` definition (`#69`_)
 - Add a stale-bot to automatically close stale issues and pull requests (`#68`_)
 
+.. _`#86`: https://github.com/pyeve/eve-swagger/pull/86
 .. _`#82`: https://github.com/pyeve/eve-swagger/issues/82
 .. _`#81`: https://github.com/pyeve/eve-swagger/issues/81
 .. _`#80`: https://github.com/pyeve/eve-swagger/issues/80

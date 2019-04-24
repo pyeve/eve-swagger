@@ -10,6 +10,9 @@
 from collections import OrderedDict
 from flask import current_app as app
 
+INFO = "SWAGGER_INFO"
+HOST = "SWAGGER_HOST"
+
 
 def definitions():
     definitions = OrderedDict()
@@ -31,7 +34,7 @@ def definitions():
     error_schema = {
         "type": "object",
         "properties": {
-            "_status": {"type": "integer"},
+            "_status": {"type": "string", "example": "OK"},
             "_error": {
                 "type": "object",
                 "properties": {
