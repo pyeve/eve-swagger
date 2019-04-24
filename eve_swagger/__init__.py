@@ -8,4 +8,4 @@
     :license: BSD, see LICENSE for more details.
 """
 from .swagger import swagger, add_documentation  # noqa
-from .definitions import INFO, HOST
+from .definitions import INFO, HOST # noqa
