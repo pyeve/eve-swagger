@@ -9,20 +9,17 @@
 """
 from collections import OrderedDict
 from flask import request, current_app as app
+from eve.auth import BasicAuth, TokenAuth
 
-import eve_swagger
 from .validation import validate_info
 from .paths import get_ref_schema
-
-
-def _get_scheme():
-    return "http" if app.auth is None else "https"
+from .definitions import INFO, HOST
 
 
 def info():
     validate_info()
 
-    cfg = app.config[eve_swagger.INFO]
+    cfg = app.config[INFO]
 
     def node(parent, cfg, key):
         value = cfg.get(key)
@@ -41,12 +38,12 @@ def info():
 
 
 def servers():
-    return [
-        {
-            "url": "%s://" % _get_scheme()
-            + (app.config.get(eve_swagger.HOST) or request.host)
-        }
-    ]
+    url = app.config.get(HOST) or "http://%s" % request.host
+    if app.config["URL_PREFIX"]:
+        url = url + "/" + app.config["URL_PREFIX"]
+    if app.config["API_VERSION"]:
+        url = url + "/" + app.config["API_VERSION"]
+    return [{"url": url}]
 
 
 def responses():
@@ -112,8 +109,44 @@ def parameters():
 
     # add header parameters
     parameters.update(_header_parameters())
+    # add query parameters
+    parameters.update(_query_parameters())
 
     return parameters
+
+
+def _query_parameters():
+    params = {}
+
+    r = OrderedDict()
+    r["in"] = "query"
+    r["name"] = app.config["QUERY_WHERE"]
+    r["description"] = "the filters query parameter"
+    r["schema"] = {"type": "string", "example": '{"number": 10}'}
+    params["query__where"] = r
+
+    r = OrderedDict()
+    r["in"] = "query"
+    r["name"] = app.config["QUERY_SORT"]
+    r["description"] = "the sort query parameter"
+    r["schema"] = {"type": "string", "example": "city,-lastname"}
+    params["query__sort"] = r
+
+    r = OrderedDict()
+    r["in"] = "query"
+    r["name"] = app.config["QUERY_PAGE"]
+    r["description"] = "the pages query parameter"
+    r["schema"] = {"type": "integer", "example": 1}
+    params["query__page"] = r
+
+    r = OrderedDict()
+    r["in"] = "query"
+    r["name"] = app.config["QUERY_MAX_RESULTS"]
+    r["description"] = "the max results query parameter"
+    r["schema"] = {"type": "integer", "example": 25}
+    params["query__max_results"] = r
+
+    return params
 
 
 def _header_parameters():
@@ -186,8 +219,13 @@ def headers():
 
 
 def security_schemes():
-    if app.auth is not None:
+    if isinstance(app.auth, TokenAuth):
+        return {"BearerAuth": {"type": "http", "scheme": "bearer"}}
+    elif isinstance(app.auth, BasicAuth):
+        return {"BasicAuth": {"type": "http", "scheme": "basic"}}
+    elif app.auth is not None:
         # TODO use app.auth to build the security scheme
+        #      can not auto generate oauth, maybe should use add_documentation({...})
         return {
             "oAuth2": {
                 "type": "oauth2",
@@ -195,7 +233,7 @@ def security_schemes():
                 "flows": {
                     "password": {
                         # TODO why does this not work with a relative path?
-                        "tokenUrl": "%s://" % _get_scheme()
+                        "tokenUrl": "http://"
                         + app.config["SERVER_NAME"]
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
@@ -215,7 +253,12 @@ def callbacks():
 
 
 def security():
-    return [{"oAuth2": []}]
+    if isinstance(app.auth, TokenAuth):
+        return [{"BearerAuth": []}]
+    elif isinstance(app.auth, BasicAuth):
+        return [{"BasicAuth": []}]
+    elif app.auth is not None:
+        return [{"oAuth2": []}]
 
 
 def tags():

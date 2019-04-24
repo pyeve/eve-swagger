@@ -44,11 +44,15 @@ class TestBase(unittest.TestCase):
         self.connection = MongoClient(MONGO_HOST, MONGO_PORT)
         self.connection.drop_database(MONGO_DBNAME)
         if MONGO_USERNAME:
-            self.connection[MONGO_DBNAME].add_user(MONGO_USERNAME, MONGO_PASSWORD)
+            self.connection[MONGO_DBNAME].command(
+                "createUser", MONGO_USERNAME, pwd=MONGO_PASSWORD, roles=[]
+            )
 
     def dropDB(self):
         self.connection = MongoClient(MONGO_HOST, MONGO_PORT)
         self.connection.drop_database(MONGO_DBNAME)
+        if MONGO_USERNAME:
+            self.connection[MONGO_DBNAME].command("dropUser", MONGO_USERNAME)
         self.connection.close()
 
     def get_swagger_doc(self):

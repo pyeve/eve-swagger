@@ -11,12 +11,12 @@ from eve.exceptions import ConfigException
 from flask import current_app as app
 from cerberus import Validator
 
-import eve_swagger
-
 try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
+
+from .definitions import INFO
 
 
 def validate_info():
@@ -46,15 +46,11 @@ def validate_info():
         },
         "schemes": {"type": "list", "schema": {"type": "string"}},
     }
-    if eve_swagger.INFO not in app.config:
-        raise ConfigException(
-            "%s setting is required in Eve configuration." % eve_swagger.INFO
-        )
+    if INFO not in app.config:
+        raise ConfigException("%s setting is required in Eve configuration." % INFO)
 
-    if not v.validate(app.config[eve_swagger.INFO], schema):
-        raise ConfigException(
-            "{} is misconfigured: {}".format(eve_swagger.INFO, v.errors)
-        )
+    if not v.validate(app.config[INFO], schema):
+        raise ConfigException("{} is misconfigured: {}".format(INFO, v.errors))
 
 
 def _validate_url(field, value, error):
