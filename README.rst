@@ -33,7 +33,7 @@ Usage
     }
 
     # optional. Will use flask.request.host if missing.
-    app.config['SWAGGER_HOST'] = 'myhost.com'
+    app.config['SWAGGER_HOST'] = 'https://myhost.com'
 
     # optional. Add/Update elements in the documentation at run-time without deleting subtrees.
     add_documentation({'paths': {'/status': {'get': {'parameters': [
@@ -64,7 +64,7 @@ support with the ``X_DOMAINS`` and ``X_HEADERS`` configuration in your Eve
     X_DOMAINS = ['http://localhost:8000',  # The domain where Swagger UI is running
                  'http://editor.swagger.io',
                  'http://petstore.swagger.io']
-    X_HEADERS = ['Content-Type', 'If-Match']  # Needed for the "Try it out" buttons
+    X_HEADERS = ['Content-Type', 'If-Match', 'Authorization']  # Needed for the "Try it out" buttons
 
 For more information check the CORS documentation of `Swagger UI`_ and `Swagger
 Editor`_.
