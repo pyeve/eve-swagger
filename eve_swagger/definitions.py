@@ -13,6 +13,7 @@ from flask import current_app as app
 INFO = "SWAGGER_INFO"
 HOST = "SWAGGER_HOST"
 
+
 def definitions():
     definitions = OrderedDict()
     dr_sources = {}
@@ -33,10 +34,7 @@ def definitions():
     error_schema = {
         "type": "object",
         "properties": {
-            "_status": {
-                "type": "string",
-                "example": "OK",
-            },
+            "_status": {"type": "string", "example": "OK"},
             "_error": {
                 "type": "object",
                 "properties": {

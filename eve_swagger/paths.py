@@ -105,6 +105,7 @@ def get_ref_requestBody(rd):
 def get_ref_response(label):
     return {"$ref": "#/components/responses/%s" % label}
 
+
 def get_ref_query():
     return [
         {"$ref": "#/components/parameters/query__where"},
@@ -112,6 +113,7 @@ def get_ref_query():
         {"$ref": "#/components/parameters/query__page"},
         {"$ref": "#/components/parameters/query__max_results"},
     ]
+
 
 def add_parameters_dr(rd, parameters):
     """ Add path parameters when using sub-resources."""
@@ -144,7 +146,7 @@ def get_response(rd):
                                             "type": "array",
                                             "items": get_ref_schema(rd),
                                         }
-                                    }
+                                    },
                                 }
                             }
                         },
