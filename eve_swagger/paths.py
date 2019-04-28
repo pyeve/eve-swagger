@@ -39,6 +39,11 @@ def paths():
             url = "/{}/{{{}}}".format(rd["url"], item_id)
             paths[url] = _item(resource, rd, methods)
 
+        if "GET" in methods and "additional_lookup" in rd:
+            item_field = rd["additional_lookup"].get("field", "unknow").title()
+            url = "/{}/{{{}}}".format(rd["url"], item_field)
+            paths[url] = _item_additional_lookup(resource, rd, methods)
+
     return paths
 
 
@@ -57,6 +62,14 @@ def _resource(resource, rd, methods):
             hook_desc = _hook_descriptions(resource, m)
             if hook_desc != "":
                 item[m.lower()]["description"] = "**Hooks**:" + hook_desc
+
+    return item
+
+
+def _item_additional_lookup(resource, rd, methods):
+    item = OrderedDict()
+    if "GET" in methods:
+        item["get"] = getitem_response_additional_lookup(rd)
 
     return item
 
@@ -215,6 +228,35 @@ def delete_response(rd):
     return r
 
 
+def getitem_response_additional_lookup(rd):
+    title = rd["item_title"]
+    field = rd["additional_lookup"]["field"]
+    r = OrderedDict(
+        [
+            ("summary", "Retrieves a %s document by %s" % (title, field)),
+            (
+                "responses",
+                {
+                    "200": {
+                        "description": "%s document fetched successfully" % title,
+                        "content": {
+                            # TODO what about other methods?
+                            "application/json": {"schema": get_ref_schema(rd)}
+                        },
+                    },
+                    "default": get_ref_response("error"),
+                },
+            ),
+            ("parameters", [additional_lookup_parameter(rd)]),
+            ("operationId", "get" + title + "ItemBy" + field.title()),
+            ("tags", [rd["item_title"]]),
+        ]
+    )
+
+    add_parameters_dr(rd, r["parameters"])
+    return r
+
+
 def getitem_response(rd):
     title = rd["item_title"]
     r = OrderedDict(
@@ -309,6 +351,14 @@ def deleteitem_response(rd):
 
     add_parameters_dr(rd, r["parameters"])
     return r
+
+
+def additional_lookup_parameter(rd):
+    return {
+        "$ref": "#/components/parameters/{}_{}".format(
+            rd["item_title"], rd["additional_lookup"]["field"]
+        )
+    }
 
 
 def id_parameter(rd):
