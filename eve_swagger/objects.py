@@ -107,6 +107,22 @@ def parameters():
         p["schema"] = {"type": ptype}
         parameters[title + "_" + lookup_field] = p
 
+        # additional_lookup
+        if "additional_lookup" in rd:
+            lookup_field = rd["additional_lookup"]["field"]
+            descr = rd["schema"][lookup_field].get("description") or ""
+            example = rd["schema"][lookup_field].get("example") or ""
+
+            p = OrderedDict()
+            p["in"] = "path"
+            p["name"] = rd["additional_lookup"]["field"].title()
+            p["required"] = True
+            p["description"] = descr
+            p["example"] = example
+            p["schema"] = {"type": "string"}
+
+            parameters[title + "_" + lookup_field] = p
+
     # add header parameters
     parameters.update(_header_parameters())
     # add query parameters
