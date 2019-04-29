@@ -6,6 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Add support for ``additional_lookup`` (`#88`_)
 - Query parameters: where; sort; page; max_results (`#86`_)
 - Basic and Token authorization support (`#86`_)
 - Allow use of SWAGGER_HOST https server (`#86`_)
@@ -18,6 +19,7 @@ In Development
 - Add support for resource-level ``example`` definition (`#69`_)
 - Add a stale-bot to automatically close stale issues and pull requests (`#68`_)
 
+.. _`#88`: https://github.com/pyeve/eve-swagger/pull/88
 .. _`#86`: https://github.com/pyeve/eve-swagger/pull/86
 .. _`#82`: https://github.com/pyeve/eve-swagger/issues/82
 .. _`#81`: https://github.com/pyeve/eve-swagger/issues/81
