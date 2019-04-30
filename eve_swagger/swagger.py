@@ -38,11 +38,26 @@ from .objects import (
 from .paths import paths
 
 
-swagger = Blueprint("eve_swagger", __name__, template_folder="templates")
-swagger.additional_documentation = OrderedDict()
+def get_swagger_blueprint(url_prefix=""):
+    swagger = Blueprint(
+        "eve_swagger", __name__, template_folder="templates", url_prefix=url_prefix
+    )
+    swagger.additional_documentation = OrderedDict()
+
+    @swagger.route("/api-docs")
+    @_modify_response
+    def index_json():
+        return jsonify(_compile_docs(swagger))
+
+    @swagger.route("/docs")
+    @_modify_response
+    def index():
+        return render_template("index.html", spec_url="/api-docs")
+
+    return swagger
 
 
-def _compile_docs():
+def _compile_docs(swagger):
     def node(parent, key, value):
         if value:
             parent[key] = value
@@ -73,7 +88,7 @@ def _compile_docs():
     return root
 
 
-def add_documentation(doc):
+def add_documentation(swagger, doc):
     _nested_update(swagger.additional_documentation, doc)
 
 
@@ -126,18 +141,6 @@ def _modify_response(f):
         return resp
 
     return decorated
-
-
-@swagger.route("/api-docs")
-@_modify_response
-def index_json():
-    return jsonify(_compile_docs())
-
-
-@swagger.route("/docs")
-@_modify_response
-def index():
-    return render_template("index.html", spec_url="/api-docs")
 
 
 def _nested_update(orig_dict, new_dict):
