@@ -16,6 +16,7 @@ from .paths import get_ref_schema
 from .definitions import INFO, HOST
 
 def _get_scheme():
+    print(app.auth)
     return 'http' if app.auth is None else 'https'
 
 def info():
@@ -199,7 +200,6 @@ def examples():
 
 def request_bodies():
     def _get_ref_examples(rd):
-<<<<<<< HEAD
         return {"$ref": "#/components/examples/%s" % rd["item_title"]}
 
     rbodies = OrderedDict()
@@ -233,13 +233,7 @@ def headers():
 
 
 def security_schemes():
-    if isinstance(app.auth, TokenAuth):
-        return {"BearerAuth": {"type": "http", "scheme": "bearer"}}
-    elif isinstance(app.auth, BasicAuth):
-        return {"BasicAuth": {"type": "http", "scheme": "basic"}}
-    elif app.auth is not None:
-        # TODO use app.auth to build the security scheme
-        #      can not auto generate oauth, maybe should use add_documentation({...})
+    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
         return {
             "oAuth2": {
                 "type": "oauth2",
@@ -256,6 +250,14 @@ def security_schemes():
                 },
             }
         }
+    elif isinstance(app.auth, TokenAuth):
+        return {"BearerAuth": {"type": "http", "scheme": "bearer"}}
+    elif isinstance(app.auth, BasicAuth):
+        return {"BasicAuth": {"type": "http", "scheme": "basic"}}
+    else:
+        pass #FIXME
+        # TODO use app.auth to build the security scheme
+        #      can not auto generate oauth, maybe should use add_documentation({...})
 
 
 def links():
@@ -267,12 +269,13 @@ def callbacks():
 
 
 def security():
-    if isinstance(app.auth, TokenAuth):
+
+    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+        return [{"oAuth2": []}]
+    elif isinstance(app.auth, TokenAuth):
         return [{"BearerAuth": []}]
     elif isinstance(app.auth, BasicAuth):
         return [{"BasicAuth": []}]
-    elif app.auth is not None:
-        return [{"oAuth2": []}]
 
 
 def tags():
