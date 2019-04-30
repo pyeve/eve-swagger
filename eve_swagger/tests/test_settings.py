@@ -8,6 +8,10 @@ SERVER_NAME = "localhost:5000"
 SENTINEL_ROUTE_PREFIX = "/oauth"
 SENTINEL_TOKEN_URL = "/token"
 
+SERVER_NAME = 'localhost:5000'
+SENTINEL_ROUTE_PREFIX = '/oauth'
+SENTINEL_TOKEN_URL = '/token'
+
 TRANSPARENT_SCHEMA_RULES = True
 RESOURCE_METHODS = ["GET", "POST", "DELETE"]
 ITEM_METHODS = ["GET", "PATCH", "PUT", "DELETE"]
@@ -57,12 +61,21 @@ DOMAIN = {
                 "type": "objectid",
                 "data_relation": {"resource": "people", "field": "_id"},
             },
+<<<<<<< HEAD
             "dictprop": {
                 "type": "dict",
                 "keyschema": {"type": "string"},
                 "valueschema": {"type": "float"},
             },
         },
+=======
+            'dictprop': {
+                'type': 'dict',
+                'keyschema': {'type': 'string'},
+                'valueschema': {'type': 'float'}
+            },
+        }
+>>>>>>> 44fa975d0fe0ae47e53c83b5db43d438cd461724
     },
     "disabled_resource": {
         "disable_documentation": True,
