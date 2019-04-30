@@ -15,6 +15,8 @@ from .validation import validate_info
 from .paths import get_ref_schema
 from .definitions import INFO, HOST
 
+def _get_scheme():
+    return 'http' if app.auth is None else 'https'
 
 def info():
     validate_info()
@@ -38,7 +40,7 @@ def info():
 
 
 def servers():
-    url = app.config.get(HOST) or "http://%s" % request.host
+    url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
     if app.config["URL_PREFIX"]:
         url = url + "/" + app.config["URL_PREFIX"]
     if app.config["API_VERSION"]:
@@ -127,9 +129,7 @@ def parameters():
     parameters.update(_header_parameters())
     # add query parameters
     parameters.update(_query_parameters())
-
     return parameters
-
 
 def _query_parameters():
     params = {}
@@ -199,6 +199,7 @@ def examples():
 
 def request_bodies():
     def _get_ref_examples(rd):
+<<<<<<< HEAD
         return {"$ref": "#/components/examples/%s" % rd["item_title"]}
 
     rbodies = OrderedDict()
@@ -220,9 +221,6 @@ def request_bodies():
             "application/json": {
                 "schema": get_ref_schema(rd),
                 "examples": {title: _get_ref_examples(rd)}
-                # {
-                #    title: ,
-                # }
             }
         }
         rbodies[title] = rb
@@ -249,7 +247,7 @@ def security_schemes():
                 "flows": {
                     "password": {
                         # TODO why does this not work with a relative path?
-                        "tokenUrl": "http://"
+                        "tokenUrl": "https://"
                         + app.config["SERVER_NAME"]
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
