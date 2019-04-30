@@ -64,7 +64,6 @@ def _object(rd, dr_sources):
 
             # replace None in dr_sources with the field properties
             dr_sources[def_name] = OrderedDict(props[field])
-
             props[field] = {"$ref": "#/components/schemas/{}".format(def_name)}
 
         if "data_relation" in rules:

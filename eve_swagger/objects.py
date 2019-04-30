@@ -16,6 +16,11 @@ from .paths import get_ref_schema
 from .definitions import INFO, HOST
 
 
+def _get_scheme():
+    print(app.auth)
+    return 'http' if app.auth is None else 'https'
+
+
 def info():
     validate_info()
 
@@ -38,7 +43,7 @@ def info():
 
 
 def servers():
-    url = app.config.get(HOST) or "http://%s" % request.host
+    url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
     if app.config["URL_PREFIX"]:
         url = url + "/" + app.config["URL_PREFIX"]
     if app.config["API_VERSION"]:
@@ -127,7 +132,6 @@ def parameters():
     parameters.update(_header_parameters())
     # add query parameters
     parameters.update(_query_parameters())
-
     return parameters
 
 
@@ -220,9 +224,6 @@ def request_bodies():
             "application/json": {
                 "schema": get_ref_schema(rd),
                 "examples": {title: _get_ref_examples(rd)}
-                # {
-                #    title: ,
-                # }
             }
         }
         rbodies[title] = rb
@@ -235,13 +236,7 @@ def headers():
 
 
 def security_schemes():
-    if isinstance(app.auth, TokenAuth):
-        return {"BearerAuth": {"type": "http", "scheme": "bearer"}}
-    elif isinstance(app.auth, BasicAuth):
-        return {"BasicAuth": {"type": "http", "scheme": "basic"}}
-    elif app.auth is not None:
-        # TODO use app.auth to build the security scheme
-        #      can not auto generate oauth, maybe should use add_documentation({...})
+    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
         return {
             "oAuth2": {
                 "type": "oauth2",
@@ -249,7 +244,7 @@ def security_schemes():
                 "flows": {
                     "password": {
                         # TODO why does this not work with a relative path?
-                        "tokenUrl": "http://"
+                        "tokenUrl": "https://"
                         + app.config["SERVER_NAME"]
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
@@ -258,6 +253,14 @@ def security_schemes():
                 },
             }
         }
+    elif isinstance(app.auth, TokenAuth):
+        return {"BearerAuth": {"type": "http", "scheme": "bearer"}}
+    elif isinstance(app.auth, BasicAuth):
+        return {"BasicAuth": {"type": "http", "scheme": "basic"}}
+    else:
+        pass  # FIXME
+        # TODO use app.auth to build the security scheme
+        #      can not auto generate oauth, maybe should use add_documentation({...})
 
 
 def links():
@@ -269,12 +272,13 @@ def callbacks():
 
 
 def security():
-    if isinstance(app.auth, TokenAuth):
+
+    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+        return [{"oAuth2": []}]
+    elif isinstance(app.auth, TokenAuth):
         return [{"BearerAuth": []}]
     elif isinstance(app.auth, BasicAuth):
         return [{"BasicAuth": []}]
-    elif app.auth is not None:
-        return [{"oAuth2": []}]
 
 
 def tags():
