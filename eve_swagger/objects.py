@@ -15,9 +15,11 @@ from .validation import validate_info
 from .paths import get_ref_schema
 from .definitions import INFO, HOST
 
+
 def _get_scheme():
     print(app.auth)
     return 'http' if app.auth is None else 'https'
+
 
 def info():
     validate_info()
@@ -131,6 +133,7 @@ def parameters():
     # add query parameters
     parameters.update(_query_parameters())
     return parameters
+
 
 def _query_parameters():
     params = {}
@@ -255,7 +258,7 @@ def security_schemes():
     elif isinstance(app.auth, BasicAuth):
         return {"BasicAuth": {"type": "http", "scheme": "basic"}}
     else:
-        pass #FIXME
+        pass  # FIXME
         # TODO use app.auth to build the security scheme
         #      can not auto generate oauth, maybe should use add_documentation({...})
 
