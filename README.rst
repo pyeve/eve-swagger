@@ -100,10 +100,9 @@ As an example:
     }
     ...
 
-**NOTE**: If you do use that feature make sure that the ``TRANSPARENT_SCHEMA_RULES``
-in your ``settings.py`` is also turned ON, otherwise you will get complains from the
-Cerberus library about "unknown field 'description' for field [yourFieldName]", or use
-a custom schema validator, as below:
+**NOTE**: If you do use this feature, you also need to provide a custom validator
+ to the Eve instance, otherwise you will get complaints from the Cerberus
+ library about "unknown rule 'description' for field [yourFieldName]"
 
 .. code-block:: python
 
@@ -113,6 +112,11 @@ a custom schema validator, as below:
         def _validate_description(self, description, field, value):
             """ {'type': 'string'} """
             # Accept description attribute, used for swagger doc generation
+            pass
+
+        def _validate_example(self, description, field, value):
+            """ {'type': 'string'} """
+            # Accept an example attribute, used for swagger doc generation
             pass
 
     app = Eve(validator=MyValidator)
@@ -193,12 +197,10 @@ The example is shown in the swagger ui in the model and the responses.
 
 .. image:: resources/example_field.png
 
-**NOTE**: As with the description, the field ``TRANSPARENT_SCHEMA_RULES``
-must be enabled in your ``settings.py``, otherwise the Cerberus library
-will display an error about "unknown field 'example' for field[yourFieldName]".
-
-If you do not want to use this rule for the entire schema, you can also use
-your own validator.
+**NOTE**: If you do use this feature, you also need to provide a custom
+validator to the Eve instance, otherwise you will get complaints from the
+Cerberus library about "unknown rule 'example' for field [yourFieldName]"
+(see the above example for the 'description' option.)
 
 .. code-block:: python
 
