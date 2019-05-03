@@ -72,9 +72,9 @@ def parameters():
         descr = rd["schema"][lookup_field].get("description") or ""
         example = rd["schema"][lookup_field].get("example") or ""
         if 'SWAGGER_EXAMPLE_FIELD_REMOVE' in app.config:
-                disable_example = app.config['SWAGGER_EXAMPLE_FIELD_REMOVE']
+            disable_example = app.config['SWAGGER_EXAMPLE_FIELD_REMOVE']
         else:
-                disable_example = False
+            disable_example = False
         if "data_relation" in rd["schema"][lookup_field]:
             # the lookup field is a copy of another field
             dr = rd["schema"][lookup_field]["data_relation"]
@@ -98,9 +98,9 @@ def parameters():
         p["required"] = True
         p["description"] = descr
         if disable_example is True:
-                continue
+            continue
         else:
-                p['example'] = example
+            p['example'] = example
 
         ptype = ""
         if eve_type == "objectid" or eve_type == "datetime":

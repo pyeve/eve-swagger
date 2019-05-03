@@ -122,15 +122,14 @@ As an example:
     app = Eve(validator=MyValidator)
 
 
-**NOTE**: Swagger 2.0 may show errors about example attribute ("should NOT have additional properties"). You can disable generating example attribute by specifying:
+**NOTE**: Swagger 2.0 may show errors about example attribute ("should NOT have additional properties").
+ You can disable generating example attribute by specifying in the app.py:
 
 .. code-block:: python
 
     ...
     app.config['SWAGGER_EXAMPLE_FIELD_REMOVE'] = True
     ...
-    
-... in your app.py
 
 
 Disabling the documentation of a resource
