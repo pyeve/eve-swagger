@@ -71,8 +71,8 @@ def parameters():
         eve_type = rd["schema"][lookup_field]["type"]
         descr = rd["schema"][lookup_field].get("description") or ""
         example = rd["schema"][lookup_field].get("example") or ""
-        if 'SWAGGER_EXAMPLE_FIELD_REMOVE' in app.config:
-            disable_example = app.config['SWAGGER_EXAMPLE_FIELD_REMOVE']
+        if "SWAGGER_EXAMPLE_FIELD_REMOVE" in app.config:
+            disable_example = app.config["SWAGGER_EXAMPLE_FIELD_REMOVE"]
         else:
             disable_example = False
         if "data_relation" in rd["schema"][lookup_field]:
@@ -100,7 +100,7 @@ def parameters():
         if disable_example is True:
             continue
         else:
-            p['example'] = example
+            p["example"] = example
 
         ptype = ""
         if eve_type == "objectid" or eve_type == "datetime":
