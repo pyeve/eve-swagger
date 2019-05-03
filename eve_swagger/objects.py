@@ -244,7 +244,7 @@ def security_schemes():
                     "password": {
                         # TODO why does this not work with a relative path?
                         "tokenUrl": "https://"
-                        + app.config["SWAGGER_HOST"]
+                        + app.config[HOST]
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
                         "scopes": {},
