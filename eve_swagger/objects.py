@@ -97,7 +97,7 @@ def parameters():
         p["name"] = title.lower() + "Id"
         p["required"] = True
         p["description"] = descr
-        if disable_example == True:
+        if disable_example is True:
                 continue
         else:
                 p['example'] = example
