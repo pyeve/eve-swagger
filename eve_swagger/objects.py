@@ -17,7 +17,6 @@ from .definitions import INFO, HOST
 
 
 def _get_scheme():
-    print(app.auth)
     return 'http' if app.auth is None else 'https'
 
 
@@ -245,7 +244,7 @@ def security_schemes():
                     "password": {
                         # TODO why does this not work with a relative path?
                         "tokenUrl": "https://"
-                        + app.config["SERVER_NAME"]
+                        + app.config["SWAGGER_HOST"]
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
                         "scopes": {},
