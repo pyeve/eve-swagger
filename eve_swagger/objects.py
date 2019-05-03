@@ -140,15 +140,15 @@ def _query_parameters():
     r = OrderedDict()
     r["in"] = "query"
     r["name"] = app.config["QUERY_WHERE"]
-    r["description"] = "the filters query parameter"
-    r["schema"] = {"type": "string", "example": '{"number": 10}'}
+    r["description"] = 'the filters query parameter (ex.: {"number": 10})'
+    r["schema"] = {"type": "string"}
     params["query__where"] = r
 
     r = OrderedDict()
     r["in"] = "query"
     r["name"] = app.config["QUERY_SORT"]
-    r["description"] = "the sort query parameter"
-    r["schema"] = {"type": "string", "example": "city,-lastname"}
+    r["description"] = 'the sort query parameter (ex.: "city,-lastname")'
+    r["schema"] = {"type": "string"}
     params["query__sort"] = r
 
     r = OrderedDict()
@@ -236,7 +236,7 @@ def headers():
 
 def security_schemes():
     if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
-        url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
+        url = app.config.get(HOST) or request.host
         return {
             "oAuth2": {
                 "type": "oauth2",
@@ -244,8 +244,7 @@ def security_schemes():
                 "flows": {
                     "password": {
                         # TODO why does this not work with a relative path?
-                        "tokenUrl": "https://"
-                        + url
+                        "tokenUrl": url
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
                         "scopes": {},
