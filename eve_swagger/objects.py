@@ -236,6 +236,7 @@ def headers():
 
 def security_schemes():
     if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+        url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
         return {
             "oAuth2": {
                 "type": "oauth2",
@@ -244,7 +245,7 @@ def security_schemes():
                     "password": {
                         # TODO why does this not work with a relative path?
                         "tokenUrl": "https://"
-                        + app.config[HOST]
+                        + url
                         + app.config["SENTINEL_ROUTE_PREFIX"]
                         + app.config["SENTINEL_TOKEN_URL"],
                         "scopes": {},
