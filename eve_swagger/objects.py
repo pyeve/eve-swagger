@@ -17,7 +17,7 @@ from .definitions import INFO, HOST
 
 
 def _get_scheme():
-    return 'http' if app.auth is None else 'https'
+    return "http" if app.auth is None else "https"
 
 
 def info():
@@ -150,7 +150,7 @@ def _query_parameters():
     r["description"] = 'the sort query parameter (ex.: "city,-lastname")'
     r["schema"] = {"type": "string"}
     params["query__sort"] = r
-
+    
     r = OrderedDict()
     r["in"] = "query"
     r["name"] = app.config["QUERY_PAGE"]
@@ -222,7 +222,7 @@ def request_bodies():
             # TODO what about other methods
             "application/json": {
                 "schema": get_ref_schema(rd),
-                "examples": {title: _get_ref_examples(rd)}
+                "examples": {title: _get_ref_examples(rd)},
             }
         }
         rbodies[title] = rb
