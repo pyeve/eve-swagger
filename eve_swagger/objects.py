@@ -150,7 +150,7 @@ def _query_parameters():
     r["description"] = 'the sort query parameter (ex.: "city,-lastname")'
     r["schema"] = {"type": "string"}
     params["query__sort"] = r
-    
+
     r = OrderedDict()
     r["in"] = "query"
     r["name"] = app.config["QUERY_PAGE"]
