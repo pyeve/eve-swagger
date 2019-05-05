@@ -7,6 +7,7 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+import sys
 from collections import OrderedDict
 from flask import request, current_app as app
 from eve.auth import BasicAuth, TokenAuth
@@ -150,7 +151,7 @@ def _query_parameters():
     r["description"] = 'the sort query parameter (ex.: "city,-lastname")'
     r["schema"] = {"type": "string"}
     params["query__sort"] = r
-    
+
     r = OrderedDict()
     r["in"] = "query"
     r["name"] = app.config["QUERY_PAGE"]
@@ -235,7 +236,8 @@ def headers():
 
 
 def security_schemes():
-    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+    # from flask_oauthlib.provider import OAuth2Provider
+    if "flask_oauthlib.provider" in sys.modules.keys():
         url = app.config.get(HOST) or request.host
         return {
             "oAuth2": {
@@ -271,8 +273,7 @@ def callbacks():
 
 
 def security():
-
-    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+    if "flask_oauthlib.provider" in sys.modules.keys():
         return [{"oAuth2": []}]
     elif isinstance(app.auth, TokenAuth):
         return [{"BearerAuth": []}]
