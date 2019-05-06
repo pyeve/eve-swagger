@@ -273,8 +273,7 @@ def callbacks():
 
 
 def security():
-
-    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+    if "flask_oauthlib.provider" in sys.modules.keys():
         return [{"oAuth2": []}]
     elif isinstance(app.auth, TokenAuth):
         return [{"BearerAuth": []}]
