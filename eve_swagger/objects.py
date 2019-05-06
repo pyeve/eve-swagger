@@ -7,6 +7,7 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
+import sys
 from collections import OrderedDict
 from flask import request, current_app as app
 from eve.auth import BasicAuth, TokenAuth
@@ -235,7 +236,8 @@ def headers():
 
 
 def security_schemes():
-    if app.config["SENTINEL_ROUTE_PREFIX"] is not None:
+    # from flask_oauthlib.provider import OAuth2Provider
+    if "flask_oauthlib.provider" in sys.modules.keys():
         url = app.config.get(HOST) or request.host
         return {
             "oAuth2": {
