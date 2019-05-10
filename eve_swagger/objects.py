@@ -93,8 +93,8 @@ def parameters():
         p["name"] = title.lower() + "Id"
         p["required"] = True
         p["description"] = descr
-        p["example"] = example
-
+        if "SWAGGER_EXAMPLE_FIELD_REMOVE" not in app.config:
+            p["example"] = example
         ptype = ""
         if eve_type == "objectid" or eve_type == "datetime":
             ptype = "string"
