@@ -6,6 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Add ``SWAGGER_EXAMPLE_FIELD_REMOVE`` for Swagger 2.0 support (`#75`_)
 - Amend ``description`` and ``example`` docs to account for the removal of
   ``TRANSPARENT_SCHEMA_RULES`` option (`#87`_)
 - Add support for ``additional_lookup`` (`#88`_)
@@ -21,6 +22,7 @@ In Development
 - Add support for resource-level ``example`` definition (`#69`_)
 - Add a stale-bot to automatically close stale issues and pull requests (`#68`_)
 
+.. _`#75`: https://github.com/pyeve/eve-swagger/issues/75
 .. _`#87`: https://github.com/pyeve/eve-swagger/issues/87
 .. _`#88`: https://github.com/pyeve/eve-swagger/pull/88
 .. _`#86`: https://github.com/pyeve/eve-swagger/pull/86
