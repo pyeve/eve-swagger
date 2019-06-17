@@ -7,5 +7,5 @@
     :copyright: (c) 2015 by Nicola Iarocci.
     :license: BSD, see LICENSE for more details.
 """
-from .swagger import swagger, add_documentation  # noqa
+from .swagger import get_swagger_blueprint, add_documentation  # noqa
 from .definitions import INFO, HOST  # noqa

@@ -25,7 +25,9 @@ class TestBase(unittest.TestCase):
         self.settings = settings
         self.app = eve.Eve(settings=self.settings)
 
-        self.app.register_blueprint(eve_swagger.swagger)
+        swagger = eve_swagger.get_swagger_blueprint()
+
+        self.app.register_blueprint(swagger)
         self.app.config["SWAGGER_INFO"] = {
             "title": "Test eve-swagger",
             "version": "0.0.1",

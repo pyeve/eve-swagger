@@ -10,9 +10,10 @@ Usage
 .. code-block:: python
 
     from eve import Eve
-    from eve_swagger import swagger, add_documentation
+    from eve_swagger import get_swagger_blueprint, add_documentation
 
     app = Eve()
+    swagger = get_swagger_blueprint()
     app.register_blueprint(swagger)
 
     # required. See http://swagger.io/specification/#infoObject for details.

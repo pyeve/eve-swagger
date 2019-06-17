@@ -44,8 +44,6 @@ def info():
 
 def servers():
     url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
-    if app.config["URL_PREFIX"]:
-        url = url + "/" + app.config["URL_PREFIX"]
     if app.config["API_VERSION"]:
         url = url + "/" + app.config["API_VERSION"]
     return [{"url": url}]
@@ -236,7 +234,6 @@ def headers():
 
 
 def security_schemes():
-    # from flask_oauthlib.provider import OAuth2Provider
     if "flask_oauthlib.provider" in sys.modules.keys():
         url = app.config.get(HOST) or request.host
         return {
