@@ -8,7 +8,13 @@
     :license: BSD, see LICENSE for more details.
 """
 import re
-from collections import Mapping, OrderedDict
+from collections import OrderedDict
+
+try:
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
+
 from flask import (
     Blueprint,
     jsonify,
