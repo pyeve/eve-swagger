@@ -122,6 +122,7 @@ def get_ref_response(label):
 def get_ref_query():
     return [
         {"$ref": "#/components/parameters/query__where"},
+        {"$ref": "#/components/parameters/query__projections"},
         {"$ref": "#/components/parameters/query__sort"},
         {"$ref": "#/components/parameters/query__page"},
         {"$ref": "#/components/parameters/query__max_results"},
