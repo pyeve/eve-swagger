@@ -145,6 +145,13 @@ def _query_parameters():
 
     r = OrderedDict()
     r["in"] = "query"
+    r["name"] = app.config["QUERY_PROJECTION"]
+    r["description"] = 'the projections query parameter (ex.: {"name": 1})'
+    r["schema"] = {"type": "string"}
+    params["query__projections"] = r
+    
+    r = OrderedDict()
+    r["in"] = "query"
     r["name"] = app.config["QUERY_SORT"]
     r["description"] = 'the sort query parameter (ex.: "city,-lastname")'
     r["schema"] = {"type": "string"}
