@@ -141,6 +141,18 @@ def add_parameters_dr(rd, parameters):
 
 def get_response(rd):
     title = rd["resource_title"]
+    
+    properties = {
+        app.config["ITEMS"]: {
+            "type": "array",
+            "items": get_ref_schema(rd),
+        },
+        app.config["META"]:  {"$ref": "#/components/schemas/respone_metadata"}
+    }
+
+    if rd.get("hateoas",app.config["HATEOAS"]):
+        properties[app.config["LINKS"]] =  {"$ref": "#/components/schemas/respone_links"}
+
     r = OrderedDict(
         [
             ("summary", "Retrieves one or more %s" % title),
@@ -154,12 +166,7 @@ def get_response(rd):
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "properties": {
-                                        app.config["ITEMS"]: {
-                                            "type": "array",
-                                            "items": get_ref_schema(rd),
-                                        }
-                                    },
+                                    "properties": properties,
                                 }
                             }
                         },
@@ -172,6 +179,10 @@ def get_response(rd):
             ("tags", [rd["item_title"]]),
         ]
     )
+
+
+    
+        
 
     add_parameters_dr(rd, r["parameters"])
     return r
