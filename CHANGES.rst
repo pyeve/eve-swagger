@@ -16,7 +16,7 @@ Version 0.1
 
 Released on July 6, 2020.
 
-- New: add meta links to response schemas (`#105`_)
+- New: add meta links to response schemas (`#107`_)
 - Fix: projections not included in GET paramenters (`#106`_)
 - Fix: deprecation warning for ABC import (`#100`_)
 - Fix: media type not converted to OpenApi 3 compatible type (`#102`_)
@@ -38,7 +38,7 @@ Released on July 6, 2020.
 - Add support for resource-level ``example`` definition (`#69`_)
 - Add stale-bot to close stale issues and pull requests (`#68`_)
 
-.. _`#105`: https://github.com/pyeve/eve-swagger/pull/105
+.. _`#107`: https://github.com/pyeve/eve-swagger/issues/107
 .. _`#106`: https://github.com/pyeve/eve-swagger/issues/106
 .. _`#100`: https://github.com/pyeve/eve-swagger/pull/100
 .. _`#102`: https://github.com/pyeve/eve-swagger/issues/102
