@@ -46,6 +46,39 @@ def definitions():
         "required": ["_status", "_error"],
     }
     definitions["Error"] = error_schema
+    # add default meta response eve schema
+    respone_metadata_schema = {
+        "type": "object",
+        "properties": {
+            "page": {"type": "string"},
+            "total": {"type": "integer"},
+            "max_results": {"type": "integer"}
+                },
+            }
+    definitions["respone_metadata"] = respone_metadata_schema
+
+    respone_links_schema = {
+        "type": "object",
+        "properties": {
+            "parent": {
+                "type": "object", 
+                "properties": {
+                    "title": {"type": "string", "format":"uri"}, 
+                    "href": {"type": "string", "format":"uri"},
+                    }
+                },
+            "self": {
+                "type": "object", 
+                "properties": {
+                    "title": {"type": "string", "format":"uri"},
+                    "href": {"type": "string", "format":"uri"}
+                    }
+                }
+            }
+        }
+    
+    definitions["respone_links"] = respone_links_schema
+
     return definitions
 
 
