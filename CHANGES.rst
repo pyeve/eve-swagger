@@ -6,6 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Fix: projections not included in GET paramenters (`#106`_)
 - Fix: deprecation warning for ABC import (`#100`_)
 - Fix: media type not converted to OpenApi 3 compatible type (`#102`_)
 - Add ``get_swagger_blueprint`` helper method (`#91`_)
@@ -26,6 +27,7 @@ In Development
 - Add support for resource-level ``example`` definition (`#69`_)
 - Add stale-bot to close stale issues and pull requests (`#68`_)
 
+.. _`#106`: https://github.com/pyeve/eve-swagger/issues/106
 .. _`#100`: https://github.com/pyeve/eve-swagger/pull/100
 .. _`#102`: https://github.com/pyeve/eve-swagger/issues/102
 .. _`#91`: https://github.com/pyeve/eve-swagger/pull/91
