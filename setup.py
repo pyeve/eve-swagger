@@ -16,7 +16,7 @@ EXTRAS_REQUIRES["dev"] = EXTRAS_REQUIRES["tests"] + EXTRAS_REQUIRES["docs"]
 
 setup(
     name="Eve-Swagger",
-    version="0.0.11",
+    version="0.1.0",
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     author="Nicola Iarocci",
@@ -38,7 +38,7 @@ setup(
     keywords=["swagger", "eve", "rest", "api"],
     python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Natural Language :: English",
         "License :: OSI Approved :: BSD License",
@@ -50,6 +50,7 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],

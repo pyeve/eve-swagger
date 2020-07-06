@@ -6,6 +6,16 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- hic sunt leones
+
+Released
+--------
+
+Version 0.1
+~~~~~~~~~~~
+
+Released on July 6, 2020.
+
 - New: add meta links to response schemas (`#105`_)
 - Fix: projections not included in GET paramenters (`#106`_)
 - Fix: deprecation warning for ABC import (`#100`_)
@@ -45,9 +55,6 @@ In Development
 .. _`#70`: https://github.com/pyeve/eve-swagger/pull/70
 .. _`#69`: https://github.com/pyeve/eve-swagger/issues/69
 .. _`#68`: https://github.com/pyeve/eve-swagger/pull/68
-
-Released
---------
 
 Version 0.0.11
 ~~~~~~~~~~~~~~
