@@ -149,7 +149,7 @@ def _query_parameters():
     r["description"] = 'the projections query parameter (ex.: {"name": 1})'
     r["schema"] = {"type": "string"}
     params["query__projections"] = r
-    
+
     r = OrderedDict()
     r["in"] = "query"
     r["name"] = app.config["QUERY_SORT"]

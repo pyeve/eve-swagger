@@ -142,17 +142,14 @@ def add_parameters_dr(rd, parameters):
 
 def get_response(rd):
     title = rd["resource_title"]
-    
+
     properties = {
-        app.config["ITEMS"]: {
-            "type": "array",
-            "items": get_ref_schema(rd),
-        },
-        app.config["META"]:  {"$ref": "#/components/schemas/respone_metadata"}
+        app.config["ITEMS"]: {"type": "array", "items": get_ref_schema(rd)},
+        app.config["META"]: {"$ref": "#/components/schemas/respone_metadata"},
     }
 
-    if rd.get("hateoas",app.config["HATEOAS"]):
-        properties[app.config["LINKS"]] =  {"$ref": "#/components/schemas/respone_links"}
+    if rd.get("hateoas", app.config["HATEOAS"]):
+        properties[app.config["LINKS"]] = {"$ref": "#/components/schemas/respone_links"}
 
     r = OrderedDict(
         [
@@ -165,10 +162,7 @@ def get_response(rd):
                         "content": {
                             # TODO what about other methods?
                             "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": properties,
-                                }
+                                "schema": {"type": "object", "properties": properties}
                             }
                         },
                     },
@@ -180,10 +174,6 @@ def get_response(rd):
             ("tags", [rd["item_title"]]),
         ]
     )
-
-
-    
-        
 
     add_parameters_dr(rd, r["parameters"])
     return r
