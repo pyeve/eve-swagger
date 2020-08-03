@@ -17,8 +17,6 @@ services:
   - mongodb
 before-script:
   - sleep 15
-  - mongo eve_swagger_test --eval 'db.addUser("test_user", "test_pw");'
-
 
 jobs:
     include:
