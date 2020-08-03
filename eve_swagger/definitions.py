@@ -52,31 +52,31 @@ def definitions():
         "properties": {
             "page": {"type": "string"},
             "total": {"type": "integer"},
-            "max_results": {"type": "integer"}
-                },
-            }
+            "max_results": {"type": "integer"},
+        },
+    }
     definitions["respone_metadata"] = respone_metadata_schema
 
     respone_links_schema = {
         "type": "object",
         "properties": {
             "parent": {
-                "type": "object", 
+                "type": "object",
                 "properties": {
-                    "title": {"type": "string", "format":"uri"}, 
-                    "href": {"type": "string", "format":"uri"},
-                    }
+                    "title": {"type": "string", "format": "uri"},
+                    "href": {"type": "string", "format": "uri"},
                 },
+            },
             "self": {
-                "type": "object", 
+                "type": "object",
                 "properties": {
-                    "title": {"type": "string", "format":"uri"},
-                    "href": {"type": "string", "format":"uri"}
-                    }
-                }
-            }
-        }
-    
+                    "title": {"type": "string", "format": "uri"},
+                    "href": {"type": "string", "format": "uri"},
+                },
+            },
+        },
+    }
+
     definitions["respone_links"] = respone_links_schema
 
     return definitions
