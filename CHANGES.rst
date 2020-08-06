@@ -6,7 +6,9 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- hic sunt leones
+- Fix: templates missing from PyPI (`#109`_)
+
+.. _`#109`: https://github.com/pyeve/eve-swagger/issues/109
 
 Released
 --------
