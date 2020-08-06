@@ -6,14 +6,21 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- hic sunt leones.
+
+Released
+--------
+
+Version 0.1.1
+~~~~~~~~~~~~~
+
+Released on August 6, 2020.
+
 - Fix: linting and CI errors (`#111`_)
 - Fix: templates missing from PyPI (`#109`_)
 
 .. _`#111`: https://github.com/pyeve/eve-swagger/pull/111
 .. _`#109`: https://github.com/pyeve/eve-swagger/issues/109
-
-Released
---------
 
 Version 0.1
 ~~~~~~~~~~~
