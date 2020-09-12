@@ -58,7 +58,8 @@ def get_swagger_blueprint(url_prefix=""):
     @swagger.route("/docs")
     @_modify_response
     def index():
-        return render_template("index.html", spec_url="/api-docs")
+        spec_url = url_prefix.rstrip("/") + "/api-docs"
+        return render_template("index.html", spec_url=spec_url)
 
     return swagger
 
