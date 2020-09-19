@@ -6,7 +6,9 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- hic sunt leones.
+- Fix: When using a non-empty ``url_prefix``, it should be also added to ``spec_url`` (`#112`_)
+
+.. _`#112`: https://github.com/pyeve/eve-swagger/pull/111
 
 Released
 --------
