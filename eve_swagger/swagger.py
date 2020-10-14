@@ -22,6 +22,7 @@ from flask import (
     request,
     current_app as app,
     render_template,
+    url_for,
 )
 from functools import wraps
 
@@ -58,7 +59,7 @@ def get_swagger_blueprint(url_prefix=""):
     @swagger.route("/docs")
     @_modify_response
     def index():
-        spec_url = url_prefix.rstrip("/") + "/api-docs"
+        spec_url = url_for('eve_swagger.index_json')
         return render_template("index.html", spec_url=spec_url)
 
     return swagger
