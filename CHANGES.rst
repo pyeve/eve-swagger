@@ -6,6 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- Add Python 3.8 to CI matrix.
 - Fix: pin pyrsistent to v0.16, as new releases dropped Python 2.7 sypport.
 - Fix: non-root urls do not work under Apache (`#114`_)
 
