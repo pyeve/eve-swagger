@@ -6,7 +6,9 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- hic sunt leones.
+- Fix: non-root urls do not work under Apache (`#114`_)
+
+.. _`#114`: https://github.com/pyeve/eve-swagger/pull/114
 
 Released
 --------
@@ -18,7 +20,7 @@ Released on September 19, 2020.
 
 - Fix: When using a non-empty ``url_prefix``, it should be also added to ``spec_url`` (`#112`_)
 
-.. _`#112`: https://github.com/pyeve/eve-swagger/pull/111
+.. _`#112`: https://github.com/pyeve/eve-swagger/pull/112
 
 
 Version 0.1.1
