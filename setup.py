@@ -11,7 +11,10 @@ with open("README.rst") as f:
 
 INSTALL_REQUIRES = ["eve"]
 
-EXTRAS_REQUIRES = {"docs": [], "tests": ["pytest", "tox", "jsonschema"]}
+EXTRAS_REQUIRES = {
+    "docs": [],
+    "tests": ["pytest", "tox", "jsonschema", "pyrsistent<=0.16"],
+}
 EXTRAS_REQUIRES["dev"] = EXTRAS_REQUIRES["tests"] + EXTRAS_REQUIRES["docs"]
 
 setup(
