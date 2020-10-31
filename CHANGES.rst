@@ -6,14 +6,21 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- hic sunt leones
+
+Released
+--------
+
+Version 0.1.3
+~~~~~~~~~~~~~
+
+Released on October 31, 2020.
+
 - Add Python 3.8 to CI matrix.
 - Fix: pin pyrsistent to v0.16, as new releases dropped Python 2.7 sypport.
 - Fix: non-root urls do not work under Apache (`#114`_)
 
 .. _`#114`: https://github.com/pyeve/eve-swagger/pull/114
-
-Released
---------
 
 Version 0.1.2
 ~~~~~~~~~~~~~

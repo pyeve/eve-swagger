@@ -19,7 +19,7 @@ EXTRAS_REQUIRES["dev"] = EXTRAS_REQUIRES["tests"] + EXTRAS_REQUIRES["docs"]
 
 setup(
     name="Eve-Swagger",
-    version="0.1.2",
+    version="0.1.3",
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     author="Nicola Iarocci",
