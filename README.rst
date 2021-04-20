@@ -37,7 +37,7 @@ Usage
     app.config['SWAGGER_HOST'] = 'https://myhost.com'
 
     # optional. Add/Update elements in the documentation at run-time without deleting subtrees.
-    add_documentation({'paths': {'/status': {'get': {'parameters': [
+    add_documentation(swagger, {'paths': {'/status': {'get': {'parameters': [
         {
             'in': 'query',
             'name': 'foobar',
