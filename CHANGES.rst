@@ -6,7 +6,9 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- hic sunt leones
+- Fix: TypeError: add_documention() missing 1 required postitional argument (`#108`_)
+
+.. _`#108`: https://github.com/pyeve/eve-swagger/issues/108
 
 Released
 --------
