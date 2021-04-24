@@ -6,12 +6,18 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- Fix: TypeError: add_documention() missing 1 required postitional argument (`#108`_)
-
-.. _`#108`: https://github.com/pyeve/eve-swagger/issues/108
+- hic sunt leones
 
 Released
 --------
+
+Version 0.1.4
+~~~~~~~~~~~~~
+
+Released on April 24, 2021.
+- Fix: TypeError: add_documention() missing 1 required postitional argument (`#108`_)
+
+.. _`#108`: https://github.com/pyeve/eve-swagger/issues/108
 
 Version 0.1.3
 ~~~~~~~~~~~~~
