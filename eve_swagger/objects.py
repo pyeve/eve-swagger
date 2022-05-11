@@ -44,6 +44,8 @@ def info():
 
 def servers():
     url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
+    if app.config["URL_PREFIX"]:
+        url = url + "/" + app.config["URL_PREFIX"]
     if app.config["API_VERSION"]:
         url = url + "/" + app.config["API_VERSION"]
     return [{"url": url}]
