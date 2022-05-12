@@ -260,6 +260,15 @@ def security_schemes():
                 },
             }
         }
+    if "eve_auth_jwt" in sys.modules.keys():
+        return {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Bearer authentication scheme.",
+            }
+        }
     elif isinstance(app.auth, TokenAuth):
         return {"BearerAuth": {"type": "http", "scheme": "bearer"}}
     elif isinstance(app.auth, BasicAuth):
@@ -281,6 +290,8 @@ def callbacks():
 def security():
     if "flask_oauthlib.provider" in sys.modules.keys():
         return [{"oAuth2": []}]
+    elif "eve_auth_jwt" in sys.modules.keys():
+        return [{"BearerAuth": []}]
     elif isinstance(app.auth, TokenAuth):
         return [{"BearerAuth": []}]
     elif isinstance(app.auth, BasicAuth):
