@@ -17,10 +17,6 @@ from .paths import get_ref_schema
 from .definitions import INFO, HOST
 
 
-def _get_scheme():
-    return "http" if app.auth is None else "https"
-
-
 def info():
     validate_info()
 
@@ -43,7 +39,7 @@ def info():
 
 
 def servers():
-    url = app.config.get(HOST) or "%s://%s" % (_get_scheme(), request.host)
+    url = app.config.get(HOST) or "%s://%s" % (request.scheme, request.host)
     if app.config["URL_PREFIX"]:
         url = url + "/" + app.config["URL_PREFIX"]
     if app.config["API_VERSION"]:
