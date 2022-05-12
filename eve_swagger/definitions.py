@@ -47,7 +47,7 @@ def definitions():
     }
     definitions["Error"] = error_schema
     # add default meta response eve schema
-    respone_metadata_schema = {
+    response_metadata_schema = {
         "type": "object",
         "properties": {
             "page": {"type": "string"},
@@ -55,9 +55,9 @@ def definitions():
             "max_results": {"type": "integer"},
         },
     }
-    definitions["respone_metadata"] = respone_metadata_schema
+    definitions["response_metadata"] = response_metadata_schema
 
-    respone_links_schema = {
+    response_links_schema = {
         "type": "object",
         "properties": {
             "parent": {
@@ -77,7 +77,7 @@ def definitions():
         },
     }
 
-    definitions["respone_links"] = respone_links_schema
+    definitions["response_links"] = response_links_schema
 
     return definitions
 

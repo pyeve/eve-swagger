@@ -145,11 +145,11 @@ def get_response(rd):
 
     properties = {
         app.config["ITEMS"]: {"type": "array", "items": get_ref_schema(rd)},
-        app.config["META"]: {"$ref": "#/components/schemas/respone_metadata"},
+        app.config["META"]: {"$ref": "#/components/schemas/response_metadata"},
     }
 
     if rd.get("hateoas", app.config["HATEOAS"]):
-        properties[app.config["LINKS"]] = {"$ref": "#/components/schemas/respone_links"}
+        properties[app.config["LINKS"]] = {"$ref": "#/components/schemas/response_links"}
 
     r = OrderedDict(
         [
