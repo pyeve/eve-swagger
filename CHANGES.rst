@@ -6,8 +6,13 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- New: add security definition for eve-auth-jwt. Closes #121.
-- Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs. Closes #119.
+- New: add security definition for eve-auth-jwt (`#121`_).
+- Fix: should use ``request.scheme`` in ``servers`` (`#123`_).
+- Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs (`#119`_)
+
+.. _`#121`: https://github.com/pyeve/eve-swagger/issues/121
+.. _`#123`: https://github.com/pyeve/eve-swagger/issues/123
+.. _`#119`: https://github.com/pyeve/eve-swagger/issues/119
 
 Released
 --------
