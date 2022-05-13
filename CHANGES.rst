@@ -7,10 +7,12 @@ In Development
 --------------
 
 - New: add security definition for eve-auth-jwt (`#121`_).
+- Fix: typos (`#125`_)
 - Fix: should use ``request.scheme`` in ``servers`` (`#123`_).
 - Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs (`#119`_)
 
 .. _`#121`: https://github.com/pyeve/eve-swagger/issues/121
+.. _`#125`: https://github.com/pyeve/eve-swagger/issues/125
 .. _`#123`: https://github.com/pyeve/eve-swagger/issues/123
 .. _`#119`: https://github.com/pyeve/eve-swagger/issues/119
 
