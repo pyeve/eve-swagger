@@ -6,6 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- New: add security definition for eve-auth-jwt. Closes #121.
 - Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs. Closes #119.
 
 Released
