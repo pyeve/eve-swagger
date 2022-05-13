@@ -6,7 +6,7 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- hic sunt leones
+- Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs. Closes #119.
 
 Released
 --------

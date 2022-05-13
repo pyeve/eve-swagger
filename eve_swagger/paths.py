@@ -130,7 +130,7 @@ def get_ref_query():
 
 
 def add_parameters_dr(rd, parameters):
-    """ Add path parameters when using sub-resources."""
+    """Add path parameters when using sub-resources."""
     lookup_field = re.match(r"^.*\{(.*)\}.*$", rd["url"])
     if lookup_field:
         lookup_field = lookup_field.group(1)
