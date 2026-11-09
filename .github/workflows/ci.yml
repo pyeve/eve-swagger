@@ -5,12 +5,17 @@ on: [push, pull_request, workflow_dispatch]
 jobs:
   tests:
     name: Python ${{ matrix.python }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       fail-fast: false
       matrix:
         python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+        os: [ubuntu-latest]
+        include:
+          # Python 3.9 is no longer available on ubuntu-latest
+          - python: "3.9"
+            os: ubuntu-24.04
 
     services:
       mongodb:

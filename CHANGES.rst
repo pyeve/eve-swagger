@@ -6,20 +6,30 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
-- New: add security definition for eve-auth-jwt (`#121`_).
 - Fix: use the ``check_with`` rule instead of the deprecated ``validator`` rule, which raised a Cerberus deprecation warning at startup. Cerberus 1.3 or later is now required (`#130`_).
+- Drop Python 2.7 and 3.5-3.8 support. Python 3.9 or later is now required, in line with Eve.
+- Add Python 3.9 to 3.14 to CI matrix.
+- Switch CI from Travis to GitHub Actions.
+
+.. _`#130`: https://github.com/pyeve/eve-swagger/issues/130
+
+Released
+--------
+
+Version 0.2.0
+~~~~~~~~~~~~~
+
+Released on May 17, 2022.
+
+- New: add security definition for eve-auth-jwt (`#121`_).
 - Fix: typos (`#125`_)
 - Fix: should use ``request.scheme`` in ``servers`` (`#123`_).
 - Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs (`#119`_)
 
 .. _`#121`: https://github.com/pyeve/eve-swagger/issues/121
-.. _`#130`: https://github.com/pyeve/eve-swagger/issues/130
 .. _`#125`: https://github.com/pyeve/eve-swagger/issues/125
 .. _`#123`: https://github.com/pyeve/eve-swagger/issues/123
 .. _`#119`: https://github.com/pyeve/eve-swagger/issues/119
-
-Released
---------
 
 Version 0.1.4
 ~~~~~~~~~~~~~
