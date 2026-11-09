@@ -263,9 +263,9 @@ See the original LICENSE_ for more information.
 .. |latest-version| image:: https://img.shields.io/pypi/v/eve-swagger.svg
    :alt: Latest version on PyPI
    :target: https://pypi.python.org/pypi/eve-swagger
-.. |build-status| image:: https://travis-ci.org/pyeve/eve-swagger.svg?branch=master
+.. |build-status| image:: https://github.com/pyeve/eve-swagger/actions/workflows/ci.yml/badge.svg
    :alt: Build status
-   :target: https://travis-ci.org/pyeve/eve-swagger
+   :target: https://github.com/pyeve/eve-swagger/actions/workflows/ci.yml
 .. |python-support| image:: https://img.shields.io/pypi/pyversions/eve-swagger.svg
    :target: https://pypi.python.org/pypi/eve-swagger
    :alt: Python versions
@@ -274,7 +274,7 @@ See the original LICENSE_ for more information.
    :target: https://github.com/pyeve/eve-swagger/blob/master/LICENSE
 .. |black-formatting| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :alt: Black code formatting
-   :target: https://github.com/ambv/black
+   :target: https://github.com/psf/black
 
 .. _Swagger: http://swagger.io/
 .. _Eve: http://python-eve.org/

@@ -1,4 +1,3 @@
 include README.rst
 include LICENSE
-include requirements.txt
 include eve_swagger/templates/*.html

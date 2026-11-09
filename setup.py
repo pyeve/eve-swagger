@@ -39,7 +39,6 @@ setup(
     install_requires=INSTALL_REQUIRES,
     extras_require=EXTRAS_REQUIRES,
     include_package_data=True,
-    test_suite="eve_swagger.tests",
     keywords=["swagger", "eve", "rest", "api"],
     python_requires=">=3.9",
     classifiers=[

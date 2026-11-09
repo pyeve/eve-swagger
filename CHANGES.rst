@@ -11,6 +11,7 @@ In Development
 - Add Python 3.9 to 3.14 to CI matrix.
 - Switch CI from Travis to GitHub Actions.
 - Update pre-commit hooks, run linting in CI, and reformat code with the current black release.
+- Remove leftovers: Travis badge, Probot Stale config, Python 2 coding headers, ``test_suite`` and the missing ``requirements.txt`` from ``MANIFEST.in``.
 
 .. _`#130`: https://github.com/pyeve/eve-swagger/issues/130
 
