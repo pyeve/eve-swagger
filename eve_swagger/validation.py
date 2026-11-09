@@ -30,7 +30,7 @@ def validate_info():
             "type": "dict",
             "schema": {
                 "name": {"type": "string"},
-                "url": {"type": "string", "validator": _validate_url},
+                "url": {"type": "string", "check_with": _validate_url},
                 "email": {
                     "type": "string",
                     "regex": r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$",
@@ -41,7 +41,7 @@ def validate_info():
             "type": "dict",
             "schema": {
                 "name": {"type": "string", "required": True},
-                "url": {"type": "string", "validator": _validate_url},
+                "url": {"type": "string", "check_with": _validate_url},
             },
         },
         "schemes": {"type": "list", "schema": {"type": "string"}},
