@@ -11,10 +11,7 @@ from eve.exceptions import ConfigException
 from flask import current_app as app
 from cerberus import Validator
 
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
+from urllib.parse import urlparse
 
 from .definitions import INFO
 

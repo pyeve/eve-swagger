@@ -13,13 +13,13 @@ INSTALL_REQUIRES = ["eve", "cerberus>=1.3"]
 
 EXTRAS_REQUIRES = {
     "docs": [],
-    "tests": ["pytest", "tox", "jsonschema", "pyrsistent<=0.16"],
+    "tests": ["pytest", "tox", "jsonschema"],
 }
 EXTRAS_REQUIRES["dev"] = EXTRAS_REQUIRES["tests"] + EXTRAS_REQUIRES["docs"]
 
 setup(
     name="Eve-Swagger",
-    version="0.1.4",
+    version="0.2.0",
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
     author="Nicola Iarocci",
@@ -40,7 +40,7 @@ setup(
     include_package_data=True,
     test_suite="eve_swagger.tests",
     keywords=["swagger", "eve", "rest", "api"],
-    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*",
+    python_requires=">=3.9",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
@@ -48,14 +48,14 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: Python :: Implementation :: PyPy",
     ],
 )
