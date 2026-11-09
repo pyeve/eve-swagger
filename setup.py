@@ -20,9 +20,10 @@ EXTRAS_REQUIRES["dev"] = EXTRAS_REQUIRES["tests"] + EXTRAS_REQUIRES["docs"]
 
 setup(
     name="Eve-Swagger",
-    version="0.2.0",
+    version="0.2.1",
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/x-rst",
     author="Nicola Iarocci",
     author_email="nicola@nicolaiarocci.com",
     url="http://github.com/pyeve/eve-swagger",

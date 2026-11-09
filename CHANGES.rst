@@ -6,6 +6,16 @@ Here you can see the full list of changes between each Eve-Swagger release.
 In Development
 --------------
 
+- hic sunt leones
+
+Released
+--------
+
+Version 0.2.1
+~~~~~~~~~~~~~
+
+Released on November 9, 2026.
+
 - Fix: use the ``check_with`` rule instead of the deprecated ``validator`` rule, which raised a Cerberus deprecation warning at startup. Cerberus 1.3 or later is now required (`#130`_).
 - Drop Python 2.7 and 3.5-3.8 support. Python 3.9 or later is now required, in line with Eve.
 - Add Python 3.9 to 3.14 to CI matrix.
@@ -14,9 +24,6 @@ In Development
 - Remove leftovers: Travis badge, Probot Stale config, Python 2 coding headers, ``test_suite`` and the missing ``requirements.txt`` from ``MANIFEST.in``.
 
 .. _`#130`: https://github.com/pyeve/eve-swagger/issues/130
-
-Released
---------
 
 Version 0.2.0
 ~~~~~~~~~~~~~
