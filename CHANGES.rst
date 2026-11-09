@@ -7,11 +7,13 @@ In Development
 --------------
 
 - New: add security definition for eve-auth-jwt (`#121`_).
+- Fix: use the ``check_with`` rule instead of the deprecated ``validator`` rule, which raised a Cerberus deprecation warning at startup. Cerberus 1.3 or later is now required (`#130`_).
 - Fix: typos (`#125`_)
 - Fix: should use ``request.scheme`` in ``servers`` (`#123`_).
 - Fix: eve-swagger ignores URL_PREFIX, so when it is set, it generates incorrect URLs (`#119`_)
 
 .. _`#121`: https://github.com/pyeve/eve-swagger/issues/121
+.. _`#130`: https://github.com/pyeve/eve-swagger/issues/130
 .. _`#125`: https://github.com/pyeve/eve-swagger/issues/125
 .. _`#123`: https://github.com/pyeve/eve-swagger/issues/123
 .. _`#119`: https://github.com/pyeve/eve-swagger/issues/119

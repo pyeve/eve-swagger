@@ -9,7 +9,7 @@ DESCRIPTION = "Swagger extension for Eve powered RESTful APIs"
 with open("README.rst") as f:
     LONG_DESCRIPTION = f.read()
 
-INSTALL_REQUIRES = ["eve"]
+INSTALL_REQUIRES = ["eve", "cerberus>=1.3"]
 
 EXTRAS_REQUIRES = {
     "docs": [],
