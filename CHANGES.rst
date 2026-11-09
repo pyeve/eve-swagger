@@ -10,6 +10,7 @@ In Development
 - Drop Python 2.7 and 3.5-3.8 support. Python 3.9 or later is now required, in line with Eve.
 - Add Python 3.9 to 3.14 to CI matrix.
 - Switch CI from Travis to GitHub Actions.
+- Update pre-commit hooks, run linting in CI, and reformat code with the current black release.
 
 .. _`#130`: https://github.com/pyeve/eve-swagger/issues/130
 
