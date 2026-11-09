@@ -2,6 +2,7 @@
 """
 Setup for Swagger extension for Eve powered RESTful APIs
 """
+
 from setuptools import setup, find_packages
 from collections import OrderedDict
 

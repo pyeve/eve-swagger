@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-    eve-swagger.objects
-    ~~~~~~~~~~~~~~~~~~~
-    swagger.io extension for Eve-powered REST APIs.
+eve-swagger.objects
+~~~~~~~~~~~~~~~~~~~
+swagger.io extension for Eve-powered REST APIs.
 
-    :copyright: (c) 2015 by Nicola Iarocci.
-    :license: BSD, see LICENSE for more details.
+:copyright: (c) 2015 by Nicola Iarocci.
+:license: BSD, see LICENSE for more details.
 """
+
 import sys
 from collections import OrderedDict
 from flask import request, current_app as app
@@ -61,7 +62,7 @@ def responses():
 def parameters():
     parameters = OrderedDict()
     # resource parameters
-    for (resource_name, rd) in app.config["DOMAIN"].items():
+    for resource_name, rd in app.config["DOMAIN"].items():
         if resource_name.endswith("_versions") or rd.get("disable_documentation"):
             continue
 
@@ -185,7 +186,7 @@ def _header_parameters():
 def examples():
     examples = OrderedDict()
 
-    for (resource_name, rd) in app.config["DOMAIN"].items():
+    for resource_name, rd in app.config["DOMAIN"].items():
         if resource_name.endswith("_versions") or rd.get("disable_documentation"):
             continue
 
@@ -210,7 +211,7 @@ def request_bodies():
 
     rbodies = OrderedDict()
 
-    for (resource_name, rd) in app.config["DOMAIN"].items():
+    for resource_name, rd in app.config["DOMAIN"].items():
         if resource_name.endswith("_versions") or rd.get("disable_documentation"):
             continue
 
@@ -296,7 +297,7 @@ def security():
 
 def tags():
     tags = []
-    for (resource_name, rd) in app.config["DOMAIN"].items():
+    for resource_name, rd in app.config["DOMAIN"].items():
         if resource_name.endswith("_versions") or rd.get("disable_documentation"):
             continue
 

@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-    eve-swagger.definitions
-    ~~~~~~~~~~~~~~~~~~~~~~~
-    swagger.io extension for Eve-powered REST APIs.
+eve-swagger.definitions
+~~~~~~~~~~~~~~~~~~~~~~~
+swagger.io extension for Eve-powered REST APIs.
 
-    :copyright: (c) 2016 by Nicola Iarocci.
-    :license: BSD, see LICENSE for more details.
+:copyright: (c) 2016 by Nicola Iarocci.
+:license: BSD, see LICENSE for more details.
 """
+
 from collections import OrderedDict
 from flask import current_app as app
 

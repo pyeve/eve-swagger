@@ -1,7 +1,6 @@
 import json
 from jsonschema import validate, ValidationError
 
-
 if __name__ == "__main__":
     import sys
     import os
